@@ -1,2 +1,2 @@
-# Moore.io Core DV Library
-This library contains Moore.io's core packages of agents, libraries and their associated testing constructs.
+# Moore.io Core DV
+Moore.io's collection of core agents, libraries and associated testing packages.
