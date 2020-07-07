@@ -16,9 +16,9 @@
 
 
 // Directories
-+incdir+${DV_UVME_RESET_ST_PATH}
-+incdir+${DV_UVME_RESET_ST_PATH}/cov
-+incdir+${DV_UVME_RESET_ST_PATH}/vseq
+-i ${DV_UVMA_RESET_PATH}
+-i ${DV_UVMA_RESET_PATH}/cov
+-i ${DV_UVMA_RESET_PATH}/seq
 
 // Files
-${DV_UVME_RESET_ST_PATH}/uvme_reset_st_pkg.sv
+${DV_UVMA_RESET_PATH}/uvma_reset_pkg.sv

@@ -16,7 +16,7 @@
 
 
 // Directories
--i ${DV_UVML_LOGS_PATH}
++incdir+${DV_UVML_LOGS_PATH}
 
 // Files
 ${DV_UVML_LOGS_PATH}/uvml_logs_pkg.sv

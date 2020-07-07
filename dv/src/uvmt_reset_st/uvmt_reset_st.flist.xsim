@@ -29,9 +29,9 @@
 -f ${DV_UVME_RESET_ST_PATH}/uvme_reset_st_pkg.flist
 
 // Reset test bench Directories
-+incdir+${DV_UVMT_RESET_ST_PATH}
-+incdir+${DV_UVMT_RESET_ST_PATH}/tests
-+incdir+${DV_UVMT_RESET_ST_PATH}/vseq
+-i ${DV_UVMT_RESET_ST_PATH}
+-i ${DV_UVMT_RESET_ST_PATH}/tests
+-i ${DV_UVMT_RESET_ST_PATH}/vseq
 
 // Reset tests (includes constants/macros/types meant for test bench)
 ${DV_UVMT_RESET_ST_PATH}/uvmt_reset_st_pkg.sv

@@ -16,9 +16,7 @@
 
 
 // Directories
-+incdir+${DV_UVME_RESET_ST_PATH}
-+incdir+${DV_UVME_RESET_ST_PATH}/cov
-+incdir+${DV_UVME_RESET_ST_PATH}/vseq
+-i ${DV_UVML_RAL_PATH}
 
 // Files
-${DV_UVME_RESET_ST_PATH}/uvme_reset_st_pkg.sv
+${DV_UVML_RAL_PATH}/uvml_ral_pkg.sv

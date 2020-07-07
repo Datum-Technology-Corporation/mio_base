@@ -16,26 +16,26 @@
 
 
 // Libraries
-//-f ${DV_UVM_PATH}/uvm.flist
+-f ${DV_UVM_PATH}/uvm.flist
 -f ${DV_UVML_HRTBT_PATH}/uvml_hrtbt_pkg.flist
 -f ${DV_UVML_TRN_PATH}/uvml_trn_pkg.flist
 -f ${DV_UVML_LOGS_PATH}/uvml_logs_pkg.flist
 -f ${DV_UVML_SB_PATH}/uvml_sb_pkg.flist
 
 // Agents
--f ${DV_UVMA_RESET_PATH}/uvma_reset_pkg.flist
+-f ${DV_UVMA_CLK_PATH}/uvma_clk_pkg.flist
 
 // Environments
--f ${DV_UVME_RESET_ST_PATH}/uvme_reset_st_pkg.flist
+-f ${DV_UVME_CLK_ST_PATH}/uvme_clk_st_pkg.flist
 
-// Reset test bench Directories
-+incdir+${DV_UVMT_RESET_ST_PATH}
-+incdir+${DV_UVMT_RESET_ST_PATH}/tests
-+incdir+${DV_UVMT_RESET_ST_PATH}/vseq
+// Clock test bench Directories
+-i ${DV_UVMT_CLK_ST_PATH}
+-i ${DV_UVMT_CLK_ST_PATH}/tests
+-i ${DV_UVMT_CLK_ST_PATH}/vseq
 
-// Reset tests (includes constants/macros/types meant for test bench)
-${DV_UVMT_RESET_ST_PATH}/uvmt_reset_st_pkg.sv
+// Clock tests (includes constants/macros/types meant for test bench)
+${DV_UVMT_CLK_ST_PATH}/uvmt_clk_st_pkg.sv
 
-// Reset test bench files
-${DV_UVMT_RESET_ST_PATH}/uvmt_reset_st_dut_wrap.sv
-${DV_UVMT_RESET_ST_PATH}/uvmt_reset_st_tb.sv
+// Clock test bench files
+${DV_UVMT_CLK_ST_PATH}/uvmt_clk_st_dut_wrap.sv
+${DV_UVMT_CLK_ST_PATH}/uvmt_clk_st_tb.sv
