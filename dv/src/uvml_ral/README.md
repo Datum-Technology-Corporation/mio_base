@@ -1,2 +1,2 @@
-# UVM Register Abstraction Layer Library
-This package contains Moore.io's UVM Register Abstraction Layer Library.
+# Register Abstraction Layer UVM Library
+This package contains Moore.io's Register Abstraction Layer UVM Library.

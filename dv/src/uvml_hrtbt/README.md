@@ -1,2 +1,2 @@
-# UVM Heartbeat Library
-This package contains Moore.io's UVM Heartbeat Library.
+# Heartbeat UVM Library
+This package contains Moore.io's Heartbeat UVM Library.

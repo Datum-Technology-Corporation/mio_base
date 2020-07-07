@@ -1,2 +1,2 @@
-# UVM Logging Library
-This package contains Moore.io's UVM Logging Library.
+# Logging UVM Library
+This package contains Moore.io's Logging UVM Library.

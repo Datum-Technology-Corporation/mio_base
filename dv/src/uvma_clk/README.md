@@ -1,2 +1,2 @@
-# UVM Clocking Agent
-This package contains Moore.io's UVM Clocking Agent.
+# Clocking UVM Agent
+This package contains Moore.io's Clocking UVM Agent.

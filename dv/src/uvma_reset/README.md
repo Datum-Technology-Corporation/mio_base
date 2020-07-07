@@ -1,2 +1,2 @@
-# UVM Reset Agent
-This package contains Moore.io's UVM Reset Agent.
+# Reset UVM Agent
+This package contains Moore.io's Reset UVM Agent.
