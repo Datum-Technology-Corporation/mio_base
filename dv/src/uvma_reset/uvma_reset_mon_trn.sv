@@ -20,7 +20,7 @@
 
 
 /**
- * Object rebuilt from the Reset monitor Analog of uvma_reset_seq_item_c.
+ * Object rebuilt from the Reset monitor. Analog of uvma_reset_seq_item_c.
  */
 class uvma_reset_mon_trn_c extends uvml_trn_mon_trn_c;
    
