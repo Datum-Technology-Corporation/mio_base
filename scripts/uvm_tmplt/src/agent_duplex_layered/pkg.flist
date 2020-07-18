@@ -1,0 +1,37 @@
+// 
+// ${copyright_header}
+// Copyright 2020 Datum Technology Corporation
+// 
+// Licensed under the Solderpad Hardware License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     https://solderpad.org/licenses/
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// 
+
+
+// Directories
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/adptr_drv
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/adptr_mon
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/adptr_mon_trn
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/adptr_seq
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/adptr_seq_item
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/adptr_sqr
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/cov
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/if
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/layer_mon
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/layer_mon_trn
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/layer_seq
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/layer_seq_item
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/layer_sqr
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/seq
+
+// Files
+${DV_UVMA_${name_uppercase}_SRC_PATH}/uvma_${name}_pkg.sv
