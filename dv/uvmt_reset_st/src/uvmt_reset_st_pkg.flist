@@ -1,0 +1,38 @@
+// 
+// Copyright 2020 Datum Technology Corporation
+// 
+// Licensed under the Solderpad Hardware License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     https://solderpad.org/licenses/
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// 
+
+
+// Libraries
+//-f ${DV_UVM_SRC_PATH}/uvm.flist
+-f ${DV_UVML_HRTBT_SRC_PATH}/uvml_hrtbt_pkg.flist
+-f ${DV_UVML_TRN_SRC_PATH}/uvml_trn_pkg.flist
+-f ${DV_UVML_LOGS_SRC_PATH}/uvml_logs_pkg.flist
+-f ${DV_UVML_SB_SRC_PATH}/uvml_sb_pkg.flist
+
+// Agents
+-f ${DV_UVMA_RESET_SRC_PATH}/uvma_reset_pkg.flist
+
+// Environments
+-f ${DV_UVME_RESET_ST_SRC_PATH}/uvme_reset_st_pkg.flist
+
+// Reset test bench directories
++incdir+${DV_UVMT_RESET_ST_SRC_PATH}
++incdir+${DV_UVMT_RESET_ST_SRC_PATH}/seq
++incdir+${DV_UVMT_RESET_ST_SRC_PATH}/tb
++incdir+${DV_UVMT_RESET_ST_SRC_PATH}/tests
+
+// Reset test bench files
+${DV_UVMT_RESET_ST_SRC_PATH}/uvmt_reset_st_pkg.sv
