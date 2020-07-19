@@ -1,6 +1,5 @@
 // 
-// ${copyright_header}
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2020 ${name_of_copyright_owner}
 // 
 // Licensed under the Solderpad Hardware License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +17,8 @@
 
 // Directories
 +incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}
-+incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/cov
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/comps
++incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/obj
 +incdir+${DV_UVMA_${name_uppercase}_SRC_PATH}/seq
 
 // Files

@@ -29,7 +29,7 @@ module uvme_${name}_chkr (
    
    `pragma protect begin
    
-   // TODO Add assertions to uvma_reset_if_chkr
+   // TODO Add assertions to uvme_$[name}_chkr
    
    `pragma protect end
    
