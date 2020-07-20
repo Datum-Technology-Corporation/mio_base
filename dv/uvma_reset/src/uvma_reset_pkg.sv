@@ -63,7 +63,8 @@ package uvma_reset_pkg;
    `include "uvma_reset_agent.sv"
    
    // Sequences
-   `include "uvma_reset_seq_lib.sv"
+   `include "uvma_reset_base_seq.sv"
+   `include "uvma_reset_pulse_seq.sv"
    
 endpackage : uvma_reset_pkg
 

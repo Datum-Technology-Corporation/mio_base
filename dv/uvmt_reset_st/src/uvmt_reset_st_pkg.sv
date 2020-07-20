@@ -55,8 +55,7 @@ package uvmt_reset_st_pkg;
    `include "uvmt_reset_st_constants.sv"
    `include "uvmt_reset_st_tdefs.sv"
    
-   // Virtual sequence library
-   `include "uvmt_reset_st_vseq_lib.sv"
+   // Sequences
    
    // Base test
    `include "uvmt_reset_st_test_cfg.sv"

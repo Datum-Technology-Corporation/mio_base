@@ -56,8 +56,7 @@ package uvmt_clk_st_pkg;
    `include "uvmt_clk_st_constants.sv"
    `include "uvmt_clk_st_tdefs.sv"
    
-   // Virtual sequence library
-   `include "uvmt_clk_st_vseq_lib.sv"
+   // Sequences
    
    // Base test
    `include "uvmt_clk_st_test_cfg.sv"

@@ -62,7 +62,7 @@ package uvma_clk_pkg;
    `include "uvma_clk_agent.sv"
    
    // Sequences
-   `include "uvma_clk_seq_lib.sv"
+   `include "uvma_clk_base_seq.sv"
    
 endpackage : uvma_clk_pkg
 

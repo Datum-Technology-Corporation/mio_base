@@ -59,8 +59,8 @@ package uvme_clk_st_pkg;
    `include "uvme_clk_st_vsqr.sv"
    `include "uvme_clk_st_env.sv"
    
-   // Virtual sequences
-   `include "uvme_clk_st_vseq_lib.sv"
+   // Sequences
+   `include "uvme_clk_st_base_vseq.sv"
    
 endpackage : uvme_clk_st_pkg
 

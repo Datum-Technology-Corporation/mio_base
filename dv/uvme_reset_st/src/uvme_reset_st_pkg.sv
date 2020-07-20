@@ -59,8 +59,9 @@ package uvme_reset_st_pkg;
    `include "uvme_reset_st_vsqr.sv"
    `include "uvme_reset_st_env.sv"
    
-   // Virtual sequences
-   `include "uvme_reset_st_vseq_lib.sv"
+   // Sequences
+   `include "uvme_reset_st_base_vseq.sv"
+   `include "uvme_reset_st_rand_pulses_vseq.sv"
    
 endpackage : uvme_reset_st_pkg
 
