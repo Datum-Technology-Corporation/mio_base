@@ -1,35 +1,35 @@
 // 
-// ${copyright_header}
-// Copyright 2020 Datum Technology Corporation
+// Copyright ${year} ${name_of_copyright_owner}
+// SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
-// Licensed under the Solderpad Hardware License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+// Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
+// not use this file except in compliance with the License, or, at your option,
+// the Apache License version 2.0. You may obtain a copy of the License at
 // 
-//     https://solderpad.org/licenses/
+//     https://solderpad.org/licenses/SHL-2.1/
 // 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Unless required by applicable law or agreed to in writing, any work
+// distributed under the License is distributed on an “AS IS” BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+// License for the specific language governing permissions and limitations
+// under the License.
 // 
 
 
-`ifndef __${name_uppercase}_SV__
-`define __${name_uppercase}_SV__
+`ifndef __${pkg_name_uppercase}_${name_uppercase}_SV__
+`define __${pkg_name_uppercase}_${name_uppercase}_SV__
 
 
 /**
- * TODO Describe ${name}_c
+ * TODO Describe ${pkg_name}_${name}_c
  */
-class ${name}_c extends ${base_class};
+class ${pkg_name}_${name}_c extends ${base_class};
    
    // Fields
    
    
    
-   `uvm_object_utils_begin(${name}_c)
+   `uvm_object_utils_begin(${pkg_name}_${name}_c)
       // UVM Field Util Macros
    `uvm_object_utils_end
    
@@ -41,18 +41,18 @@ class ${name}_c extends ${base_class};
    /**
     * Default constructor.
     */
-   extern function new(string name="${name}");
+   extern function new(string name="${pkg_name}_${name}");
    
    // Methods
    
    
-endclass : ${name}_c
+endclass : ${pkg_name}_${name}_c
 
 
 `pragma protect begin
 
 
-function ${name}_c::new(string name="${name}");
+function ${pkg_name}_${name}_c::new(string name="${pkg_name}_${name}");
    
    super.new(name);
    
@@ -62,4 +62,4 @@ endfunction : new
 `pragma protect end
 
 
-`endif // __${name_uppercase}_SV__
+`endif // __${pkg_name_uppercase}_${name_uppercase}_SV__

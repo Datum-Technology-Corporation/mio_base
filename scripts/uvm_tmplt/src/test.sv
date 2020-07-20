@@ -1,18 +1,18 @@
 // 
-// ${copyright_header}
-// Copyright 2020 Datum Technology Corporation
+// Copyright ${year} ${name_of_copyright_owner}
+// SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
-// Licensed under the Solderpad Hardware License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+// Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
+// not use this file except in compliance with the License, or, at your option,
+// the Apache License version 2.0. You may obtain a copy of the License at
 // 
-//     https://solderpad.org/licenses/
+//     https://solderpad.org/licenses/SHL-2.1/
 // 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Unless required by applicable law or agreed to in writing, any work
+// distributed under the License is distributed on an “AS IS” BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+// License for the specific language governing permissions and limitations
+// under the License.
 // 
 
 
@@ -23,7 +23,7 @@
 /**
  * TODO Describe uvmt_${tb_name}_${name}_test_c
  */
-class uvmt_${tb_name}_${name}_test_c extends ${test_base};
+class uvmt_${tb_name}_${name}_test_c extends uvmt_${tb_name}_${base_test}_test_c;
    
    rand uvme_${tb_name}_${vseq_name}_vseq_c  ${vseq_name}_vseq;
    
@@ -47,7 +47,7 @@ function uvmt_${tb_name}_${name}_test_c::new(string name="uvmt_${tb_name}_${name
    
    super.new(name, parent);
    
-   ${name}_vseq = uvme_${tb_name}_${name}_vseq_c::type_id::create("${name}_vseq");
+   ${vseq_name}_vseq = uvme_${tb_name}_${name}_vseq_c::type_id::create("${name}_vseq");
    
 endfunction : new
 
