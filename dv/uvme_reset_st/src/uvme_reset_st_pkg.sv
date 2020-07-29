@@ -33,8 +33,8 @@
 
 
  /**
- * Encapsulates all the types needed for an UVM environment capable of
- * self-testing an Reset VIP.
+ * Encapsulates all the types needed for the Moore.io UVM environment capable of
+ * self-testing the Moore.io Reset UVM Agent.
  */
 package uvme_reset_st_pkg;
    

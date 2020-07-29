@@ -33,8 +33,8 @@
 
 
  /**
- * Encapsulates all the types needed for an UVM environment capable of
- * self-testing an Clock VIP.
+ * Encapsulates all the types needed for the Moore.io UVM environment capable of
+ * self-testing the Moore.io Clocking UVM Agent.
  */
 package uvme_clk_st_pkg;
    

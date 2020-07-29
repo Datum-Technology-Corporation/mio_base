@@ -30,8 +30,7 @@
 
 
 /**
- * Encapsulates all the types needed for an UVM agent capable of driving and/or
- * monitoring Reset.
+ * Encapsulates all the types needed for the Moore.io Reset UVM Agent.
  */
 package uvma_reset_pkg;
    

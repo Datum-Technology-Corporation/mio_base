@@ -26,7 +26,7 @@
 
 
 /**
- * Encapsulates all the types needed for Logging Utilities library.
+ * Encapsulates all the types needed for the Moore.io Logging Utilities library.
  */
 package uvml_logs_pkg;
    

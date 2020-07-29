@@ -16,10 +16,30 @@
 // 
 
 
-// Directories
-+incdir+${DV_UVML_RAL_SRC_PATH}
-+incdir+${DV_UVML_RAL_SRC_PATH}/obj
-+incdir+${DV_UVML_RAL_SRC_PATH}/reg
+`ifndef __UVML_VERSION_PKG_SV__
+`define __UVML_VERSION_PKG_SV__
 
-// Files
-${DV_UVML_RAL_SRC_PATH}/uvml_ral_pkg.sv
+
+// Pre-processor macros
+`include "uvm_macros.svh"
+`include "uvml_version_macros.sv"
+
+
+/**
+ * Encapsulates all the types needed for the Moore.io Versioning library.
+ */
+package uvml_version_pkg;
+   
+   import uvm_pkg::*;
+   
+   // Constants / Structs / Enums
+   `include "uvml_version_constants.sv"
+   `include "uvml_version_tdefs.sv"
+   
+   // Objects
+   `include "uvml_version_maj_min.sv"
+   
+endpackage : uvml_version_pkg
+
+
+`endif // __UVML_VERSION_PKG_SV__

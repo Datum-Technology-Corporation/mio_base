@@ -26,7 +26,7 @@
 
 
 /**
- * Encapsulates all the types needed for ${name_normal_case} library.
+ * Encapsulates all the types needed for the ${name_normal_case} library.
  */
 package uvml_${name}_pkg;
    

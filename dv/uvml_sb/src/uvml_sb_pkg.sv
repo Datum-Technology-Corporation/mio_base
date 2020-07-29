@@ -28,7 +28,7 @@
 
 
 /**
- * Encapsulates all the types needed for Scoreboard library.
+ * Encapsulates all the types needed for the Moore.io Scoreboard library.
  */
 package uvml_sb_pkg;
    

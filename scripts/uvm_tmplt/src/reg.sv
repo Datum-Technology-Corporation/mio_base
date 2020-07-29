@@ -26,7 +26,7 @@
 class ${pkg_name}_${name}_reg_c extends ${base_class};
    
    // TODO Add register fields
-   //      Ex: rand uvm_reg_field  xyz;
+   //      Ex: rand uvml_ral_reg_field  xyz;
    
    
    `uvm_object_utils_begin(${pkg_name}_${name}_reg_c)
@@ -38,7 +38,7 @@ class ${pkg_name}_${name}_reg_c extends ${base_class};
    /**
     * Default constructor.
     */
-   extern function new(string name="${pkg_name}_${name}_reg");
+   extern function new(string name="${pkg_name}_${name}_reg", int unsigned n_bits=32, int has_coverage=UVM_NO_COVERAGE);
    
    /**
     * Create and configure register fields.
@@ -48,13 +48,12 @@ class ${pkg_name}_${name}_reg_c extends ${base_class};
 endclass : ${pkg_name}_${name}_reg_c
 
 
-function ${pkg_name}_${name}_reg_c::new(string name="${pkg_name}_${name}_reg");
+`pragma protect begin
+
+
+function ${pkg_name}_${name}_reg_c::new(string name="${pkg_name}_${name}_reg", int unsigned n_bits=32, int has_coverage=UVM_NO_COVERAGE);
    
-   super.new(
-      .name        (name),
-      .n_bits      (32),
-      .has_coverage(UVM_NO_COVERAGE)
-   );
+   super.new(name, n_bits, has_coverage);
    
 endfunction : new
 
@@ -62,20 +61,23 @@ endfunction : new
 function void ${pkg_name}_${name}_reg_c::build();
    
    // TODO Create and configure register fields
-   //      Ex: xyz = uvm_reg_field::type_id::create("xyz");
+   //      Ex: xyz = uvml_ral_reg_field::type_id::create("xyz");
    //          xyz.configure(
    //             .parent                 (this),
    //             .size                   (   1),
    //             .lsb_pos                (   0),
    //             .access                 ("RW"),
    //             .volatile               (   0),
-   //             .reset                  (   1),
+   //             .reset                  (   0),
    //             .has_reset              (   1),
    //             .is_rand                (   1),
    //             .individually_accessible(   0)
    //          );
    
 endfunction: build
+
+
+`pragma protect end
 
 
 `endif // __${pkg_name_uppercase}_${name_uppercase}_REG_SV__

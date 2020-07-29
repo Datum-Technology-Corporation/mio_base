@@ -26,7 +26,8 @@
 
 
 /**
- * Encapsulates all the types needed for Transactional Base Classes library.
+ * Encapsulates all the types needed for the Moore.io Transactional Base Classes
+ * library.
  */
 package uvml_trn_pkg;
    

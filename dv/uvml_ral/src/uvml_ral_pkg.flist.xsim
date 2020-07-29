@@ -18,6 +18,8 @@
 
 // Directories
 -i ${DV_UVML_RAL_SRC_PATH}
+-i ${DV_UVML_RAL_SRC_PATH}/obj
+-i ${DV_UVML_RAL_SRC_PATH}/reg
 
 // Files
 ${DV_UVML_RAL_SRC_PATH}/uvml_ral_pkg.sv

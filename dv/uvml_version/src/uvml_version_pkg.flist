@@ -16,48 +16,10 @@
 // 
 
 
-`ifndef __UVML_RAL_REG_SV__
-`define __UVML_RAL_REG_SV__
+// Directories
++incdir+${DV_UVML_VERSION_SRC_PATH}
++incdir+${DV_UVML_VERSION_SRC_PATH}/comps
++incdir+${DV_UVML_VERSION_SRC_PATH}/obj
 
-
-/**
- * TODO Describe uvml_ral_reg_c
- */
-class uvml_ral_reg_c extends uvm_reg;
-   
-   // Fields
-   
-   
-   
-   `uvm_object_utils_begin(uvml_ral_reg_c)
-      // UVM Field Util Macros
-   `uvm_object_utils_end
-   
-   
-   // Constraints
-   
-   
-   
-   /**
-    * Default constructor.
-    */
-   extern function new(string name="uvml_ral_reg");
-   
-   // Methods
-   
-   
-endclass : uvml_ral_reg_c
-
-
-function uvml_ral_reg_c::new(string name="uvml_ral_reg");
-   
-   super.new(
-      .name        (name),
-      .n_bits      (32),
-      .has_coverage(UVM_NO_COVERAGE)
-   );
-   
-endfunction : new
-
-
-`endif // __UVML_RAL_REG_SV__
+// Files
+${DV_UVML_VERSION_SRC_PATH}/uvml_version_pkg.sv

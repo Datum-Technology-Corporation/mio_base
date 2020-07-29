@@ -16,10 +16,11 @@
 // 
 
 
-// Directories
-+incdir+${DV_UVML_RAL_SRC_PATH}
-+incdir+${DV_UVML_RAL_SRC_PATH}/obj
-+incdir+${DV_UVML_RAL_SRC_PATH}/reg
+`ifndef __UVML_VERSION_MACROS_SV__
+`define __UVML_VERSION_MACROS_SV__
 
-// Files
-${DV_UVML_RAL_SRC_PATH}/uvml_ral_pkg.sv
+
+
+
+
+`endif // __UVML_VERSION_MACROS_SV__

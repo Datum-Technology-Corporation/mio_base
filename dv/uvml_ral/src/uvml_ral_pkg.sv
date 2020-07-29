@@ -26,7 +26,8 @@
 
 
 /**
- * Encapsulates all the types needed for the Register Abstraction Layer library.
+ * Encapsulates all the types needed for the Moore.io Register Abstraction Layer
+ * library.
  */
 package uvml_ral_pkg;
    

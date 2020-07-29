@@ -30,8 +30,7 @@
 
 
 /**
- * Encapsulates all the types needed for an UVM agent capable of driving and/or
- * monitoring Clock.
+ * Encapsulates all the types needed for the Moore.io Clocking UVM agent.
  */
 package uvma_clk_pkg;
    

@@ -16,33 +16,44 @@
 // 
 
 
-`ifndef __UVML_HRTBT_PKG_SV__
-`define __UVML_HRTBT_PKG_SV__
-
-
-// Pre-processor macros
-`include "uvm_macros.svh"
-`include "uvml_hrtbt_macros.sv"
+`ifndef __UVML_RAL_REG_SV__
+`define __UVML_RAL_REG_SV__
 
 
 /**
- * Encapsulates all the types needed for the Moore.io Heartbeat Monitor library.
+ * TODO Describe uvml_ral_reg_c
  */
-package uvml_hrtbt_pkg;
+class uvml_ral_reg_c extends uvm_reg;
    
-   import uvm_pkg::*;
+   // Fields
    
-   // Constants / Structs / Enums
-   `include "uvml_hrtbt_constants.sv"
-   `include "uvml_hrtbt_tdefs.sv"
    
-   // Components
-   `include "uvml_hrtbt_mon.sv"
    
-   // Default heartbeat monitor
-   uvml_hrtbt_mon_c  uvml_default_hrtbt = new("uvml_default_hrtbt");
+   `uvm_object_utils_begin(uvml_ral_reg_c)
+      // UVM Field Util Macros
+   `uvm_object_utils_end
    
-endpackage : uvml_hrtbt_pkg
+   
+   // Constraints
+   
+   
+   
+   /**
+    * Default constructor.
+    */
+   extern function new(string name="uvml_ral_reg", int unsigned n_bits=32, int has_coverage=UVM_NO_COVERAGE);
+   
+   // Methods
+   
+   
+endclass : uvml_ral_reg_c
 
 
-`endif // __UVML_HRTBT_PKG_SV__
+function uvml_ral_reg_c::new(string name="uvml_ral_reg", int unsigned n_bits=32, int has_coverage=UVM_NO_COVERAGE);
+   
+   super.new(name, n_bits, has_coverage);
+   
+endfunction : new
+
+
+`endif // __UVML_RAL_REG_SV__

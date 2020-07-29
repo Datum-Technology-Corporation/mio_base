@@ -44,28 +44,27 @@ class ${pkg_name}_${name}_reg_block_c extends ${base_class};
    /**
     * Default constructor.
     */
-   extern function new(string name="${pkg_name}_${name}_reg_block");
-   
-   /**
-    * Creates register and register block instances and associates them with this
-    * register block.
-    */
-   extern virtual function void build();
+   extern function new(string name="${pkg_name}_${name}_reg_block", int has_coverage=UVM_NO_COVERAGE);
    
    /**
     * Creates sub-block(s).
     */
-   extern function void create_blocks();
+   extern virtual function void create_blocks();
    
    /**
     * Creates register(s).
     */
-   extern function void create_regs();
+   extern virtual function void create_regs();
+   
+   /**
+    * Creates default register map.
+    */
+   extern virtual function void create_reg_map();
    
    /**
     * Adds register(s) to register map.
     */
-   extern function void add_regs_to_map();
+   extern virtual function void add_regs_to_map();
    
 endclass : ${pkg_name}_${name}_reg_block_c
 
@@ -73,31 +72,11 @@ endclass : ${pkg_name}_${name}_reg_block_c
 `pragma protect begin
 
 
-function ${pkg_name}_${name}_reg_block_c::new(string name="${pkg_name}_${name}_reg_block");
+function ${pkg_name}_${name}_reg_block_c::new(string name="${pkg_name}_${name}_reg_block", int has_coverage=UVM_NO_COVERAGE);
    
-   super.new(name, UVM_NO_COVERAGE);
+   super.new(name, has_coverage);
    
 endfunction : new
-
-
-function void ${pkg_name}_${name}_reg_block_c::build();
-   
-   super.build();
-   
-   create_blocks();
-   create_regs  ();
-   
-endfunction: build
-
-
-function void ${pkg_name}_${name}_reg_block_c::connect();
-   
-   super.connect();
-   
-   create_reg_map ();
-   add_regs_to_map();
-   
-endfunction: build
 
 
 function void ${pkg_name}_${name}_reg_block_c::create_blocks();
