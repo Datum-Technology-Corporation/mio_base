@@ -18,6 +18,8 @@
 
 // Directories
 -i ${DV_UVML_LOGS_SRC_PATH}
+-i ${DV_UVML_LOGS_SRC_PATH}/comps
+-i ${DV_UVML_LOGS_SRC_PATH}/obj
 
 // Files
 ${DV_UVML_LOGS_SRC_PATH}/uvml_logs_pkg.sv

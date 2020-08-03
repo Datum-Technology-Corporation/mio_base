@@ -18,6 +18,8 @@
 
 // Directories
 -i ${DV_UVML_TRN_SRC_PATH}
+-i ${DV_UVML_TRN_SRC_PATH}/comps
+-i ${DV_UVML_TRN_SRC_PATH}/obj
 
 // Files
 ${DV_UVML_TRN_SRC_PATH}/uvml_trn_pkg.sv
