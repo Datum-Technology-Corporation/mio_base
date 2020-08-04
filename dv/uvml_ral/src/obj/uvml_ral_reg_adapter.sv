@@ -54,14 +54,14 @@ function uvml_ral_reg_adapter_c::new(string name="uvml_ral_reg_adapter");
 endfunction : new
 
 
-function uvm_sequence_item uvma_apb_reg_adapter_c::reg2bus(const ref uvm_reg_bus_op rw);
+function uvm_sequence_item uvml_ral_reg_adapter_c::reg2bus(const ref uvm_reg_bus_op rw);
    
    // Empty
    
 endfunction : reg2bus
 
 
-function void uvma_apb_reg_adapter_c::bus2reg(uvm_sequence_item bus_item, ref uvm_reg_bus_op rw);
+function void uvml_ral_reg_adapter_c::bus2reg(uvm_sequence_item bus_item, ref uvm_reg_bus_op rw);
    
    // Empty
    
