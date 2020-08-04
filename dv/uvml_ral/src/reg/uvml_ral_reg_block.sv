@@ -114,7 +114,7 @@ function void uvml_ral_reg_block_c::connect();
    create_reg_map ();
    add_regs_to_map();
    
-endfunction: build
+endfunction: connect
 
 
 function void uvml_ral_reg_block_c::create_blocks();
