@@ -81,7 +81,7 @@ endclass : uvml_ral_reg_block_c
 function uvml_ral_reg_block_c::new(string name="uvml_ral_reg_block", int has_coverage=UVM_NO_COVERAGE);
    
    super.new(name, has_coverage);
-   if (!(uvm_config_db#(longint unsigned)::get(this, "", "base_address", base_address))) begin
+   if (!(uvm_config_db#(longint unsigned)::get(null, get_full_name(), "base_address", base_address))) begin
       `uvm_warning("REG_BLOCK", "Did not find 'base_address' for this block in uvm_config_db. Using default.")
       base_address = get_default_base_address();
    end
