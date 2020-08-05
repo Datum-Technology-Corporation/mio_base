@@ -158,7 +158,7 @@ task uvma_${name}_mon_c::run_phase(uvm_phase phase);
       
       // ${direction_rx_normal_case}
       begin
-         if (cfg.enabled && cfg.${direction_rx}_cfg.enabled) begin
+         wait (cfg.enabled && cfg.${direction_rx}_cfg.enabled) begin
             forever begin
                case (cntxt.reset_state)
                   UVMA_${name_uppercase}_RESET_STATE_PRE_RESET :  mon_${direction_rx}_pre_reset (phase);
@@ -171,7 +171,7 @@ task uvma_${name}_mon_c::run_phase(uvm_phase phase);
       
       // ${direction_tx_normal_case}
       begin
-         if (cfg.enabled && cfg.${direction_tx}_cfg.enabled) begin
+         wait (cfg.enabled && cfg.${direction_tx}_cfg.enabled) begin
             forever begin
                case (cntxt.reset_state)
                   UVMA_${name_uppercase}_RESET_STATE_PRE_RESET :  mon_${direction_tx}_pre_reset (phase);
@@ -190,7 +190,7 @@ task uvma_${name}_mon_c::observe_reset();
    
    // TODO Implement uvma_${name}_mon_c::observe_reset()
    //      Ex: forever begin
-   //             if (cfg.enabled) begin
+   //             wait (cfg.enabled) begin
    //                wait (cntxt.vif.reset == 1);
    //                cntxt.reset_state = UVMA_${name_uppercase}_RESET_STATE_IN_RESET;
    //                wait (cntxt.vif.reset == 0);

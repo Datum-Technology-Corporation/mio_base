@@ -127,7 +127,7 @@ task uvma_${name}_mon_c::run_phase(uvm_phase phase);
       
       begin
          forever begin
-            if (cfg.enabled) begin
+            wait (cfg.enabled) begin
                case (cntxt.reset_state)
                   UVMA_${name_uppercase}_RESET_STATE_PRE_RESET : mon_pre_reset (phase);
                   UVMA_${name_uppercase}_RESET_STATE_IN_RESET  : mon_in_reset  (phase);
@@ -145,7 +145,7 @@ task uvma_${name}_mon_c::observe_reset();
    
    // TODO Implement uvma_${name}_mon_c::observe_reset()
    //      Ex: forever begin
-   //             if (cfg.enabled) begin
+   //             wait (cfg.enabled) begin
    //                wait (cntxt.vif.reset_n === 0);
    //                cntxt.reset_state = UVMA_${name_uppercase}_RESET_STATE_IN_RESET;
    //                wait (cntxt.vif.reset_n === 1);

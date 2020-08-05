@@ -117,7 +117,7 @@ task uvma_${name}_drv_c::run_phase(uvm_phase phase);
    super.run_phase(phase);
    
    forever begin
-      if (cfg.enabled && cfg.is_active) begin
+      wait (cfg.enabled && cfg.is_active) begin
          case (cntxt.reset_state)
             UVMA_${name_uppercase}_RESET_STATE_PRE_RESET : drv_pre_reset (phase);
             UVMA_${name_uppercase}_RESET_STATE_IN_RESET  : drv_in_reset  (phase);
