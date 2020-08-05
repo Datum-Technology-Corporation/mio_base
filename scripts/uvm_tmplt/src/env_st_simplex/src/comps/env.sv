@@ -35,10 +35,10 @@ class uvme_${name}_st_env_c extends uvm_env;
    uvma_${name}_agent_c  ${name_2}_agent;
    
    // Components
-   uvme_${name}_st_cov_model_c   cov_model;
-   uvme_${name}_st_prd_c         predictor;
-   uvme_${name}_st_sb_simplex_c  sb;
-   uvme_${name}_st_vsqr_c        vsequencer;
+   uvme_${name}_st_cov_model_c  cov_model;
+   uvme_${name}_st_prd_c        predictor;
+   uvml_sb_simplex_c            sb;
+   uvme_${name}_st_vsqr_c       vsequencer;
    
    
    `uvm_component_utils_begin(uvme_${name}_st_env_c)
@@ -220,8 +220,8 @@ endfunction: create_agents
 function void uvme_${name}_st_env_c::create_env_components();
    
    if (cfg.scoreboarding_enabled) begin
-      predictor = uvme_${name}_st_prd_c       ::type_id::create("predictor", this);
-      sb        = uvme_${name}_st_sb_simplex_c::type_id::create("sb"       , this);
+      predictor = uvme_${name}_st_prd_c::type_id::create("predictor", this);
+      sb        = uvml_sb_simplex_c    ::type_id::create("sb"       , this);
    end
    
 endfunction: create_env_components

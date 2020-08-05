@@ -32,8 +32,8 @@ class uvme_${name}_sb_c extends uvm_scoreboard;
    
    // Components
    // TODO Add sub-scoreboards
-   //      Ex: uvme_${name}_sb_simplex_c  egress_sb;
-   //          uvme_${name}_sb_simplex_c  ingress_sb;
+   //      Ex: uvml_sb_simplex_c  egress_sb;
+   //          uvml_sb_simplex_c  ingress_sb;
    
    
    `uvm_component_utils_begin(uvme_${name}_sb_c)
@@ -111,8 +111,8 @@ endfunction : build_phase
 function void uvme_${name}_sb_c::assign_cfg();
    
    // TODO Implement uvme_${name}_sb_c::assign_cfg()
-   //      Ex: uvm_config_db#(uvm_sb_cfg_c)::set(this, "egress_sb" , "cfg", cfg.sb_egress_cfg );
-   //          uvm_config_db#(uvm_sb_cfg_c)::set(this, "ingress_sb", "cfg", cfg.sb_ingress_cfg);
+   //      Ex: uvm_config_db#(uvml_sb_cfg_c)::set(this, "egress_sb" , "cfg", cfg.sb_egress_cfg );
+   //          uvm_config_db#(uvml_sb_cfg_c)::set(this, "ingress_sb", "cfg", cfg.sb_ingress_cfg);
    
 endfunction : assign_cfg
 
@@ -120,8 +120,8 @@ endfunction : assign_cfg
 function void uvme_${name}_sb_c::assign_cntxt();
    
    // TODO Implement uvme_${name}_sb_c::assign_cntxt()
-   //      Ex: uvm_config_db#(uvme_${name}_sb_cntxt_c)::set(this, "egress_sb" , "cntxt", cntxt.sb_egress_cntxt );
-   //          uvm_config_db#(uvme_${name}_sb_cntxt_c)::set(this, "ingress_sb", "cntxt", cntxt.sb_ingress_cntxt);
+   //      Ex: uvm_config_db#(uvml_sb_cntxt_c)::set(this, "egress_sb" , "cntxt", cntxt.sb_egress_cntxt );
+   //          uvm_config_db#(uvml_sb_cntxt_c)::set(this, "ingress_sb", "cntxt", cntxt.sb_ingress_cntxt);
    
 endfunction : assign_cntxt
 
@@ -129,8 +129,8 @@ endfunction : assign_cntxt
 function void uvme_${name}_sb_c::create_sbs();
    
    // TODO Implement uvme_${name}_sb_c::create_sbs()
-   //      Ex: egress_sb  = uvme_${name}_sb_simplex_c::type_id::create("egress_sb" , this);
-   //          ingress_sb = uvme_${name}_sb_simplex_c::type_id::create("ingress_sb", this);
+   //      Ex: egress_sb  = uvml_sb_simplex_c::type_id::create("egress_sb" , this);
+   //          ingress_sb = uvml_sb_simplex_c::type_id::create("ingress_sb", this);
    
 endfunction : create_sbs
 

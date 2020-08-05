@@ -31,8 +31,8 @@ class uvme_${name}_st_sb_c extends uvm_scoreboard;
    uvme_${name}_st_cntxt_c  cntxt;
    
    // Sub-scoreboards
-   uvme_${name}_st_sb_simplex_c  ${name_1}_sb;
-   uvme_${name}_st_sb_simplex_c  ${name_2}_sb;
+   uvml_sb_simplex_c  ${name_1}_sb;
+   uvml_sb_simplex_c  ${name_2}_sb;
    
    
    `uvm_component_utils_begin(uvme_${name}_st_sb_c)
@@ -108,8 +108,8 @@ endfunction : build_phase
 
 function void uvme_${name}_st_sb_c::assign_cfg();
    
-   uvm_config_db#(uvm_sb_cfg_c)::set(this, "${name_1}_sb", "cfg", cfg.sb_${name_1}_cfg);
-   uvm_config_db#(uvm_sb_cfg_c)::set(this, "${name_2}_sb", "cfg", cfg.sb_${name_2}_cfg);
+   uvm_config_db#(uvml_sb_cfg_c)::set(this, "${name_1}_sb", "cfg", cfg.sb_${name_1}_cfg);
+   uvm_config_db#(uvml_sb_cfg_c)::set(this, "${name_2}_sb", "cfg", cfg.sb_${name_2}_cfg);
    
 endfunction : assign_cfg
 
@@ -124,8 +124,8 @@ endfunction : assign_cntxt
 
 function void uvme_${name}_st_sb_c::create_sbs();
    
-   ${name_1}_sb = uvme_${name}_st_sb_simplex_c::type_id::create("${name_1}_sb", this);
-   ${name_2}_sb = uvme_${name}_st_sb_simplex_c::type_id::create("${name_2}_sb", this);
+   ${name_1}_sb = uvml_sb_simplex_c::type_id::create("${name_1}_sb", this);
+   ${name_2}_sb = uvml_sb_simplex_c::type_id::create("${name_2}_sb", this);
    
 endfunction : create_sbs
 

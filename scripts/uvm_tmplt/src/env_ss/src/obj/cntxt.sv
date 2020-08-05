@@ -34,8 +34,8 @@ class uvme_${name}_cntxt_c extends uvm_object;
    uvma_${reset_agent_type}_cntxt_c  reset_cntxt;
    
    // TODO Add scoreboard context handles
-   //      Ex: uvme_${name}_sb_cntxt_c  sb_egress_cntxt;
-   //          uvme_${name}_sb_cntxt_c  sb_ingress_cntxt;
+   //      Ex: uvml_sb_cntxt_c  sb_egress_cntxt;
+   //          uvml_sb_cntxt_c  sb_ingress_cntxt;
    
    // Events
    uvm_event  sample_cfg_e;
@@ -80,8 +80,8 @@ function uvme_${name}_cntxt_c::new(string name="uvme_${name}_cntxt");
    reset_cntxt = uvma_${reset_agent_type}_cntxt_c::type_id::create("reset_cntxt");
    
    // TODO Create uvme_${name}_cntxt_c scoreboard context objects
-   //      Ex: sb_egress_cntxt  = uvma_${name}_sb_cntxt_c::type_id::create("sb_egress_cntxt" );
-   //          sb_ingress_cntxt = uvma_${name}_sb_cntxt_c::type_id::create("sb_ingress_cntxt");
+   //      Ex: sb_egress_cntxt  = uvml_sb_cntxt_c::type_id::create("sb_egress_cntxt" );
+   //          sb_ingress_cntxt = uvml_sb_cntxt_c::type_id::create("sb_ingress_cntxt");
    
    sample_cfg_e   = new("sample_cfg_e"  );
    sample_cntxt_e = new("sample_cntxt_e");
