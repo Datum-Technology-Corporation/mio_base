@@ -21,6 +21,13 @@
 
 
 typedef enum {
+   UVMA_${name_uppercase}_RESET_STATE_PRE_RESET ,
+   UVMA_${name_uppercase}_RESET_STATE_IN_RESET  ,
+   UVMA_${name_uppercase}_RESET_STATE_POST_RESET
+} uvma_${name}_reset_state_enum;
+
+
+typedef enum {
    UVMA_${name_uppercase}_DIRECTION_${direction_rx_uppercase},
    UVMA_${name_uppercase}_DIRECTION_${direction_tx_uppercase}
 } uvma_${name}_direction_enum;

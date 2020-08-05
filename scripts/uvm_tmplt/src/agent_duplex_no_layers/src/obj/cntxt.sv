@@ -34,7 +34,7 @@ class uvma_${name}_cntxt_c extends uvm_object;
    uvm_event  sample_cntxt_e;
    
    // Reset
-   uvma_reset_state_enum  reset_state = UVMA_RESET_STATE_PRE_RESET;
+   uvma_${name}_reset_state_enum  reset_state = UVMA_${name_uppercase}_RESET_STATE_PRE_RESET;
    
    // Sub-contexts
    uvma_${name}_cntxt_simplex_c  ${direction_rx}_cntxt;
@@ -45,7 +45,7 @@ class uvma_${name}_cntxt_c extends uvm_object;
       `uvm_field_event(sample_cfg_e  , UVM_DEFAULT)
       `uvm_field_event(sample_cntxt_e, UVM_DEFAULT)
       
-      `uvm_field_enum(uvma_reset_state_enum, reset_state, UVM_DEFAULT)
+      `uvm_field_enum(uvma_${name}_reset_state_enum, reset_state, UVM_DEFAULT)
       
       `uvm_field_object(${direction_rx}_cntxt, UVM_DEFAULT)
       `uvm_field_object(${direction_tx}_cntxt, UVM_DEFAULT)

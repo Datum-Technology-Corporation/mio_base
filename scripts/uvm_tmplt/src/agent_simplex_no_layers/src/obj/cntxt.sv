@@ -30,7 +30,7 @@ class uvma_${name}_cntxt_c extends uvm_object;
    virtual uvma_${name}_if  vif;
    
    // Integrals
-   uvma_${name}_reset_state_enum  reset_state = UVMA_RESET_STATE_PRE_RESET;
+   uvma_${name}_reset_state_enum  reset_state = UVMA_${name_uppercase}_RESET_STATE_PRE_RESET;
    
    // Events
    uvm_event  sample_cfg_e;

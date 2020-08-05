@@ -20,6 +20,13 @@
 `define __UVMA_${name_uppercase}_TDEFS_SV__
 
 
+typedef enum {
+   UVMA_${name_uppercase}_RESET_STATE_PRE_RESET ,
+   UVMA_${name_uppercase}_RESET_STATE_IN_RESET  ,
+   UVMA_${name_uppercase}_RESET_STATE_POST_RESET
+} uvma_${name}_reset_state_enum;
+
+
 typedef enum int unsigned {
    UVMA_${name_uppercase}_LOGGING_DEPTH_AGENT,
    UVMA_${name_uppercase}_LOGGING_DEPTH_LAYER,
