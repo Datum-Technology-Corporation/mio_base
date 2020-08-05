@@ -161,9 +161,9 @@ task uvma_${name}_mon_c::run_phase(uvm_phase phase);
          if (cfg.enabled && cfg.${direction_rx}_cfg.enabled) begin
             forever begin
                case (cntxt.reset_state)
-                  UVMA_RESET_STATE_PRE_RESET :  mon_${direction_rx}_pre_reset (phase);
-                  UVMA_RESET_STATE_IN_RESET  :  mon_${direction_rx}_in_reset  (phase);
-                  UVMA_RESET_STATE_POST_RESET:  mon_${direction_rx}_post_reset(phase);
+                  UVMA_${name_uppercase}_RESET_STATE_PRE_RESET :  mon_${direction_rx}_pre_reset (phase);
+                  UVMA_${name_uppercase}_RESET_STATE_IN_RESET  :  mon_${direction_rx}_in_reset  (phase);
+                  UVMA_${name_uppercase}_RESET_STATE_POST_RESET:  mon_${direction_rx}_post_reset(phase);
                endcase
             end
          end
@@ -174,9 +174,9 @@ task uvma_${name}_mon_c::run_phase(uvm_phase phase);
          if (cfg.enabled && cfg.${direction_tx}_cfg.enabled) begin
             forever begin
                case (cntxt.reset_state)
-                  UVMA_RESET_STATE_PRE_RESET :  mon_${direction_tx}_pre_reset (phase);
-                  UVMA_RESET_STATE_IN_RESET  :  mon_${direction_tx}_in_reset  (phase);
-                  UVMA_RESET_STATE_POST_RESET:  mon_${direction_tx}_post_reset(phase);
+                  UVMA_${name_uppercase}_RESET_STATE_PRE_RESET :  mon_${direction_tx}_pre_reset (phase);
+                  UVMA_${name_uppercase}_RESET_STATE_IN_RESET  :  mon_${direction_tx}_in_reset  (phase);
+                  UVMA_${name_uppercase}_RESET_STATE_POST_RESET:  mon_${direction_tx}_post_reset(phase);
                endcase
             end
          end
@@ -192,9 +192,9 @@ task uvma_${name}_mon_c::observe_reset();
    //      Ex: forever begin
    //             if (cfg.enabled) begin
    //                wait (cntxt.vif.reset == 1);
-   //                cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
+   //                cntxt.reset_state = UVMA_${name_uppercase}_RESET_STATE_IN_RESET;
    //                wait (cntxt.vif.reset == 0);
-   //                cntxt.reset_state = UVMA_RESET_STATE_POST_RESET;
+   //                cntxt.reset_state = UVMA_${name_uppercase}_RESET_STATE_POST_RESET;
    //             end
    //          end
    

@@ -147,9 +147,9 @@ task uvma_${name}_adptr_drv_base_c::run_phase(uvm_phase phase);
          if (cfg.${direction_rx}_cfg.enabled) begin
             forever begin
                case (cntxt.reset_state)
-                  UVMA_RESET_STATE_PRE_RESET :  drv_${direction_rx}_pre_reset ();
-                  UVMA_RESET_STATE_IN_RESET  :  drv_${direction_rx}_in_reset  ();
-                  UVMA_RESET_STATE_POST_RESET:  drv_${direction_rx}_post_reset();
+                  UVMA_${name_uppercase}_RESET_STATE_PRE_RESET :  drv_${direction_rx}_pre_reset ();
+                  UVMA_${name_uppercase}_RESET_STATE_IN_RESET  :  drv_${direction_rx}_in_reset  ();
+                  UVMA_${name_uppercase}_RESET_STATE_POST_RESET:  drv_${direction_rx}_post_reset();
                endcase
             end
          end
@@ -160,9 +160,9 @@ task uvma_${name}_adptr_drv_base_c::run_phase(uvm_phase phase);
          if (cfg.${direction_tx}_cfg.enabled) begin
             forever begin
                case (cntxt.reset_state)
-                  UVMA_RESET_STATE_PRE_RESET : drv_${direction_tx}_pre_reset ();
-                  UVMA_RESET_STATE_IN_RESET  : drv_${direction_tx}_in_reset  ();
-                  UVMA_RESET_STATE_POST_RESET: drv_${direction_tx}_post_reset();
+                  UVMA_${name_uppercase}_RESET_STATE_PRE_RESET : drv_${direction_tx}_pre_reset ();
+                  UVMA_${name_uppercase}_RESET_STATE_IN_RESET  : drv_${direction_tx}_in_reset  ();
+                  UVMA_${name_uppercase}_RESET_STATE_POST_RESET: drv_${direction_tx}_post_reset();
                endcase
             end
          end

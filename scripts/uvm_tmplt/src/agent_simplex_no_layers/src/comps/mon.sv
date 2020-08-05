@@ -147,9 +147,9 @@ task uvma_${name}_mon_c::observe_reset();
    //      Ex: forever begin
    //             if (cfg.enabled) begin
    //                wait (cntxt.vif.reset_n === 0);
-   //                cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
+   //                cntxt.reset_state = UVMA_${name_uppercase}_RESET_STATE_IN_RESET;
    //                wait (cntxt.vif.reset_n === 1);
-   //                cntxt.reset_state = UVMA_RESET_STATE_POST_RESET;
+   //                cntxt.reset_state = UVMA_${name_uppercase}_RESET_STATE_POST_RESET;
    //             end
    //          end
    

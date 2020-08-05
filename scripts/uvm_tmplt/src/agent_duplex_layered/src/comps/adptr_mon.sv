@@ -99,9 +99,9 @@ task uvma_${name}_adptr_mon_${layer_name}_c::observe_reset();
    // TODO Implement uvma_${name}_adptr_mon_${layer_name}_c::observe_reset()
    //      Ex: forever begin
    //             wait (cntxt.${layer_name}_vif.reset == 1);
-   //             cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
+   //             cntxt.reset_state = UVMA_${name_uppercase}_RESET_STATE_IN_RESET;
    //             wait (cntxt.${layer_name}_vif.reset == 0);
-   //             cntxt.reset_state = UVMA_RESET_STATE_POST_RESET;
+   //             cntxt.reset_state = UVMA_${name_uppercase}_RESET_STATE_POST_RESET;
    //          end
    
    // WARNING If no time is consumed by this task, a zero-delay oscillation loop will occur and stall simulation
