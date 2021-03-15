@@ -30,10 +30,12 @@ class uvme_${name}_prd_c extends uvm_component;
    uvme_${name}_cntxt_c  cntxt;
    
    // Input TLM
-   uvm_analysis_export  #(uvma_${ral_agent_type}_mon_trn_c)  ${ral_agent_type}_export;
-   uvm_tlm_analysis_fifo#(uvma_${ral_agent_type}_mon_trn_c)  ${ral_agent_type}_fifo;
-   uvm_analysis_export  #(uvma_${reset_agent_type}_mon_trn_c)  reset_export;
-   uvm_tlm_analysis_fifo#(uvma_${reset_agent_type}_mon_trn_c)  reset_fifo;
+   uvm_analysis_export  #(uvma_${clk_agent_type}_mon_trn_c)  ${clk_agent_name}_export;
+   uvm_tlm_analysis_fifo#(uvma_${clk_agent_type}_mon_trn_c)  ${clk_agent_name}_fifo;
+   uvm_analysis_export  #(uvma_${reset_agent_type}_mon_trn_c)  ${reset_agent_name}_export;
+   uvm_tlm_analysis_fifo#(uvma_${reset_agent_type}_mon_trn_c)  ${reset_agent_name}_fifo;
+   uvm_analysis_export  #(uvma_${ral_agent_type}_mon_trn_c)  ${ral_agent_name}_export;
+   uvm_tlm_analysis_fifo#(uvma_${ral_agent_type}_mon_trn_c)  ${ral_agent_name}_fifo;
    
    // Output TLM
    // TODO Add TLM outputs to uvme_${name}_prd_c
@@ -67,14 +69,19 @@ class uvme_${name}_prd_c extends uvm_component;
    extern virtual task run_phase(uvm_phase phase);
    
    /**
-    * TODO Describe uvme_${name}_prd_c::process_${ral_agent_type}()
+    * TODO Describe uvme_${name}_prd_c::process_${clk_agent_name}()
     */
-   extern task process_${ral_agent_type}();
+   extern task process_${clk_agent_name}();
    
    /**
-    * TODO Describe uvme_${name}_prd_c::process_reset()
+    * TODO Describe uvme_${name}_prd_c::process_${reset_agent_name}()
     */
-   extern task process_reset();
+   extern task process_${reset_agent_name}();
+   
+   /**
+    * TODO Describe uvme_${name}_prd_c::process_${ral_agent_name}()
+    */
+   extern task process_${ral_agent_name}();
    
 endclass : uvme_${name}_prd_c
 
@@ -104,10 +111,12 @@ function void uvme_${name}_prd_c::build_phase(uvm_phase phase);
    end
    
    // Build Input TLM objects
-   ${ral_agent_type}_export = new("${ral_agent_type}_export", this);
-   ${ral_agent_type}_fifo   = new("${ral_agent_type}_fifo"  , this);
-   reset_export = new("reset_export", this);
-   reset_fifo   = new("reset_fifo"  , this);
+   ${clk_agent_name}_export = new("${clk_agent_name}_export", this);
+   ${clk_agent_name}_fifo   = new("${clk_agent_name}_fifo"  , this);
+   ${reset_agent_name}_export = new("${reset_agent_name}_export", this);
+   ${reset_agent_name}_fifo   = new("${reset_agent_name}_fifo"  , this);
+   ${ral_agent_name}_export = new("${ral_agent_name}_export", this);
+   ${ral_agent_name}_fifo   = new("${ral_agent_name}_fifo"  , this);
    
    // Build Output TLM objects
    // TODO Create Output TLM objects for uvme_${name}_prd_c
@@ -121,8 +130,9 @@ function void uvme_${name}_prd_c::connect_phase(uvm_phase phase);
    super.connect_phase(phase);
    
    // Connect TLM objects
+   ${clk_agent_name}_export.connect(${clk_agent_name}_fifo.analysis_export);
+   ${reset_agent_name}_export.connect(${reset_agent_name}_fifo.analysis_export);
    ${ral_agent_type}_export.connect(${ral_agent_type}_fifo.analysis_export);
-   reset_export.connect(reset_fifo.analysis_export);
    
 endfunction: connect_phase
 
@@ -132,11 +142,38 @@ task uvme_${name}_prd_c::run_phase(uvm_phase phase);
    super.run_phase(phase);
    
    fork
-      process_${ral_agent_type}();
-      process_reset();
+      process_${clk_agent_name}();
+      process_${reset_agent_name}();
+      process_${ral_agent_name}();
    join_none
    
 endtask: run_phase
+
+
+task uvme_${name}_prd_c::process_${clk_agent_name}();
+   
+   uvma_${clk_agent_type}_mon_trn_c  ${clk_agent_name}_trn;
+   
+   forever begin
+      ${clk_agent_name}_fifo.get(${clk_agent_name}_trn);
+      
+      // TODO Implement uvme_${name}_prd_c::process_${clk_agent_name}()
+   end
+   
+endtask : process_${clk_agent_name}
+
+
+task uvme_${name}_prd_c::process_${reset_agent_name}();
+   
+   uvma_${reset_agent_type}_mon_trn_c  ${reset_agent_name}_trn;
+   
+   forever begin
+      ${reset_agent_name}_fifo.get(${reset_agent_name}_trn);
+      
+      // TODO Implement uvme_${name}_prd_c::process_${reset_agent_name}()
+   end
+   
+endtask : process_${reset_agent_name}
 
 
 task uvme_${name}_prd_c::process_${ral_agent_type}();
@@ -150,19 +187,6 @@ task uvme_${name}_prd_c::process_${ral_agent_type}();
    end
    
 endtask : process_${ral_agent_type}
-
-
-task uvme_${name}_prd_c::process_reset();
-   
-   uvma_${reset_agent_type}_mon_trn_c  reset_trn;
-   
-   forever begin
-      reset_fifo.get(reset_trn);
-      
-      // TODO Implement uvme_${name}_prd_c::process_reset()
-   end
-   
-endtask : process_reset
 
 
 `pragma protect end

@@ -102,27 +102,27 @@ class uvme_${name}_st_cov_model_c extends uvm_component;
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_cfg()
     */
-   extern virtual function void sample_cfg();
+   extern function void sample_cfg();
    
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_cntxt()
     */
-   extern virtual function void sample_cntxt();
+   extern function void sample_cntxt();
    
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_${name_1}_seq_item()
     */
-   extern virtual function void sample_${name_1}_seq_item();
+   extern function void sample_${name_1}_seq_item();
    
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_${name_1}_mon_trn()
     */
-   extern virtual function void sample_${name_1}_mon_trn();
+   extern function void sample_${name_1}_mon_trn();
    
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_${name_2}_mon_trn()
     */
-   extern virtual function void sample_${name_2}_mon_trn();
+   extern function void sample_${name_2}_mon_trn();
    
 endclass : uvme_${name}_st_cov_model_c
 

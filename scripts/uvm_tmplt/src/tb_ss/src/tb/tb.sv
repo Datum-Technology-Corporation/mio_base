@@ -31,12 +31,18 @@ module uvmt_${name}_tb;
    import uvm_pkg::*;
    import uvmt_${name}_pkg::*;
    
-   // Clocking & Reset
-   uvmt_${name}_clk_gen_if  clk_gen_if();
-   uvma_${reset_agent_type}_if  reset_if(.clk(clk_gen_if.reset_clk));
-   
    // Agent interfaces
-   uvma_${ral_agent_type}_if  ${ral_agent_type}_if(.clk(clk_gen_if.${ral_agent_type}_clk), .reset(reset_if.reset));
+   uvma_${clk_agent_type}_if  ${clk_agent_name}_if();
+   uvma_${reset_agent_type}_if  ${reset_agent_name}_if(
+      .clk(${clk_agent_name}_if.clk)
+   );
+   uvma_${ral_agent_type}_if  ${ral_agent_type}_if(
+      .clk(${clk_agent_name}_if.clk),
+      .reset(${reset_agent_name}.reset_n)
+   );
+   
+   // Misc. interfaces
+   uvmt_${name}_probe_if  probe_if();
    
    // DUT instance
    uvmt_${name}_dut_wrap  dut_wrap(.*);
@@ -46,13 +52,19 @@ module uvmt_${name}_tb;
     * Test bench entry point.
     */
    initial begin
-      // Specify time format for simulation (units_number, precision_number, suffix_string, minimum_field_width)
-      $timeformat(-9, 3, " ns", 18);
+      // Specify time format for simulation
+      $timeformat(
+         .units_number       (   -9),
+         .precision_number   (    3),
+         .suffix_string      (" ns"),
+         .minimum_field_width(   18) 
+      );
       
       // Add interfaces to uvm_config_db
-      uvm_config_db#(virtual uvmt_${name}_clk_gen_if)::set(null, "*", "clk_gen_vif", clk_gen_if);
-      uvm_config_db#(virtual uvma_${reset_agent_type}_if)::set(null, "*.env.reset_agent", "vif", reset_if);
-      uvm_config_db#(virtual uvma_${ral_agent_type}_if)::set(null, "*.env.${ral_agent_type}_agent", "vif", ${ral_agent_type}_if);
+      uvm_config_db#(virtual uvma_${clk_agent_type}_if)::set(null, "*.env.${clk_agent_name}_agent", "vif", ${clk_agent_name}_if);
+      uvm_config_db#(virtual uvma_${reset_agent_type}_if)::set(null, "*.env.${reset_agent_name}_agent", "vif", ${reset_agent_name}_if);
+      uvm_config_db#(virtual uvma_${ral_agent_type}_if)::set(null, "*.env.${ral_agent_name}_agent", "vif", ${ral_agent_type}_if);
+      uvm_config_db#(virtual uvmt_${name}_probe_if)::set(null, "*", "probe_vif", probe_if);
       
       // Run test
       uvm_top.enable_print_topology = 1;

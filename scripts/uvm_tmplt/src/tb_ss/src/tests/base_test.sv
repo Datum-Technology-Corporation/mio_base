@@ -40,11 +40,12 @@ class uvmt_${name}_base_test_c extends uvm_test;
    uvme_${name}_env_c   env       ;
    uvme_${name}_vsqr_c  vsequencer;
    
-   // Handle to clock generation interface
-   virtual uvmt_${name}_clk_gen_if  clk_gen_vif;
+   // Handle to design probe interface
+   virtual uvmt_${name}_probe_if  probe_vif;
    
    // Default sequences
-   rand uvme_${name}_reset_vseq_c  reset_vseq;
+   rand uvme_${name}_${clk_agent_name}_vseq_c  ${clk_agent_name}_vseq;
+   rand uvme_${name}_${reset_agent_name}_vseq_c  ${reset_agent_name}_vseq;
    
    
    `uvm_component_utils_begin(uvmt_${name}_base_test_c)
@@ -95,7 +96,12 @@ class uvmt_${name}_base_test_c extends uvm_test;
    extern virtual task run_phase(uvm_phase phase);
    
    /**
-    * Runs reset_vseq.
+    * Runs ${clk_agent_name}_vseq.
+    */
+   extern virtual task pre_reset_phase(uvm_phase phase);
+   
+   /**
+    * Runs ${reset_agent_name}_vseq.
     */
    extern virtual task reset_phase(uvm_phase phase);
    
@@ -116,9 +122,9 @@ class uvmt_${name}_base_test_c extends uvm_test;
    extern virtual function void phase_ended(uvm_phase phase);
    
    /**
-    * Retrieves clk_gen_vif from UVM configuration database.
+    * Retrieves probe_vif from UVM configuration database.
     */
-   extern function void retrieve_clk_gen_vif();
+   extern function void retrieve_probe_vif();
    
    /**
     * Creates test_cfg and env_cfg. Assigns ral handle to env_cfg's.
@@ -169,11 +175,6 @@ class uvmt_${name}_base_test_c extends uvm_test;
    extern function void print_banner(string text);
    
    /**
-    * Starts clock generation via clk_gen_vif functions.
-    */
-   extern virtual task start_clk();
-   
-   /**
     * Fatals out after simulation_timeout has elapsed.
     */
    extern virtual task simulation_timeout();
@@ -187,7 +188,8 @@ function uvmt_${name}_base_test_c::new(string name="uvmt_${name}_base_test", uvm
    
    rs = new("rs");
    uvm_report_server::set_server(rs);
-   reset_vseq = uvme_${name}_reset_vseq_c::type_id::create("reset_vseq");
+   ${clk_agent_name}_vseq = uvme_${name}_${clk_agent_name}_vseq_c::type_id::create("${clk_agent_name}_vseq");
+   ${reset_agent_name}_vseq = uvme_${name}_${reset_agent_name}_vseq_c::type_id::create("${reset_agent_name}_vseq");
    
 endfunction : new
 
@@ -196,15 +198,15 @@ function void uvmt_${name}_base_test_c::build_phase(uvm_phase phase);
    
    super.build_phase(phase);
    
-   retrieve_clk_gen_vif();
-   create_cfg          ();
-   randomize_test      ();
-   cfg_hrtbt_monitor   ();
-   assign_cfg          ();
-   create_cntxt        ();
-   assign_cntxt        ();
-   create_env          ();
-   create_components   ();
+   retrieve_probe_vif();
+   create_cfg        ();
+   randomize_test    ();
+   cfg_hrtbt_monitor ();
+   assign_cfg        ();
+   create_cntxt      ();
+   assign_cntxt      ();
+   create_env        ();
+   create_components ();
    
 endfunction : build_phase
 
@@ -223,24 +225,29 @@ task uvmt_${name}_base_test_c::run_phase(uvm_phase phase);
    
    super.run_phase(phase);
    
-   clk_gen_vif.set_clk_periods(
-      env_cfg.reset_clk_period,
-      env_cfg.${ral_agent_type}_clk_period
-   );
-   
-   start_clk();
    simulation_timeout();
    
 endtask : run_phase
+
+
+task uvmt_${name}_base_test_c::pre_reset_phase(uvm_phase phase);
+   
+   super.pre_reset_phase(phase);
+   
+   `uvm_info("TEST", $sformatf("Starting ${clk_agent_name} virtual sequence:\n%s", ${clk_agent_name}_vseq.sprint()), UVM_NONE)
+   ${clk_agent_name}_vseq.start(vsequencer);
+   `uvm_info("TEST", "Finished ${clk_agent_name} virtual sequence", UVM_NONE)
+   
+endtask : pre_reset_phase
 
 
 task uvmt_${name}_base_test_c::reset_phase(uvm_phase phase);
    
    super.reset_phase(phase);
    
-   `uvm_info("TEST", $sformatf("Starting reset virtual sequence:\n%s", reset_vseq.sprint()), UVM_NONE)
-   reset_vseq.start(vsequencer);
-   `uvm_info("TEST", "Finished reset virtual sequence", UVM_NONE)
+   `uvm_info("TEST", $sformatf("Starting ${reset_agent_name} virtual sequence:\n%s", ${reset_agent_name}_vseq.sprint()), UVM_NONE)
+   ${reset_agent_name}_vseq.start(vsequencer);
+   `uvm_info("TEST", "Finished ${reset_agent_name} virtual sequence", UVM_NONE)
    
 endtask : reset_phase
 
@@ -281,16 +288,16 @@ function void uvmt_${name}_base_test_c::phase_ended(uvm_phase phase);
 endfunction : phase_ended
 
 
-function void uvmt_${name}_base_test_c::retrieve_clk_gen_vif();
+function void uvmt_${name}_base_test_c::retrieve_probe_vif();
    
-   if (!uvm_config_db#(virtual uvmt_${name}_clk_gen_if)::get(this, "", "clk_gen_vif", clk_gen_vif)) begin
-      `uvm_fatal("VIF", $sformatf("Could not find clk_gen_vif handle of type %s in uvm_config_db", $typename(clk_gen_vif)))
+   if (!uvm_config_db#(virtual uvmt_${name}_probe_if)::get(this, "", "probe_vif", probe_vif)) begin
+      `uvm_fatal("VIF", $sformatf("Could not find probe_vif handle of type %s in uvm_config_db", $typename(probe_vif)))
    end
    else begin
-      `uvm_info("VIF", $sformatf("Found clk_gen_vif handle of type %s in uvm_config_db", $typename(clk_gen_vif)), UVM_DEBUG)
+      `uvm_info("VIF", $sformatf("Found probe_vif handle of type %s in uvm_config_db", $typename(probe_vif)), UVM_DEBUG)
    end
    
-endfunction : retrieve_clk_gen_vif
+endfunction : retrieve_probe_vif
 
 
 function void uvmt_${name}_base_test_c::create_cfg();
@@ -364,13 +371,6 @@ function void uvmt_${name}_base_test_c::print_banner(string text);
    $display("*******************************************************************************");
    
 endfunction : print_banner
-
-
-task uvmt_${name}_base_test_c::start_clk();
-   
-   clk_gen_vif.start();
-   
-endtask : start_clk
 
 
 task uvmt_${name}_base_test_c::simulation_timeout();

@@ -141,26 +141,24 @@ task uvma_${name}_drv_c::run_phase(uvm_phase phase);
       // ${direction_rx_normal_case}
       begin
          forever begin
-            wait (cfg.enabled && cfg.is_active && cfg.${direction_rx}_cfg.enabled) begin
-               case (cntxt.reset_state)
-                  UVMA_${name_uppercase}_RESET_STATE_PRE_RESET :  drv_${direction_rx}_pre_reset (phase);
-                  UVMA_${name_uppercase}_RESET_STATE_IN_RESET  :  drv_${direction_rx}_in_reset  (phase);
-                  UVMA_${name_uppercase}_RESET_STATE_POST_RESET:  drv_${direction_rx}_post_reset(phase);
-               endcase
-            end
+            wait (cfg.enabled && cfg.is_active && cfg.${direction_rx}_cfg.enabled);
+            case (cntxt.reset_state)
+               UVMA_${name_uppercase}_RESET_STATE_PRE_RESET :  drv_${direction_rx}_pre_reset (phase);
+               UVMA_${name_uppercase}_RESET_STATE_IN_RESET  :  drv_${direction_rx}_in_reset  (phase);
+               UVMA_${name_uppercase}_RESET_STATE_POST_RESET:  drv_${direction_rx}_post_reset(phase);
+            endcase
          end
       end
       
       // ${direction_tx_normal_case}
       begin
          forever begin
-            wait (cfg.enabled && cfg.is_active && cfg.${direction_tx}_cfg.enabled) begin
-               case (cntxt.reset_state)
-                  UVMA_${name_uppercase}_RESET_STATE_PRE_RESET : drv_${direction_tx}_pre_reset (phase);
-                  UVMA_${name_uppercase}_RESET_STATE_IN_RESET  : drv_${direction_tx}_in_reset  (phase);
-                  UVMA_${name_uppercase}_RESET_STATE_POST_RESET: drv_${direction_tx}_post_reset(phase);
-               endcase
-            end
+            wait (cfg.enabled && cfg.is_active && cfg.${direction_tx}_cfg.enabled);
+            case (cntxt.reset_state)
+               UVMA_${name_uppercase}_RESET_STATE_PRE_RESET : drv_${direction_tx}_pre_reset (phase);
+               UVMA_${name_uppercase}_RESET_STATE_IN_RESET  : drv_${direction_tx}_in_reset  (phase);
+               UVMA_${name_uppercase}_RESET_STATE_POST_RESET: drv_${direction_tx}_post_reset(phase);
+            endcase
          end
       end
    join_none

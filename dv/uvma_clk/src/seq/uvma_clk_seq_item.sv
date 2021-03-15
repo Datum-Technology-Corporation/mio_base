@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -25,20 +25,27 @@
  */
 class uvma_clk_seq_item_c extends uvml_trn_seq_item_c;
    
-   // TODO Add uvma_clk_seq_item_c fields
-   //      Ex: rand bit [7:0]  abc;
+   rand uvma_clk_seq_item_action_enum      action;
+   rand uvma_clk_seq_item_stop_value_enum  stop_value;
+   rand int unsigned                       new_frequency;
    
    
    `uvm_object_utils_begin(uvma_clk_seq_item_c)
-      // TODO Add uvma_clk_seq_item_c UVM field utils
-      //      Ex: `uvm_field_int(abc, UVM_DEFAULT)
+      `uvm_field_enum(uvma_clk_seq_item_action_enum    , action       , UVM_DEFAULT          )
+      `uvm_field_enum(uvma_clk_seq_item_stop_value_enum, stop_value   , UVM_DEFAULT          )
+      `uvm_field_int (                                   new_frequency, UVM_DEFAULT + UVM_DEC)
    `uvm_object_utils_end
    
    
-   // TODO Add uvma_clk_seq_item_c constraints
-   //      Ex: constraint default_cons {
-   //             abc inside {0,2,4,8,16,32};
-   //          }
+   constraint defaults_cons {
+      soft action == UVMA_CLK_SEQ_ITEM_ACTION_START;
+   }
+   
+   constraint rules_cons {
+      if (action != UVMA_CLK_SEQ_ITEM_ACTION_STOP) {
+         stop_value == UVMA_CLK_SEQ_ITEM_STOP_VALUE_SAME;
+      }
+   }
    
    
    /**

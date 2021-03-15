@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -32,14 +32,11 @@ class uvmt_clk_st_base_test_c extends uvm_test;
    rand uvmt_clk_st_test_cfg_c  test_cfg ;
    rand uvme_clk_st_cfg_c       env_cfg  ;
    uvme_clk_st_cntxt_c          env_cntxt;
-   uvml_logs_rs_text_c              rs       ;
+   uvml_logs_rs_text_c          rs       ;
    
    // Components
    uvme_clk_st_env_c   env       ;
    uvme_clk_st_vsqr_c  vsequencer;
-   
-   // Handle to clock generation interface
-   virtual uvmt_clk_st_clknrst_gen_if  clknrst_gen_vif;
    
    
    `uvm_component_utils_begin(uvmt_clk_st_base_test_c)
@@ -184,15 +181,14 @@ function void uvmt_clk_st_base_test_c::build_phase(uvm_phase phase);
    
    super.build_phase(phase);
    
-   retrieve_clknrst_gen_vif();
-   create_cfg              ();
-   randomize_test          ();
-   cfg_hrtbt_monitor       ();
-   assign_cfg              ();
-   create_cntxt            ();
-   assign_cntxt            ();
-   create_env              ();
-   create_components       ();
+   create_cfg       ();
+   randomize_test   ();
+   cfg_hrtbt_monitor();
+   assign_cfg       ();
+   create_cntxt     ();
+   assign_cntxt     ();
+   create_env       ();
+   create_components();
    
 endfunction : build_phase
 
@@ -210,23 +206,9 @@ task uvmt_clk_st_base_test_c::run_phase(uvm_phase phase);
    
    super.run_phase(phase);
    
-   start_clk();
    simulation_timeout();
    
 endtask : run_phase
-
-
-task uvmt_clk_st_base_test_c::reset_phase(uvm_phase phase);
-   
-   super.reset_phase(phase);
-   
-   `uvm_info("TEST", $sformatf("Asserting reset for %0t", (test_cfg.reset_period * 1ns)), UVM_NONE)
-   clknrst_gen_vif.assert_reset();
-   #(test_cfg.reset_period * 1ns);
-   clknrst_gen_vif.deassert_reset();
-   `uvm_info("TEST", "De-asserted reset", UVM_NONE)
-   
-endtask : reset_phase
 
 
 function void uvmt_clk_st_base_test_c::phase_started(uvm_phase phase);
@@ -250,18 +232,6 @@ function void uvmt_clk_st_base_test_c::phase_ended(uvm_phase phase);
    end
    
 endfunction : phase_ended
-
-
-function void uvmt_clk_st_base_test_c::retrieve_clknrst_gen_vif();
-   
-   if (!uvm_config_db#(virtual uvmt_clk_st_clknrst_gen_if)::get(this, "", "clknrst_gen_vif", clknrst_gen_vif)) begin
-      `uvm_fatal("VIF", $sformatf("Could not find clknrst_gen_vif handle of type %s in uvm_config_db", $typename(clknrst_gen_vif)))
-   end
-   else begin
-      `uvm_info("VIF", $sformatf("Found clknrst_gen_vif handle of type %s in uvm_config_db", $typename(clknrst_gen_vif)), UVM_DEBUG)
-   end
-   
-endfunction : retrieve_clknrst_gen_vif
 
 
 function void uvmt_clk_st_base_test_c::create_cfg();
@@ -334,14 +304,6 @@ function void uvmt_clk_st_base_test_c::print_banner(string text);
    $display("*******************************************************************************");
    
 endfunction : print_banner
-
-
-task uvmt_clk_st_base_test_c::start_clk();
-   
-   clknrst_gen_vif.set_clk_period(test_cfg.clk_period);
-   clknrst_gen_vif.start_clk();
-   
-endtask : start_clk
 
 
 task uvmt_clk_st_base_test_c::simulation_timeout();

@@ -25,6 +25,7 @@
 -f ${DV_UVML_SB_SRC_PATH}/uvml_sb_pkg.flist
 
 // Agents
+-f ${DV_UVMA_${clk_agent_type_uppercase}_SRC_PATH}/uvma_${clk_agent_type}_pkg.flist
 -f ${DV_UVMA_${reset_agent_type_uppercase}_SRC_PATH}/uvma_${reset_agent_type}_pkg.flist
 -f ${DV_UVMA_${ral_agent_type_uppercase}_SRC_PATH}/uvma_${ral_agent_type}_pkg.flist
 

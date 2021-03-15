@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -46,8 +46,17 @@ class uvma_clk_mon_trn_logger_c extends uvml_logs_mon_trn_logger_c#(
     */
    virtual function void write(uvma_clk_mon_trn_c t);
       
-      // TODO Implement uvma_clk_mon_trn_logger_c::write()
-      // Ex: fwrite($sformatf(" %t | %08h | %02b | %04d | %02h |", $realtime(), t.a, t.b, t.c, t.d));
+      string event_str = "";
+      
+      case (t.event_type)
+         UVMA_CLK_MON_TRN_EVENT_STOPPED          : event_str = $sformatf("STOPPED");
+         UVMA_CLK_MON_TRN_EVENT_STARTED          : event_str = $sformatf("STARTED @ %t Mhz", t.new_frequency);
+         UVMA_CLK_MON_TRN_EVENT_CHANGED_FREQUENCY: event_str = $sformatf("CHANGED %t -> %t Mhz", t.old_frequency, t.new_frequency);
+         UVMA_CLK_MON_TRN_EVENT_X                : event_str = $sformatf("X");
+         UVMA_CLK_MON_TRN_EVENT_Z                : event_str = $sformatf("Z");
+      endcase
+      
+      fwrite($sformatf(" %t | %s ", $realtime(), event_str));
       
    endfunction : write
    
@@ -56,10 +65,9 @@ class uvma_clk_mon_trn_logger_c extends uvml_logs_mon_trn_logger_c#(
     */
    virtual function void print_header();
       
-      // TODO Implement uvma_clk_mon_trn_logger_c::print_header()
-      // Ex: fwrite("----------------------------------------------");
-      //     fwrite(" TIME | FIELD A | FIELD B | FIELD C | FIELD D ");
-      //     fwrite("----------------------------------------------");
+      fwrite("-------------");
+      fwrite(" TIME | EVENT");
+      fwrite("-------------");
       
    endfunction : print_header
    

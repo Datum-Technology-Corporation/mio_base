@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -46,8 +46,26 @@ class uvma_clk_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
     */
    virtual function void write(uvma_clk_seq_item_c t);
       
-      // TODO Implement uvma_clk_seq_item_logger_c::write()
-      // Ex: fwrite($sformatf(" %t | %08h | %02b | %04d | %02h |", $realtime(), t.a, t.b, t.c, t.d));
+      string action_str = "";
+      
+      case (t.action)
+         UVMA_CLK_SEQ_ITEM_ACTION_START           : action_str = $sformatf("START @ %t Mhz", t.new_frequency);
+         UVMA_CLK_SEQ_ITEM_ACTION_PAUSE           : action_str = $sformatf("PAUSE");
+         UVMA_CLK_SEQ_ITEM_ACTION_CHANGE_FREQUENCY: action_str = $sformatf("CHANGE %t -> %t Mhz", cntxt.old_frequency, t.new_frequency);
+         
+         UVMA_CLK_SEQ_ITEM_ACTION_STOP: begin
+            case (t.stop_value)
+               UVMA_CLK_SEQ_ITEM_STOP_VALUE_SAME  : action_str = $sformatf("STOP");
+               UVMA_CLK_SEQ_ITEM_STOP_VALUE_RANDOM: action_str = $sformatf("STOP RANDVAL");
+               UVMA_CLK_SEQ_ITEM_STOP_VALUE_0     : action_str = $sformatf("STOP ->0");
+               UVMA_CLK_SEQ_ITEM_STOP_VALUE_1     : action_str = $sformatf("STOP ->1");
+               UVMA_CLK_SEQ_ITEM_STOP_VALUE_Z     : action_str = $sformatf("STOP ->Z");
+               UVMA_CLK_SEQ_ITEM_STOP_VALUE_X     : action_str = $sformatf("STOP ->X");
+            endcase
+         end
+      endcase
+      
+      fwrite($sformatf(" %t | %s", $realtime(), action_str));
       
    endfunction : write
    
@@ -56,10 +74,9 @@ class uvma_clk_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
     */
    virtual function void print_header();
       
-      // TODO Implement uvma_clk_seq_item_logger_c::print_header()
-      // Ex: fwrite("----------------------------------------------");
-      //     fwrite(" TIME | FIELD A | FIELD B | FIELD C | FIELD D ");
-      //     fwrite("----------------------------------------------");
+      fwrite("--------------");
+      fwrite(" TIME | ACTION");
+      fwrite("--------------");
       
    endfunction : print_header
    

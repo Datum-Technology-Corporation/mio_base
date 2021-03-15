@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -54,29 +54,44 @@ class uvma_clk_drv_c extends uvm_driver#(
    extern virtual function void build_phase(uvm_phase phase);
    
    /**
-    * Oversees driving, depending on the reset state, by calling drv_<pre|in|post>_reset() tasks.
+    * TODO Describe uvma_clk_drv_c::run_phase()
     */
    extern virtual task run_phase(uvm_phase phase);
    
    /**
-    * Called by run_phase() while agent is in pre-reset state.
+    * TODO Describe uvma_clk_drv_c::drv_vif()
     */
-   extern virtual task drv_pre_reset(uvm_phase phase);
+   extern virtual task drv_vif(uvm_phase phase);
    
    /**
-    * Called by run_phase() while agent is in reset state.
-    */
-   extern virtual task drv_in_reset(uvm_phase phase);
-   
-   /**
-    * Called by run_phase() while agent is in post-reset state.
-    */
-   extern virtual task drv_post_reset(uvm_phase phase);
-   
-   /**
-    * Drives the virtual interface's (cntxt.vif) signals using req's contents.
+    * TODO Describe uvma_clk_drv_c::drv_req()
     */
    extern virtual task drv_req(ref uvma_clk_seq_item_c req);
+   
+   /**
+    * TODO Describe uvma_clk_drv_c::action_start()
+    */
+   extern virtual task action_start(ref uvma_clk_seq_item_c req);
+   
+   /**
+    * TODO Describe uvma_clk_drv_c::action_stop()
+    */
+   extern virtual task action_stop(ref uvma_clk_seq_item_c req);
+   
+   /**
+    * TODO Describe uvma_clk_drv_c::action_pause()
+    */
+   extern virtual task action_pause(ref uvma_clk_seq_item_c req);
+   
+   /**
+    * TODO Describe uvma_clk_drv_c::action_chg_freq()
+    */
+   extern virtual task action_chg_freq(ref uvma_clk_seq_item_c req);
+   
+   /**
+    * TODO Describe uvma_clk_drv_c::clock_generator()
+    */
+   extern virtual task clock_generator();
    
 endclass : uvma_clk_drv_c
 
@@ -113,60 +128,116 @@ task uvma_clk_drv_c::run_phase(uvm_phase phase);
    
    super.run_phase(phase);
    
-   forever begin
-      if (cfg.enabled && cfg.is_active) begin
-         case (cntxt.reset_state)
-            UVMA_CLK_RESET_STATE_PRE_RESET : drv_pre_reset (phase);
-            UVMA_CLK_RESET_STATE_IN_RESET  : drv_in_reset  (phase);
-            UVMA_CLK_RESET_STATE_POST_RESET: drv_post_reset(phase);
-         endcase
-      end
-   end
+   drv_vif(phase);
    
 endtask : run_phase
 
 
-task uvma_clk_drv_c::drv_pre_reset(uvm_phase phase);
+task uvma_clk_drv_c::drv_vif(uvm_phase phase);
    
-   // TODO Implement uvma_clk_drv_c::drv_pre_reset()
-   //      Ex: @(cntxt.vif.drv_cb);
+   forever begin
+      wait (cfg.enabled && cfg.is_active);
+      seq_item_port.get_next_item(req);
+      `uvml_hrtbt()
+      
+      drv_req (req);
+      ap.write(req);
+      seq_item_port.item_done();
+   end
    
-   // WARNING If no time is consumed by this task, a zero-delay oscillation loop will occur and stall simulation
-   
-endtask : drv_pre_reset
-
-
-task uvma_clk_drv_c::drv_in_reset(uvm_phase phase);
-   
-   // TODO Implement uvma_clk_drv_c::drv_in_reset()
-   //      Ex: @(cntxt.vif.drv_cb);
-   
-   // WARNING If no time is consumed by this task, a zero-delay oscillation loop will occur and stall simulation
-   
-endtask : drv_in_reset
-
-
-task uvma_clk_drv_c::drv_post_reset(uvm_phase phase);
-   
-   seq_item_port.get_next_item(req);
-   `uvml_hrtbt()
-   
-   drv_req (req);
-   ap.write(req);
-   seq_item_port.item_done(/* TODO Remove this if request is not returned to sequencer/sequence: req*/);
-   
-endtask : drv_post_reset
+endtask : drv_vif
 
 
 task uvma_clk_drv_c::drv_req(ref uvma_clk_seq_item_c req);
    
-   // TODO Implement uvma_clk_drv_c::drv_req()
-   //      Ex: cntxt.vif.drv_cb.abc <= req.abc;
-   //          cntxt.vif.drv_cb.xyz <= req.xyz;
-   
-   // WARNING If no time is consumed by this task, a zero-delay oscillation loop will occur and stall simulation
+   case (req.action)
+      UVMA_CLK_SEQ_ITEM_ACTION_START           : action_start   (req);
+      UVMA_CLK_SEQ_ITEM_ACTION_STOP            : action_stop    (req);
+      UVMA_CLK_SEQ_ITEM_ACTION_PAUSE           : action_pause   (req);
+      UVMA_CLK_SEQ_ITEM_ACTION_CHANGE_FREQUENCY: action_chg_freq(req);
+   endcase
    
 endtask : drv_req
+
+
+task uvma_clk_drv_c::action_start(ref uvma_clk_seq_item_c req);
+   
+   bit clock_running = 0;
+   
+   cntxt.drv_frequency = req.new_frequency;
+   
+   if (cntxt.clk_gen_process != null) begin
+      if (cntxt.clk_gen_process.status() == RUNNING) begin
+         clock_running = 1;
+      end
+   end
+   
+   if (!clock_running) begin
+      fork
+         clock_generator();
+      join_none
+   end
+   
+endtask : action_start
+
+
+task uvma_clk_drv_c::action_stop(ref uvma_clk_seq_item_c req);
+   
+   cntxt.clk_gen_process.kill();
+   
+   case (req.stop_value)
+      UVMA_CLK_SEQ_ITEM_STOP_VALUE_RANDOM: cntxt.vif.clk = $urandom_range(0,1);
+      UVMA_CLK_SEQ_ITEM_STOP_VALUE_0     : cntxt.vif.clk = '0;
+      UVMA_CLK_SEQ_ITEM_STOP_VALUE_1     : cntxt.vif.clk = '1;
+      UVMA_CLK_SEQ_ITEM_STOP_VALUE_X     : cntxt.vif.clk = 'X;
+      UVMA_CLK_SEQ_ITEM_STOP_VALUE_Z     : cntxt.vif.clk = 'Z;
+   endcase
+   
+endtask : action_stop
+
+
+task uvma_clk_drv_c::action_pause(ref uvma_clk_seq_item_c req);
+   
+   cntxt.clk_gen_process.suspend();
+   
+endtask : action_pause
+
+
+task uvma_clk_drv_c::action_chg_freq(ref uvma_clk_seq_item_c req);
+   
+   cntxt.drv_frequency = $itor(req.new_frequency);
+   
+endtask : action_chg_freq
+
+
+task uvma_clk_drv_c::clock_generator();
+   
+   realtime  period, period_duty_cycle_on, period_duty_cycle_off;
+   
+   cntxt.clk_gen_process = process::self();
+   
+   forever begin
+      if (!(cntxt.vif.clk inside {1'b0, 1'b1})) begin
+         cntxt.vif.clk = $urandom_range(0,1);
+      end
+      else begin
+         cntxt.vif.clk = ~cntxt.vif.clk;
+      end
+      
+      // We re-calculate each time because the frequency can change at any moment via a sequence item
+      period = 1.0 / cntxt.drv_frequency;
+      period_duty_cycle_on  = period * $itor(cfg.drv_duty_cycle)/100.0;
+      period_duty_cycle_off = period - period_duty_cycle_on;
+      
+      if (cntxt.vif.clk === 1'b1) begin
+         #(period_duty_cycle_on);
+      end
+      else begin
+         #(period_duty_cycle_off);
+      end
+   end
+   
+endtask : clock_generator
 
 
 `endif // __UVMA_CLK_DRV_SV__

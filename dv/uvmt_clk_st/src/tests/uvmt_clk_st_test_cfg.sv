@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -27,22 +27,11 @@
 class uvmt_clk_st_test_cfg_c extends uvm_object;
    
    // Knobs
-   rand int unsigned  clk_period        ; // Specified in picoseconds (ps)
-   rand int unsigned  reset_period      ; // Specified in nanoseconds (ns)
    rand int unsigned  startup_timeout   ; // Specified in nanoseconds (ns)
    rand int unsigned  heartbeat_period  ; // Specified in nanoseconds (ns)
    rand int unsigned  simulation_timeout; // Specified in nanoseconds (ns)
    
-   // Command line arguments
-   // TODO Add command line argument descriptors
-   //      Ex: string        cli_num_pkts_str      = "NPKTS";
-   //          bit           cli_num_pkts_override = 0;
-   //          int unsigned  cli_num_pkts_parsed;
-   
-   
    `uvm_object_utils_begin(uvmt_clk_st_test_cfg_c)
-      `uvm_field_int(clk_period        , UVM_DEFAULT + UVM_DEC)
-      `uvm_field_int(reset_period      , UVM_DEFAULT + UVM_DEC)
       `uvm_field_int(startup_timeout   , UVM_DEFAULT + UVM_DEC)
       `uvm_field_int(heartbeat_period  , UVM_DEFAULT + UVM_DEC)
       `uvm_field_int(simulation_timeout, UVM_DEFAULT + UVM_DEC)
@@ -50,8 +39,6 @@ class uvmt_clk_st_test_cfg_c extends uvm_object;
    
    
    constraint defaults_cons {
-      soft clk_period         == uvmt_clk_st_default_clk_period        ;
-      soft reset_period       == uvmt_clk_st_default_reset_period      ;
       soft startup_timeout    == uvmt_clk_st_default_startup_timeout   ;
       soft heartbeat_period   == uvmt_clk_st_default_heartbeat_period  ;
       soft simulation_timeout == uvmt_clk_st_default_simulation_timeout;

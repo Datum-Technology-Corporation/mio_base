@@ -158,27 +158,25 @@ task uvma_${name}_mon_c::run_phase(uvm_phase phase);
       
       // ${direction_rx_normal_case}
       begin
-         wait (cfg.enabled && cfg.${direction_rx}_cfg.enabled) begin
-            forever begin
-               case (cntxt.reset_state)
-                  UVMA_${name_uppercase}_RESET_STATE_PRE_RESET :  mon_${direction_rx}_pre_reset (phase);
-                  UVMA_${name_uppercase}_RESET_STATE_IN_RESET  :  mon_${direction_rx}_in_reset  (phase);
-                  UVMA_${name_uppercase}_RESET_STATE_POST_RESET:  mon_${direction_rx}_post_reset(phase);
-               endcase
-            end
+         wait (cfg.enabled && cfg.${direction_rx}_cfg.enabled);
+         forever begin
+            case (cntxt.reset_state)
+               UVMA_${name_uppercase}_RESET_STATE_PRE_RESET :  mon_${direction_rx}_pre_reset (phase);
+               UVMA_${name_uppercase}_RESET_STATE_IN_RESET  :  mon_${direction_rx}_in_reset  (phase);
+               UVMA_${name_uppercase}_RESET_STATE_POST_RESET:  mon_${direction_rx}_post_reset(phase);
+            endcase
          end
       end
       
       // ${direction_tx_normal_case}
       begin
-         wait (cfg.enabled && cfg.${direction_tx}_cfg.enabled) begin
-            forever begin
-               case (cntxt.reset_state)
-                  UVMA_${name_uppercase}_RESET_STATE_PRE_RESET :  mon_${direction_tx}_pre_reset (phase);
-                  UVMA_${name_uppercase}_RESET_STATE_IN_RESET  :  mon_${direction_tx}_in_reset  (phase);
-                  UVMA_${name_uppercase}_RESET_STATE_POST_RESET:  mon_${direction_tx}_post_reset(phase);
-               endcase
-            end
+         wait (cfg.enabled && cfg.${direction_tx}_cfg.enabled);
+         forever begin
+            case (cntxt.reset_state)
+               UVMA_${name_uppercase}_RESET_STATE_PRE_RESET :  mon_${direction_tx}_pre_reset (phase);
+               UVMA_${name_uppercase}_RESET_STATE_IN_RESET  :  mon_${direction_tx}_in_reset  (phase);
+               UVMA_${name_uppercase}_RESET_STATE_POST_RESET:  mon_${direction_tx}_post_reset(phase);
+            endcase
          end
       end
    join_none
@@ -190,12 +188,11 @@ task uvma_${name}_mon_c::observe_reset();
    
    // TODO Implement uvma_${name}_mon_c::observe_reset()
    //      Ex: forever begin
-   //             wait (cfg.enabled) begin
-   //                wait (cntxt.vif.reset == 1);
-   //                cntxt.reset_state = UVMA_${name_uppercase}_RESET_STATE_IN_RESET;
-   //                wait (cntxt.vif.reset == 0);
-   //                cntxt.reset_state = UVMA_${name_uppercase}_RESET_STATE_POST_RESET;
-   //             end
+   //             wait (cfg.enabled);
+   //             wait (cntxt.vif.reset == 1);
+   //             cntxt.reset_state = UVMA_${name_uppercase}_RESET_STATE_IN_RESET;
+   //             wait (cntxt.vif.reset == 0);
+   //             cntxt.reset_state = UVMA_${name_uppercase}_RESET_STATE_POST_RESET;
    //          end
    
    // WARNING If no time is consumed by this task, a zero-delay oscillation loop will occur and stall simulation

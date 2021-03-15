@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -21,10 +21,34 @@
 
 
 typedef enum {
-   UVMA_CLK_RESET_STATE_PRE_RESET ,
-   UVMA_CLK_RESET_STATE_IN_RESET  ,
-   UVMA_CLK_RESET_STATE_POST_RESET
-} uvma_clk_reset_state_enum;
+   UVMA_CLK_STATE_NO_SYNC      ,
+   UVMA_CLK_STATE_SYNCHRONIZING,
+   UVMA_CLK_STATE_LOCKED
+} uvma_clk_state_enum;
+
+
+typedef enum {
+   UVMA_CLK_SEQ_ITEM_ACTION_START,
+   UVMA_CLK_SEQ_ITEM_ACTION_STOP ,
+   UVMA_CLK_SEQ_ITEM_ACTION_PAUSE,
+   UVMA_CLK_SEQ_ITEM_ACTION_CHANGE_FREQUENCY
+} uvma_clk_seq_item_action_enum;
+
+
+typedef enum {
+   UVMA_CLK_SEQ_ITEM_STOP_VALUE_SAME  ,
+   UVMA_CLK_SEQ_ITEM_STOP_VALUE_RANDOM,
+   UVMA_CLK_SEQ_ITEM_STOP_VALUE_0     ,
+   UVMA_CLK_SEQ_ITEM_STOP_VALUE_1     ,
+   UVMA_CLK_SEQ_ITEM_STOP_VALUE_X     ,
+   UVMA_CLK_SEQ_ITEM_STOP_VALUE_Z
+} uvma_clk_seq_item_stop_value_enum;
+
+
+typedef enum {
+   UVMA_CLK_MON_TRN_EVENT_LOCKED   ,
+   UVMA_CLK_MON_TRN_EVENT_LOST_LOCK
+} uvma_clk_mon_trn_event_enum;
 
 
 `endif // __UVMA_CLK_TDEFS_SV__

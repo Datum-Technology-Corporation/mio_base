@@ -71,52 +71,52 @@ class uvme_${name}_st_env_c extends uvm_env;
    /**
     * Assigns configuration handles to components using UVM Configuration Database.
     */
-   extern virtual function void assign_cfg();
+   extern function void assign_cfg();
    
    /**
     * Assigns context handles to components using UVM Configuration Database.
     */
-   extern virtual function void assign_cntxt();
+   extern function void assign_cntxt();
    
    /**
     * Creates agent components.
     */
-   extern virtual function void create_agents();
+   extern function void create_agents();
    
    /**
     * Creates additional (non-agent) environment components (and objects).
     */
-   extern virtual function void create_env_components();
+   extern function void create_env_components();
    
    /**
     * Creates environment's virtual sequencer.
     */
-   extern virtual function void create_vsequencer();
+   extern function void create_vsequencer();
    
    /**
     * Creates environment's coverage model.
     */
-   extern virtual function void create_cov_model();
+   extern function void create_cov_model();
    
    /**
     * Connects agents to predictor.
     */
-   extern virtual function void connect_predictor();
+   extern function void connect_predictor();
    
    /**
     * Connects scoreboards components to agents/predictor.
     */
-   extern virtual function void connect_scoreboard();
+   extern function void connect_scoreboard();
    
    /**
     * Assembles virtual sequencer from agent sequencers.
     */
-   extern virtual function void assemble_vsequencer();
+   extern function void assemble_vsequencer();
    
    /**
     * Connects environment coverage model to agents/scoreboards/predictor.
     */
-   extern virtual function void connect_coverage_model();
+   extern function void connect_coverage_model();
    
 endclass : uvme_${name}_st_env_c
 

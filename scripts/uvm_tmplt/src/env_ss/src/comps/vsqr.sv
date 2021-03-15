@@ -37,8 +37,9 @@ class uvme_${name}_vsqr_c extends uvm_sequencer#(
    //       Ex: uvme_sub_env_vsqr_c  sub_env_vsequencer;
    
    // Sequencer handles
-   uvma_${ral_agent_type}_sqr_c  ${ral_agent_type}_sequencer;
-   uvma_${reset_agent_type}_sqr_c  reset_sequencer;
+   uvma_${clk_agent_type}_sqr_c  ${clk_agent_name}_sequencer;
+   uvma_${reset_agent_type}_sqr_c  ${reset_agent_name}_sequencer;
+   uvma_${ral_agent_type}_sqr_c  ${ral_agent_name}_sequencer;
    // TODO Add sequencer handles
    
    

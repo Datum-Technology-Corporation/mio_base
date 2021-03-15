@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -115,8 +115,6 @@ task uvme_clk_st_prd_c::run_phase(uvm_phase phase);
       in_fifo.get(in_trn);
       out_trn = uvma_clk_mon_trn_c::type_id::create("out_trn");
       out_trn.copy(in_trn);
-      
-      // TODO Implement uvme_clk_st_prd_c::run_phase()
       
       // Send transaction to analysis port
       out_ap.write(out_trn);

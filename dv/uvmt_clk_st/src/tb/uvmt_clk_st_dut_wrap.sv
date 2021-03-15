@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -28,11 +28,7 @@ module uvmt_clk_st_dut_wrap(
    uvma_clk_if  passive_if
 );
    
-   // TODO Instantiate Device Under Test (DUT)
-   //      Ex: clk_st_top  dut(
-   //             .abc(active_if.abc),
-   //             .xyz(passive_if.xyz),
-   //          );
+   assign passive_if.clk = active_if.clk;
    
 endmodule : uvmt_clk_st_dut_wrap
 

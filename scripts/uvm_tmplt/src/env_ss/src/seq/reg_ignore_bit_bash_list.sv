@@ -27,4 +27,4 @@ string  ignore_list[$] = '{
 };
 
 
-`endif // __UVME_${tb_name_uppercase}_REG_IGNORE_BIT_BASH_LIST_SV__
+`endif // __UVME_${name_uppercase}_REG_IGNORE_BIT_BASH_LIST_SV__

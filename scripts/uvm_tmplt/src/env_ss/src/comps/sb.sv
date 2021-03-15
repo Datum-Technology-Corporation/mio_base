@@ -39,10 +39,6 @@ class uvme_${name}_sb_c extends uvm_scoreboard;
    `uvm_component_utils_begin(uvme_${name}_sb_c)
       `uvm_field_object(cfg  , UVM_DEFAULT)
       `uvm_field_object(cntxt, UVM_DEFAULT)
-      
-      // TODO Add sub-scoreboards field macros
-      //      Ex: `uvm_field_object(egress_sb , UVM_DEFAULT)
-      //          `uvm_field_object(ingress_sb, UVM_DEFAULT)
    `uvm_component_utils_end
    
    
@@ -62,17 +58,17 @@ class uvme_${name}_sb_c extends uvm_scoreboard;
    /**
     * Assigns configuration handles.
     */
-   extern virtual function void assign_cfg();
+   extern function void assign_cfg();
    
    /**
     * Assigns context handles.
     */
-   extern virtual function void assign_cntxt();
+   extern function void assign_cntxt();
    
    /**
     * Creates sub-scoreboard components.
     */
-   extern virtual function void create_sbs();
+   extern function void create_sbs();
    
 endclass : uvme_${name}_sb_c
 

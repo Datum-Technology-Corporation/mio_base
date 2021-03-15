@@ -110,42 +110,42 @@ class uvme_${name}_st_cov_model_c extends uvm_component;
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_cfg()
     */
-   extern virtual function void sample_cfg();
+   extern function void sample_cfg();
    
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_cntxt()
     */
-   extern virtual function void sample_cntxt();
+   extern function void sample_cntxt();
    
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_${name_1}_seq_item()
     */
-   extern virtual function void sample_${name_1}_seq_item();
+   extern function void sample_${name_1}_seq_item();
    
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_${name_2}_seq_item()
     */
-   extern virtual function void sample_${name_2}_seq_item();
+   extern function void sample_${name_2}_seq_item();
    
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_${name_1}_mon_${direction_rx}_trn()
     */
-   extern virtual function void sample_${name_1}_mon_${direction_rx}_trn();
+   extern function void sample_${name_1}_mon_${direction_rx}_trn();
    
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_${name_1}_mon_${direction_tx}_trn()
     */
-   extern virtual function void sample_${name_1}_mon_${direction_tx}_trn();
+   extern function void sample_${name_1}_mon_${direction_tx}_trn();
    
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_${name_2}_mon_${direction_rx}_trn()
     */
-   extern virtual function void sample_${name_2}_mon_${direction_rx}_trn();
+   extern function void sample_${name_2}_mon_${direction_rx}_trn();
    
    /**
     * TODO Describe uvme_${name}_st_cov_model_c::sample_${name_2}_mon_${direction_tx}_trn()
     */
-   extern virtual function void sample_${name_2}_mon_${direction_tx}_trn();
+   extern function void sample_${name_2}_mon_${direction_tx}_trn();
    
 endclass : uvme_${name}_st_cov_model_c
 

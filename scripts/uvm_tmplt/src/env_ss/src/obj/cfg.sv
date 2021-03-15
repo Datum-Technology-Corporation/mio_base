@@ -35,15 +35,15 @@ class uvme_${name}_cfg_c extends uvm_object;
    
    // Sub-system parameters
    rand longint unsigned  ral_base_address;
-   rand int unsigned      reset_clk_period;
-   rand int unsigned      ${ral_agent_type}_clk_period;
+   rand int unsigned      ${clk_agent_name}_period;
    
    // TODO: Add sub-environments configuration handles
    //       Ex: rand uvme_sub_env_cfg_c  sub_env_cfg;
    
    // Agent cfg handles
-   rand uvma_${ral_agent_type}_cfg_c  ${ral_agent_type}_cfg;
-   rand uvma_${reset_agent_type}_cfg_c  reset_cfg;
+   rand uvma_${clk_agent_type}_cfg_c  ${clk_agent_name}_cfg;
+   rand uvma_${reset_agent_type}_cfg_c  ${reset_agent_name}_cfg;
+   rand uvma_${ral_agent_type}_cfg_c  ${ral_agent_name}_cfg;
    
    // Objects
    rand uvme_${name}_ral_c  ${name}_ral;
@@ -59,15 +59,15 @@ class uvme_${name}_cfg_c extends uvm_object;
       `uvm_field_int (                         cov_model_enabled    , UVM_DEFAULT)
       `uvm_field_int (                         trn_log_enabled      , UVM_DEFAULT)
       
-      `uvm_field_int(ral_base_address            , UVM_DEFAULT          )
-      `uvm_field_int(reset_clk_period            , UVM_DEFAULT + UVM_DEC)
-      `uvm_field_int(${ral_agent_type}_clk_period, UVM_DEFAULT + UVM_DEC)
+      `uvm_field_int(ral_base_address, UVM_DEFAULT)
+      `uvm_field_int(${clk_agent_name}_period, UVM_DEFAULT + UVM_DEC)
       
       // TODO: Add sub-environments configuration field macros
       //       Ex: `uvm_field_object(sub_env_cfg, UVM_DEFAULT)
       
-      `uvm_field_object(${ral_agent_type}_cfg, UVM_DEFAULT)
-      `uvm_field_object(reset_cfg, UVM_DEFAULT)
+      `uvm_field_object(${clk_agent_name}_cfg, UVM_DEFAULT)
+      `uvm_field_object(${reset_agent_name}_cfg, UVM_DEFAULT)
+      `uvm_field_object(${ral_agent_name}_cfg, UVM_DEFAULT)
       
       `uvm_field_object(${name}_ral, UVM_DEFAULT)
       // TODO Add scoreboard cfg field macros
@@ -82,25 +82,30 @@ class uvme_${name}_cfg_c extends uvm_object;
       soft scoreboarding_enabled        == 1;
       soft cov_model_enabled            == 0;
       soft trn_log_enabled              == 1;
-      soft ral_base_address             == uvme_${name}_rall_default_base_address;
-      soft reset_clk_period             == uvme_${name}_reset_default_clk_period;
-      soft ${ral_agent_type}_clk_period == uvme_${name}_${ral_agent_type}_default_clk_period;
+      soft ral_base_address             == uvme_${name}_default_ral_base_address;
+      soft ${clk_agent_name}_period     == uvme_${name}_default_${clk_agent_name}_period;
    }
    
    constraint agent_cfg_cons {
       if (enabled) {
-         ${ral_agent_type}_cfg.enabled == 1;
-         reset_cfg.enabled == 1;
+         ${clk_agent_name}_cfg.enabled == 1;
+         ${reset_agent_name}_cfg.enabled == 1;
+         ${ral_agent_name}_cfg.enabled == 1;
+         
+         // TODO Assign period to ${clk_agent_name}
+         //      Ex: ${clk_agent_name}_cfg.period == ${clk_agent_name}_period;
       }
       
       if (is_active == UVM_ACTIVE) {
-         ${ral_agent_type}_cfg.is_active == UVM_ACTIVE;
-         reset_cfg.is_active == UVM_ACTIVE;
+         ${clk_agent_name}_cfg.is_active == UVM_ACTIVE;
+         ${reset_agent_name}_cfg.is_active == UVM_ACTIVE;
+         ${ral_agent_name}_cfg.is_active == UVM_ACTIVE;
       }
       
       if (trn_log_enabled) {
-         ${ral_agent_type}_cfg.trn_log_enabled == 1;
-         reset_cfg.trn_log_enabled == 1;
+         ${clk_agent_name}_cfg.trn_log_enabled == 1;
+         ${reset_agent_name}_cfg.trn_log_enabled == 1;
+         ${ral_agent_name}_cfg.trn_log_enabled == 1;
       }
    }
    
@@ -123,8 +128,9 @@ function uvme_${name}_cfg_c::new(string name="uvme_${name}_cfg");
    // TODO Create environment cfg objects
    //      Ex: sub_env_cfg  = uvme_sub_env_cfg_c::type_id::create("sub_env_cfg");
    
-   ${ral_agent_type}_cfg = uvma_${ral_agent_type}_cfg_c::type_id::create("${ral_agent_type}_cfg");
-   reset_cfg = uvma_${reset_agent_type}_cfg_c::type_id::create("reset_cfg");
+   ${clk_agent_name}_cfg = uvma_${clk_agent_type}_cfg_c::type_id::create("${clk_agent_name}_cfg");
+   ${reset_agent_name}_cfg = uvma_${reset_agent_type}_cfg_c::type_id::create("${reset_agent_name}_cfg");
+   ${ral_agent_name}_cfg = uvma_${ral_agent_type}_cfg_c::type_id::create("${ral_agent_name}_cfg");
    
    ${name}_ral = uvme_${name}_ral_c::type_id::create("${name}_ral");
    ${name}_ral.build();

@@ -56,6 +56,11 @@ class uvme_${name}_st_cntxt_c extends uvm_object;
     */
    extern function new(string name="uvme_${name}_st_cntxt");
    
+   /**
+    * TODO Describe uvme_${name}_cntxt_c::reset()
+    */
+   extern function void reset();
+   
 endclass : uvme_${name}_st_cntxt_c
 
 
@@ -76,6 +81,14 @@ function uvme_${name}_st_cntxt_c::new(string name="uvme_${name}_st_cntxt");
    sample_cntxt_e = new("sample_cntxt_e");
    
 endfunction : new
+
+
+function void uvme_${name}_cntxt_c::reset();
+   
+   ${name_1}_cntxt.reset();
+   ${name_2}_cntxt.reset();
+   
+endfunction : reset
 
 
 `pragma protect end

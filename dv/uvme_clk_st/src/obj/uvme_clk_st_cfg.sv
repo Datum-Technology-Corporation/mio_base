@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -37,7 +37,7 @@ class uvme_clk_st_cfg_c extends uvm_object;
    // Objects
    rand uvma_clk_cfg_c  active_cfg;
    rand uvma_clk_cfg_c  passive_cfg;
-   rand uvml_sb_cfg_c       sb_cfg;
+   rand uvml_sb_cfg_c   sb_cfg;
    
    
    `uvm_object_utils_begin(uvme_clk_st_cfg_c)
@@ -47,9 +47,9 @@ class uvme_clk_st_cfg_c extends uvm_object;
       `uvm_field_int (                         cov_model_enabled    , UVM_DEFAULT)
       `uvm_field_int (                         trn_log_enabled      , UVM_DEFAULT)
       
-      `uvm_field_object(active_cfg, UVM_DEFAULT)
+      `uvm_field_object(active_cfg , UVM_DEFAULT)
       `uvm_field_object(passive_cfg, UVM_DEFAULT)
-      `uvm_field_object(sb_cfg       , UVM_DEFAULT)
+      `uvm_field_object(sb_cfg     , UVM_DEFAULT)
    `uvm_object_utils_end
    
    
@@ -63,17 +63,17 @@ class uvme_clk_st_cfg_c extends uvm_object;
    
    constraint agent_cfg_cons {
       if (enabled) {
-         active_cfg.enabled == 1;
+         active_cfg .enabled == 1;
          passive_cfg.enabled == 1;
       }
       
       if (is_active == UVM_ACTIVE) {
-         active_cfg.is_active == UVM_ACTIVE;
+         active_cfg .is_active == UVM_ACTIVE;
          passive_cfg.is_active == UVM_ACTIVE;
       }
       
       if (trn_log_enabled) {
-         soft active_cfg.trn_log_enabled == 1;
+         soft active_cfg .trn_log_enabled == 1;
          soft passive_cfg.trn_log_enabled == 1;
       }
    }
@@ -85,6 +85,13 @@ class uvme_clk_st_cfg_c extends uvm_object;
       else {
          sb_cfg.enabled == 0;
       }
+   }
+   
+   constraint sync_agent_cfg_cons {
+      active_cfg.drv_duty_cycle                  == passive_cfg.drv_duty_cycle                 ;
+      active_cfg.mon_lock_cycle_threshold        == passive_cfg.mon_lock_cycle_threshold       ;
+      active_cfg.mon_sync_missed_edges_threshold == passive_cfg.mon_sync_missed_edges_threshold;
+      active_cfg.mon_tolerance                   == passive_cfg.mon_tolerance                  ;
    }
    
    
@@ -100,9 +107,9 @@ function uvme_clk_st_cfg_c::new(string name="uvme_clk_st_cfg");
    
    super.new(name);
    
-   active_cfg  = uvma_clk_cfg_c::type_id::create("active_cfg");
-   passive_cfg  = uvma_clk_cfg_c::type_id::create("passive_cfg");
-   sb_cfg         = uvml_sb_cfg_c::type_id::create("sb_cfg");
+   active_cfg  = uvma_clk_cfg_c::type_id::create("active_cfg" );
+   passive_cfg = uvma_clk_cfg_c::type_id::create("passive_cfg");
+   sb_cfg      = uvml_sb_cfg_c ::type_id::create("sb_cfg"     );
    
 endfunction : new
 

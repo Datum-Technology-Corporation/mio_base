@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -27,15 +27,12 @@
  */
 module uvmt_clk_st_tb;
    
-   import uvm_pkg::*;
+   import uvm_pkg        ::*;
    import uvmt_clk_st_pkg::*;
    
-   // Clocking & Reset
-   uvmt_clk_st_clknrst_gen_if  clknrst_gen_if();
-   
    // Agent interfaces
-   uvma_clk_if  active_if(.clk(clknrst_gen_if.clk), .reset_n(clknrst_gen_if.reset_n));
-   uvma_clk_if  passive_if(.clk(clknrst_gen_if.clk), .reset_n(clknrst_gen_if.reset_n));
+   uvma_clk_if  active_if ();
+   uvma_clk_if  passive_if();
    
    // DUT instance
    uvmt_clk_st_dut_wrap  dut_wrap(.*);
@@ -49,9 +46,8 @@ module uvmt_clk_st_tb;
       $timeformat(-9, 3, " ns", 18);
       
       // Add interfaces to uvm_config_db
-      uvm_config_db#(virtual uvmt_clk_st_clknrst_gen_if)::set(null, "*"                    , "clknrst_gen_vif", clknrst_gen_if);
-      uvm_config_db#(virtual uvma_clk_if               )::set(null, "*.env.active_agent", "vif"            , active_if  );
-      uvm_config_db#(virtual uvma_clk_if               )::set(null, "*.env.passive_agent", "vif"            , passive_if  );
+      uvm_config_db#(virtual uvma_clk_if)::set(null, "*.env.active_agent" , "vif", active_if );
+      uvm_config_db#(virtual uvma_clk_if)::set(null, "*.env.passive_agent", "vif", passive_if);
       
       // Run test
       uvm_top.enable_print_topology = 1;

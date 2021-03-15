@@ -25,7 +25,8 @@
  * All ports are SV interfaces.
  */
 module uvmt_${name}_dut_chkr(
-   uvma_${ral_agent_type}_if  ${ral_agent_type}_if
+   uvma_${ral_agent_type}_if  ${ral_agent_type}_if,
+   uvmt_${name}_probe_if  probe_if
 );
    
    `pragma protect begin

@@ -38,8 +38,9 @@ package uvme_${name}_pkg;
    import uvml_hrtbt_pkg::*;
    import uvml_sb_pkg   ::*;
    import uvml_ral_pkg  ::*;
-   import uvma_${ral_agent_type}_pkg::*;
+   import uvma_${clk_agent_type}_pkg::*;
    import uvma_${reset_agent_type}_pkg::*;
+   import uvma_${ral_agent_type}_pkg::*;
    
    // Constants / Structs / Enums
    `include "uvme_${name}_constants.sv"
@@ -63,10 +64,11 @@ package uvme_${name}_pkg;
    
    // Sequences
    `include "uvme_${name}_base_vseq.sv"
+   `include "uvme_${name}_${clk_agent_name}_vseq.sv"
+   `include "uvme_${name}_${reset_agent_name}_vseq.sv"
    `include "uvme_${name}_reg_base_vseq.sv"
    `include "uvme_${name}_reg_bit_bash_vseq.sv"
    `include "uvme_${name}_reg_hw_reset_vseq.sv"
-   `include "uvme_${name}_reset_vseq.sv"
    
 endpackage : uvme_${name}_pkg
 

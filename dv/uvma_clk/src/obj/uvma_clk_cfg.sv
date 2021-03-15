@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -33,6 +33,12 @@ class uvma_clk_cfg_c extends uvm_object;
    rand bit                      cov_model_enabled;
    rand bit                      trn_log_enabled;
    
+   // Configuration
+   rand int unsigned  drv_duty_cycle;
+   rand int unsigned  mon_lock_cycle_threshold;
+   rand int unsigned  mon_sync_missed_edges_threshold;
+   rand int unsigned  mon_tolerance;                   ///< Measured in percentage
+   
    
    `uvm_object_utils_begin(uvma_clk_cfg_c)
       `uvm_field_int (                         enabled          , UVM_DEFAULT)
@@ -49,6 +55,18 @@ class uvma_clk_cfg_c extends uvm_object;
       soft sqr_arb_mode      == UVM_SEQ_ARB_FIFO;
       soft cov_model_enabled == 0;
       soft trn_log_enabled   == 1;
+      
+      soft drv_duty_cycle                  == 50; // 50%
+      soft mon_lock_cycle_threshold        == 10;
+      soft mon_sync_missed_edges_threshold ==  1; 
+      soft mon_tolerance                   ==  1; // 1%
+   }
+   
+   constraint limits_cons {
+      drv_duty_cycle inside {[1:99]};
+      mon_lock_cycle_threshold > 0;
+      mon_sync_missed_edges_threshold > 0;
+      mon_tolerance inside {[1:99]};
    }
    
    

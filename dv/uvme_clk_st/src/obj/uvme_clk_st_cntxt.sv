@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -39,7 +39,7 @@ class uvme_clk_st_cntxt_c extends uvm_object;
    
    
    `uvm_object_utils_begin(uvme_clk_st_cntxt_c)
-      `uvm_field_object(active_cntxt, UVM_DEFAULT)
+      `uvm_field_object(active_cntxt , UVM_DEFAULT)
       `uvm_field_object(passive_cntxt, UVM_DEFAULT)
       
       `uvm_field_object(sb_cntxt, UVM_DEFAULT)
@@ -54,6 +54,11 @@ class uvme_clk_st_cntxt_c extends uvm_object;
     */
    extern function new(string name="uvme_clk_st_cntxt");
    
+   /**
+    * TODO Describe uvme_clk_st_cntxt_c::reset()
+    */
+   extern function void reset();
+   
 endclass : uvme_clk_st_cntxt_c
 
 
@@ -61,14 +66,23 @@ function uvme_clk_st_cntxt_c::new(string name="uvme_clk_st_cntxt");
    
    super.new(name);
    
-   active_cntxt = uvma_clk_cntxt_c::type_id::create("active_cntxt");
+   active_cntxt  = uvma_clk_cntxt_c::type_id::create("active_cntxt" );
    passive_cntxt = uvma_clk_cntxt_c::type_id::create("passive_cntxt");
-   sb_cntxt        = uvml_sb_cntxt_c     ::type_id::create("sb_cntxt"       );
+   sb_cntxt      = uvml_sb_cntxt_c ::type_id::create("sb_cntxt"     );
    
    sample_cfg_e   = new("sample_cfg_e"  );
    sample_cntxt_e = new("sample_cntxt_e");
    
 endfunction : new
+
+
+function void uvme_clk_st_cntxt_c::reset();
+   
+   active_cntxt .reset();
+   passive_cntxt.reset();
+   sb_cntxt     .reset();
+   
+endfunction : reset
 
 
 `endif // __UVME_CLK_ST_CNTXT_SV__

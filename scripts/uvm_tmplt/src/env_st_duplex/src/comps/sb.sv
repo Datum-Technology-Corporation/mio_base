@@ -60,17 +60,17 @@ class uvme_${name}_st_sb_c extends uvm_scoreboard;
    /**
     * Assigns configuration handles.
     */
-   extern virtual function void assign_cfg();
+   extern function void assign_cfg();
    
    /**
     * Assigns context handles.
     */
-   extern virtual function void assign_cntxt();
+   extern function void assign_cntxt();
    
    /**
     * Creates sub-scoreboard components.
     */
-   extern virtual function void create_sbs();
+   extern function void create_sbs();
    
 endclass : uvme_${name}_st_sb_c
 

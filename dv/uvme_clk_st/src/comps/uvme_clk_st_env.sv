@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -188,27 +188,27 @@ endfunction: connect_phase
 
 function void uvme_clk_st_env_c::assign_cfg();
    
-   uvm_config_db#(uvme_clk_st_cfg_c)::set(this, "*"              , "cfg", cfg              );
-   uvm_config_db#(uvma_clk_cfg_c   )::set(this, "active_agent", "cfg", cfg.active_cfg);
+   uvm_config_db#(uvme_clk_st_cfg_c)::set(this, "*"            , "cfg", cfg            );
+   uvm_config_db#(uvma_clk_cfg_c   )::set(this, "active_agent" , "cfg", cfg.active_cfg );
    uvm_config_db#(uvma_clk_cfg_c   )::set(this, "passive_agent", "cfg", cfg.passive_cfg);
-   uvm_config_db#(uvml_sb_cfg_c        )::set(this, "sb"             , "cfg", cfg.sb_cfg       );
+   uvm_config_db#(uvml_sb_cfg_c    )::set(this, "sb"           , "cfg", cfg.sb_cfg     );
    
 endfunction: assign_cfg
 
 
 function void uvme_clk_st_env_c::assign_cntxt();
    
-   uvm_config_db#(uvme_clk_st_cntxt_c)::set(this, "*"              , "cntxt", cntxt                );
-   uvm_config_db#(uvma_clk_cntxt_c   )::set(this, "active_agent", "cntxt", cntxt.active_cntxt);
+   uvm_config_db#(uvme_clk_st_cntxt_c)::set(this, "*"            , "cntxt", cntxt              );
+   uvm_config_db#(uvma_clk_cntxt_c   )::set(this, "active_agent" , "cntxt", cntxt.active_cntxt );
    uvm_config_db#(uvma_clk_cntxt_c   )::set(this, "passive_agent", "cntxt", cntxt.passive_cntxt);
-   uvm_config_db#(uvml_sb_cntxt_c        )::set(this, "sb"             , "cntxt", cntxt.sb_cntxt       );
+   uvm_config_db#(uvml_sb_cntxt_c    )::set(this, "sb"           , "cntxt", cntxt.sb_cntxt     );
    
 endfunction: assign_cntxt
 
 
 function void uvme_clk_st_env_c::create_agents();
    
-   active_agent = uvma_clk_agent_c::type_id::create("active_agent", this);
+   active_agent  = uvma_clk_agent_c::type_id::create("active_agent" , this);
    passive_agent = uvma_clk_agent_c::type_id::create("passive_agent", this);
    
 endfunction: create_agents
@@ -266,9 +266,9 @@ endfunction: assemble_vsequencer
 
 function void uvme_clk_st_env_c::connect_coverage_model();
    
-   active_agent.drv_ap.connect(cov_model.active_seq_item_export);
-   active_agent.mon_ap.connect(cov_model.active_mon_trn_export );
-   passive_agent.mon_ap.connect(cov_model.passive_mon_trn_export );
+   active_agent .drv_ap.connect(cov_model.active_seq_item_export);
+   active_agent .mon_ap.connect(cov_model.active_mon_trn_export );
+   passive_agent.mon_ap.connect(cov_model.passive_mon_trn_export);
    
 endfunction: connect_coverage_model
 

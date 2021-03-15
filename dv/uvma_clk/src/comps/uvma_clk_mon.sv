@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -52,39 +52,39 @@ class uvma_clk_mon_c extends uvm_monitor;
    extern virtual function void build_phase(uvm_phase phase);
    
    /**
-    * Oversees monitoring, depending on the reset state, by calling mon_<pre|in|post>_reset() tasks.
+    * Calls monitor_vif().
     */
    extern virtual task run_phase(uvm_phase phase);
    
    /**
-    * Updates the context's reset state.
+    * TODO Describe uvma_clk_mon_c::monitor_clk()
     */
-   extern virtual task observe_reset();
+   extern virtual task monitor_clk(uvm_phase phase);
    
    /**
-    * Called by run_phase() while agent is in pre-reset state.
+    * TODO Describe uvma_clk_mon_c::monitor_vif()
     */
-   extern virtual task mon_pre_reset(uvm_phase phase);
+   extern virtual task monitor_vif();
    
    /**
-    * Called by run_phase() while agent is in reset state.
+    * TODO Describe uvma_clk_mon_c::sync_lock_fsm()
     */
-   extern virtual task mon_in_reset(uvm_phase phase);
+   extern virtual task sync_lock_fsm();
    
    /**
-    * Called by run_phase() while agent is in post-reset state.
+    * TODO Describe uvma_clk_mon_c::wait_for_first_cycle()
     */
-   extern virtual task mon_post_reset(uvm_phase phase);
+   extern virtual task wait_for_first_cycle();
    
    /**
-    * Creates trn by sampling the virtual interface's (cntxt.vif) signals.
+    * TODO Describe uvma_clk_mon_c::next_cycle()
     */
-   extern virtual task sample_trn(output uvma_clk_mon_trn_c trn);
+   extern virtual task next_cycle();
    
    /**
-    * TODO Describe uvma_clk_mon_c::process_trn()
+    * TODO Describe uvma_clk_mon_c::send_trn()
     */
-   extern virtual function void process_trn(ref uvma_clk_mon_trn_c trn);
+   extern virtual task send_trn(uvma_clk_mon_trn_c trn);
    
 endclass : uvma_clk_mon_c
 
@@ -119,105 +119,141 @@ task uvma_clk_mon_c::run_phase(uvm_phase phase);
    
    super.run_phase(phase);
    
-   fork
-      observe_reset();
-      
-      begin
-         forever begin
-            if (cfg.enabled) begin
-               case (cntxt.reset_state)
-                  UVMA_CLK_RESET_STATE_PRE_RESET : mon_pre_reset (phase);
-                  UVMA_CLK_RESET_STATE_IN_RESET  : mon_in_reset  (phase);
-                  UVMA_CLK_RESET_STATE_POST_RESET: mon_post_reset(phase);
-               endcase
-            end
-         end
-      end
-   join_none
+   monitor_clk(phase);
    
 endtask : run_phase
 
 
-task uvma_clk_mon_c::observe_reset();
+task uvma_clk_mon_c::monitor_clk(uvm_phase phase);
    
-   // TODO Implement uvma_clk_mon_c::observe_reset()
-   //      Ex: forever begin
-   //             if (cfg.enabled) begin
-   //                wait (cntxt.vif.reset_n === 0);
-   //                cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
-   //                wait (cntxt.vif.reset_n === 1);
-   //                cntxt.reset_state = UVMA_RESET_STATE_POST_RESET;
-   //             end
-   //          end
+   forever begin
+      wait (cfg.enabled && cfg.monitor_clk);
+      monitor_vif();
+      sync_lock_fsm();
+   end
    
-   // WARNING If no time is consumed by this task, a zero-delay oscillation loop will occur and stall simulation
-   
-endtask : observe_reset
+endtask : monitor_clk
 
 
-task uvma_clk_mon_c::mon_pre_reset(uvm_phase phase);
+task uvma_clk_mon_c::monitor_vif();
    
-   // TODO Implement uvma_clk_mon_c::mon_pre_reset()
-   //      Ex: @(cntxt.vif.mon_cb);
+   if (cntxt.current_state != UVMA_CLK_STATE_LOCKED) begin
+      if (cntxt.mon_cycle_count == 0) begin
+         wait_for_first_cycle();
+      end
+      else begin
+         next_cycle();
+      end
+   end
+   else begin
+      next_cycle();
+   end
    
-   // WARNING If no time is consumed by this task, a zero-delay oscillation loop will occur and stall simulation
-   
-endtask : mon_pre_reset
+endtask : monitor_vif
 
 
-task uvma_clk_mon_c::mon_in_reset(uvm_phase phase);
-   
-   // TODO Implement uvma_clk_mon_c::mon_in_reset()
-   //      Ex: @(cntxt.vif.mon_cb);
-   
-   // WARNING If no time is consumed by this task, a zero-delay oscillation loop will occur and stall simulation
-   
-endtask : mon_in_reset
-
-
-task uvma_clk_mon_c::mon_post_reset(uvm_phase phase);
+task uvma_clk_mon_c::sync_lock_fsm();
    
    uvma_clk_mon_trn_c  trn;
    
-   sample_trn (trn);
-   process_trn(trn);
-   ap.write   (trn);
+   forever begin
+      case (cntxt.current_state)
+         UVMA_CLK_STATE_NO_SYNC: begin
+            if (cntxt.mon_cycle_count > 0) begin
+               cntxt.current_state = UVMA_CLK_STATE_SYNCHRONIZING;
+            end
+         end
+         
+         UVMA_CLK_STATE_SYNCHRONIZING: begin
+            if (cntxt.mon_cycle_count >= cfg.mon_lock_cycle_threshold) begin
+               cntxt.current_state = UVMA_CLK_STATE_LOCKED;
+               trn = uvma_clk_mon_trn_c::type_id::create("trn");
+               trn.event_type = UVMA_CLK_MON_TRN_EVENT_LOCKED;
+               trn.frequency  = cntxt.mon_frequency;
+               send_trn(trn);
+            end
+         end
+         
+         UVMA_CLK_STATE_LOCKED: begin
+            if (cntxt.mon_missed_edges >= cfg.mon_sync_missed_edges_threshold) begin
+               cntxt.current_state = UVMA_CLK_STATE_NO_SYNC;
+               trn = uvma_clk_mon_trn_c::type_id::create("trn");
+               trn.event_type = UVMA_CLK_MON_TRN_EVENT_LOST_LOCK;
+               send_trn(trn);
+            end
+         end
+         
+      endcase
+   end
    
-   `uvml_hrtbt()
-   
-endtask : mon_post_reset
+endtask : sync_lock_fsm
 
 
-task uvma_clk_mon_c::sample_trn(output uvma_clk_mon_trn_c trn);
+task uvma_clk_mon_c::wait_for_first_cycle();
    
-   bit  sampled_trn = 0;
-   
-   trn = uvma_clk_mon_trn_c::type_id::create("trn");
+   bit       saw_first_cycle = 0;
+   realtime  first_edge;
    
    do begin
-      @(cntxt.vif.mon_cb);
-      
-      // TODO Sample trn from vif
-      //      Ex: if (cntxt.vif.reset == 0) begin
-      //             if (cntxt.vif.mon_cb.enable) begin
-      //                sampled_trn   = 1;
-      //                trn.abc       = cntxt.vif.mon_cb.abc;
-      //                trn.xyz       = cntxt.vif.mon_cb.xyz;
-      //                trn.timestamp = $realtime();
-      //             end
-      //          end
-      
-      // WARNING If no time is consumed by this loop, a zero-delay oscillation loop will occur and stall simulation
-   end while (!sampled_trn);
+      @(cntxt.vif.clk);
+      if (cntxt.vif.clk === 1'b0) begin
+         @(cnxt.vif.clk === 1'b1);
+         first_edge = $realtime();
+         @(cnxt.vif.clk === 1'b0);
+         @(cnxt.vif.clk === 1'b1);
+         
+         saw_first_cycle = 1;
+         cntxt.mon_cycle_count++;
+         cntxt.mon_period    = $realtime() - first_edge;
+         cntxt.mon_frequency = 1.00/cntxt.mon_period;
+      end
+   end while (!saw_first_cycle);
    
-endtask : sample_trn
+endtask : wait_for_first_cycle
 
 
-function void uvma_clk_mon_c::process_trn(ref uvma_clk_mon_trn_c trn);
+
+task uvma_clk_mon_c::next_cycle();
    
-   // TODO Implement uvma_clk_mon_c::process_trn()
+   fork
+      // Timeout
+      begin
+         #(cntxt.mon_period * (1.00 + $itor(cfg.mon_tolerance)/100.0));
+         #(0); // To avoid race condition
+         cntxt.mon_missed_edges++;
+         cntxt.mon_cycle_count = 0;
+      end
+      
+      // Waits for new cycle
+      begin
+         @(cntxt.vif.clk === 1'b0);
+         @(cntxt.vif.clk === 1'b1);
+         
+         next_pos_edge = cntxt.mon_last_pos_edge + ((1.00 - $itor(cfg.mon_tolerance)/100.0) * cntxt.mon_period);
+         if ($realtime() < next_pos_edge) begin
+            // Too fast!
+            cntxt.mon_missed_edges++;
+            cntxt.mon_cycle_count = 0;
+         end
+         else begin
+            cntxt.mon_cycle_count++;
+            cntxt.mon_missed_edges = 0;
+         end
+         
+         cntxt.mon_last_pos_edge = $realtime();
+      end
+   join_any
+   disable fork;
    
-endfunction : process_trn
+endtask : next_cycle
+
+
+task uvma_clk_mon_c::send_trn(output uvma_clk_mon_trn_c trn);
+   
+   ap.write(trn);
+   `uvml_hrtbt()
+   
+endtask : send_trn
 
 
 `endif // __UVMA_CLK_MON_SV__

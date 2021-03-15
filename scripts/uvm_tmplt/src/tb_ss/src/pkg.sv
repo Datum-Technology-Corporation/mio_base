@@ -30,7 +30,7 @@ timeunit       1ns;
 timeprecision  1ps;
 
 // Interface(s)
-`include "uvmt_${name}_clk_gen_if.sv"
+`include "uvmt_${name}_probe_if.sv"
 
 
 /**
@@ -42,8 +42,9 @@ package uvmt_${name}_pkg;
    import uvm_pkg       ::*;
    import uvml_hrtbt_pkg::*;
    import uvml_logs_pkg ::*;
-   import uvma_${ral_agent_type}_pkg::*;
+   import uvma_${clk_agent_type}_pkg::*;
    import uvma_${reset_agent_type}_pkg::*;
+   import uvma_${ral_agent_type}_pkg::*;
    import uvme_${name}_pkg::*;
    
    // Constants / Structs / Enums

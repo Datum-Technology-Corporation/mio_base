@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -26,15 +26,15 @@
 class uvma_clk_mon_trn_c extends uvml_trn_mon_trn_c;
    
    // Data
-   // TODO Add uvma_clk_mon_trn_c data fields
-   //      Ex: logic        abc;
-   //          logic [7:0]  xyz;
+   real  frequency;
+   
+   // Metadata
+   uvma_clk_mon_trn_event_enum  event_type;
    
    
    `uvm_object_utils_begin(uvma_clk_mon_trn_c)
-      // TODO Add UVM field utils for data fields
-      //      Ex: `uvm_field_int(abc, UVM_DEFAULT)
-      //          `uvm_field_int(xyz, UVM_DEFAULT)
+      `uvm_field_enum(uvma_clk_mon_trn_event_enum, event_type, UVM_DEFAULT          )
+      `uvm_field_real(                             frequency , UVM_DEFAULT + UVM_DEC)
    `uvm_object_utils_end
    
    

@@ -30,8 +30,9 @@ class uvme_${name}_cntxt_c extends uvm_object;
    //      Ex: uvme_sub_env_cntxt_c  sub_env_cntxt;
    
    // Agent context handles
-   uvma_${ral_agent_type}_cntxt_c  ${ral_agent_type}_cntxt;
-   uvma_${reset_agent_type}_cntxt_c  reset_cntxt;
+   uvma_${clk_agent_type}_cntxt_c  ${clk_agent_name}_cntxt;
+   uvma_${reset_agent_type}_cntxt_c  ${reset_agent_name}_cntxt;
+   uvma_${ral_agent_type}_cntxt_c  ${ral_agent_name}_cntxt;
    
    // TODO Add scoreboard context handles
    //      Ex: uvml_sb_cntxt_c  sb_egress_cntxt;
@@ -46,8 +47,9 @@ class uvme_${name}_cntxt_c extends uvm_object;
        // TODO: Add sub-environments context field macros
        //       Ex: `uvm_field_object(sub_env_cntxt, UVM_DEFAULT)
       
-      `uvm_field_object(${ral_agent_type}_cntxt, UVM_DEFAULT)
-      `uvm_field_object(reset_cntxt, UVM_DEFAULT)
+      `uvm_field_object(${clk_agent_name}_cntxt, UVM_DEFAULT)
+      `uvm_field_object(${reset_agent_name}_cntxt, UVM_DEFAULT)
+      `uvm_field_object(${ral_agent_name}_cntxt, UVM_DEFAULT)
       
       // TODO Add scoreboard context field macros
       //      Ex: `uvm_field_object(sb_egress_cntxt , UVM_DEFAULT)
@@ -63,6 +65,12 @@ class uvme_${name}_cntxt_c extends uvm_object;
     */
    extern function new(string name="uvme_${name}_cntxt");
    
+   
+   /**
+    * TODO Describe uvme_${name}_cntxt_c::reset()
+    */
+   extern function void reset();
+   
 endclass : uvme_${name}_cntxt_c
 
 
@@ -76,8 +84,9 @@ function uvme_${name}_cntxt_c::new(string name="uvme_${name}_cntxt");
    // TODO Create environment cntxt objects
    //      Ex: sub_env_cntxt  = uvme_sub_env_cntxt_c::type_id::create("sub_env_cntxt");
    
-   ${ral_agent_type}_cntxt = uvma_${ral_agent_type}_cntxt_c::type_id::create("${ral_agent_type}_cntxt");
-   reset_cntxt = uvma_${reset_agent_type}_cntxt_c::type_id::create("reset_cntxt");
+   ${clk_agent_name}_cntxt = uvma_${reset_agent_type}_cntxt_c::type_id::create("${clk_agent_name}_cntxt");
+   ${reset_agent_name}_cntxt = uvma_${reset_agent_type}_cntxt_c::type_id::create("${reset_agent_name}_cntxt");
+   ${ral_agent_name}_cntxt = uvma_${ral_agent_type}_cntxt_c::type_id::create("${ral_agent_name}_cntxt");
    
    // TODO Create uvme_${name}_cntxt_c scoreboard context objects
    //      Ex: sb_egress_cntxt  = uvml_sb_cntxt_c::type_id::create("sb_egress_cntxt" );
@@ -87,6 +96,15 @@ function uvme_${name}_cntxt_c::new(string name="uvme_${name}_cntxt");
    sample_cntxt_e = new("sample_cntxt_e");
    
 endfunction : new
+
+
+function void uvme_${name}_cntxt_c::reset();
+   
+   ${clk_agent_name}_cntxt  .reset();
+   ${reset_agent_name}_cntxt.reset();
+   ${ral_agent_name}_cntxt  .reset();
+   
+endfunction : reset
 
 
 `pragma protect end

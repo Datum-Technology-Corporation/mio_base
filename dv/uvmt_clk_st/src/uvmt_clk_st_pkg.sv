@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -34,9 +34,6 @@
 timeunit       1ns;
 timeprecision  1ps;
 
-// Interface(s)
-`include "uvmt_clk_st_clknrst_gen_if.sv"
-
 
 /**
  * Encapsulates all the types and test cases for self-testing an
@@ -61,9 +58,7 @@ package uvmt_clk_st_pkg;
    // Base test
    `include "uvmt_clk_st_test_cfg.sv"
    `include "uvmt_clk_st_base_test.sv"
-   
-   // TODO Add tests
-   //      Ex: `include "uvmt_clk_st_sanity_test.sv"
+   `include "uvmt_clk_st_sanity_test.sv"
    
 endpackage : uvmt_clk_st_pkg
 

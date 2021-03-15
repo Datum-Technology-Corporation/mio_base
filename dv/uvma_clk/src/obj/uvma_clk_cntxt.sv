@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Datum Technology Corporation
+// Copyright 2021 Datum Technology Corporation
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // 
 // Licensed under the Solderpad Hardware License v 2.1 (the “License”); you may
@@ -30,15 +30,28 @@ class uvma_clk_cntxt_c extends uvm_object;
    virtual uvma_clk_if  vif;
    
    // Integrals
-   uvma_clk_reset_state_enum  reset_state = UVMA_RESET_STATE_PRE_RESET;
+   uvma_clk_state_enum  current_state     = UVMA_CLK_STATE_NO_SYNC;
+   realtime             drv_frequency     = 0;
+   int unsigned         mon_cycle_count   = 0;
+   int unsigned         mon_missed_edges  = 0;
+   realtime             mon_frequency     = 0;
+   realtime             mon_period        = 0;
+   realtime             mon_last_pos_edge = 0;
    
-   // Events
+   // Objects
+   process    clk_gen_process;
    uvm_event  sample_cfg_e;
    uvm_event  sample_cntxt_e;
    
    
    `uvm_object_utils_begin(uvma_clk_cntxt_c)
-      `uvm_field_enum(uvma_clk_reset_state_enum, reset_state, UVM_DEFAULT)
+      `uvm_field_enum(uvma_clk_state_enum, current_state    , UVM_DEFAULT)
+      `uvm_field_real(                     drv_frequency    , UVM_DEFAULT)
+      `uvm_field_int (                     mon_cycle_count  , UVM_DEFAULT)
+      `uvm_field_int (                     mon_missed_edges , UVM_DEFAULT)
+      `uvm_field_real(                     mon_frequency    , UVM_DEFAULT)
+      `uvm_field_real(                     mon_period       , UVM_DEFAULT)
+      `uvm_field_real(                     mon_last_pos_edge, UVM_DEFAULT)
       
       `uvm_field_event(sample_cfg_e  , UVM_DEFAULT)
       `uvm_field_event(sample_cntxt_e, UVM_DEFAULT)
@@ -70,7 +83,15 @@ endfunction : new
 
 function void uvma_clk_cntxt_c::reset();
    
-   // TODO Implement uvma_clk_cntxt_c::reset()
+   current_state     = UVMA_CLK_STATE_NO_SYNC;
+   drv_frequency     = 0;
+   mon_cycle_count   = 0;
+   mon_missed_edges  = 0;
+   mon_frequency     = 0;
+   mon_period        = 0;
+   mon_last_pos_edge = 0;
+   
+   clk_gen_process.kill();
    
 endfunction : reset
 
