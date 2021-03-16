@@ -59,32 +59,32 @@ class uvma_clk_mon_c extends uvm_monitor;
    /**
     * TODO Describe uvma_clk_mon_c::monitor_clk()
     */
-   extern virtual task monitor_clk(uvm_phase phase);
+   extern task monitor_clk(uvm_phase phase);
    
    /**
     * TODO Describe uvma_clk_mon_c::monitor_vif()
     */
-   extern virtual task monitor_vif();
+   extern task monitor_vif();
    
    /**
     * TODO Describe uvma_clk_mon_c::sync_lock_fsm()
     */
-   extern virtual task sync_lock_fsm();
+   extern task sync_lock_fsm();
    
    /**
     * TODO Describe uvma_clk_mon_c::wait_for_first_cycle()
     */
-   extern virtual task wait_for_first_cycle();
+   extern task wait_for_first_cycle();
    
    /**
     * TODO Describe uvma_clk_mon_c::next_cycle()
     */
-   extern virtual task next_cycle();
+   extern task next_cycle();
    
    /**
     * TODO Describe uvma_clk_mon_c::send_trn()
     */
-   extern virtual task send_trn(uvma_clk_mon_trn_c trn);
+   extern task send_trn(uvma_clk_mon_trn_c trn);
    
 endclass : uvma_clk_mon_c
 
@@ -127,9 +127,19 @@ endtask : run_phase
 task uvma_clk_mon_c::monitor_clk(uvm_phase phase);
    
    forever begin
-      wait (cfg.enabled && cfg.monitor_clk);
-      monitor_vif();
-      sync_lock_fsm();
+      wait (cfg.enabled && cfg.mon_enabled);
+      
+      fork
+         begin
+            monitor_vif  ();
+            sync_lock_fsm();
+         end
+         
+         begin
+            wait (!cfg.enabled || !cfg.mon_enabled);
+         end
+      join_any
+      disable fork;
    end
    
 endtask : monitor_clk

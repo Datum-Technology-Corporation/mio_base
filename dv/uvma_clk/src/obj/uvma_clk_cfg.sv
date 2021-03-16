@@ -34,6 +34,7 @@ class uvma_clk_cfg_c extends uvm_object;
    rand bit                      trn_log_enabled;
    
    // Configuration
+   rand bit           mon_enabled;
    rand int unsigned  drv_duty_cycle;
    rand int unsigned  mon_lock_cycle_threshold;
    rand int unsigned  mon_sync_missed_edges_threshold;
@@ -46,6 +47,12 @@ class uvma_clk_cfg_c extends uvm_object;
       `uvm_field_enum(uvm_sequencer_arb_mode , sqr_arb_mode     , UVM_DEFAULT)
       `uvm_field_int (                         cov_model_enabled, UVM_DEFAULT)
       `uvm_field_int (                         trn_log_enabled  , UVM_DEFAULT)
+      
+      `uvm_field_int(mon_enabled                    , UVM_DEFAULT          )
+      `uvm_field_int(drv_duty_cycle                 , UVM_DEFAULT + UVM_DEC)
+      `uvm_field_int(mon_lock_cycle_threshold       , UVM_DEFAULT + UVM_DEC)
+      `uvm_field_int(mon_sync_missed_edges_threshold, UVM_DEFAULT + UVM_DEC)
+      `uvm_field_int(mon_tolerance                  , UVM_DEFAULT + UVM_DEC)
    `uvm_object_utils_end
    
    
@@ -56,6 +63,7 @@ class uvma_clk_cfg_c extends uvm_object;
       soft cov_model_enabled == 0;
       soft trn_log_enabled   == 1;
       
+      soft mon_enabled                     ==  1;
       soft drv_duty_cycle                  == 50; // 50%
       soft mon_lock_cycle_threshold        == 10;
       soft mon_sync_missed_edges_threshold ==  1; 
