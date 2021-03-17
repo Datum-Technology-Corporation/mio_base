@@ -94,7 +94,7 @@ class uvml_logs_mon_trn_logger_c#(
    /**
     * Writes log header to disk
     */
-   extern virtual function void print_header();
+   extern function void print_header();
    
    /**
     * Writes msg to disk

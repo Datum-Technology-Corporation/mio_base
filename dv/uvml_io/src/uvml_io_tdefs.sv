@@ -20,7 +20,14 @@
 `define __UVML_IO_TDEFS_SV__
 
 
-
+typedef enum {
+   UVML_IO_FILE_BASE_CUSTOM,
+   UVML_IO_FILE_BASE_SIM_DIR,
+   UVML_IO_FILE_BASE_TEST_DIR,
+   UVML_IO_FILE_BASE_TEST_RESULT_DIR,
+   UVML_IO_FILE_BASE_DV_DIR,
+   UVML_IO_FILE_BASE_RTL_DIR
+} uvml_io_file_base_enum;
 
 
 `endif // __UVML_IO_TDEFS_SV__
