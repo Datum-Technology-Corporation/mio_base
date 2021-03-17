@@ -51,16 +51,16 @@ class uvma_clk_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
       case (t.action)
          UVMA_CLK_SEQ_ITEM_ACTION_START           : action_str = $sformatf("START @ %t Mhz", t.new_frequency);
          UVMA_CLK_SEQ_ITEM_ACTION_PAUSE           : action_str = $sformatf("PAUSE");
-         UVMA_CLK_SEQ_ITEM_ACTION_CHANGE_FREQUENCY: action_str = $sformatf("CHANGE %t -> %t Mhz", cntxt.old_frequency, t.new_frequency);
+         UVMA_CLK_SEQ_ITEM_ACTION_CHANGE_FREQUENCY: action_str = $sformatf("CHANGE %t -> %t Mhz", cntxt.mon_frequency, t.new_frequency);
          
          UVMA_CLK_SEQ_ITEM_ACTION_STOP: begin
             case (t.stop_value)
-               UVMA_CLK_SEQ_ITEM_STOP_VALUE_SAME  : action_str = $sformatf("STOP");
-               UVMA_CLK_SEQ_ITEM_STOP_VALUE_RANDOM: action_str = $sformatf("STOP RANDVAL");
-               UVMA_CLK_SEQ_ITEM_STOP_VALUE_0     : action_str = $sformatf("STOP ->0");
-               UVMA_CLK_SEQ_ITEM_STOP_VALUE_1     : action_str = $sformatf("STOP ->1");
-               UVMA_CLK_SEQ_ITEM_STOP_VALUE_Z     : action_str = $sformatf("STOP ->Z");
-               UVMA_CLK_SEQ_ITEM_STOP_VALUE_X     : action_str = $sformatf("STOP ->X");
+               UVMA_CLK_SEQ_ITEM_STOP_VALUE_SAME  : action_str = "STOP";
+               UVMA_CLK_SEQ_ITEM_STOP_VALUE_RANDOM: action_str = "STOP RANDVAL";
+               UVMA_CLK_SEQ_ITEM_STOP_VALUE_0     : action_str = "STOP ->0";
+               UVMA_CLK_SEQ_ITEM_STOP_VALUE_1     : action_str = "STOP ->1";
+               UVMA_CLK_SEQ_ITEM_STOP_VALUE_Z     : action_str = "STOP ->Z";
+               UVMA_CLK_SEQ_ITEM_STOP_VALUE_X     : action_str = "STOP ->X";
             endcase
          end
       endcase

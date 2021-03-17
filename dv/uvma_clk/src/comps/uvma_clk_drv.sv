@@ -61,37 +61,37 @@ class uvma_clk_drv_c extends uvm_driver#(
    /**
     * TODO Describe uvma_clk_drv_c::drv_vif()
     */
-   extern virtual task drv_vif(uvm_phase phase);
+   extern task drv_vif(uvm_phase phase);
    
    /**
     * TODO Describe uvma_clk_drv_c::drv_req()
     */
-   extern virtual task drv_req(ref uvma_clk_seq_item_c req);
+   extern task drv_req(ref uvma_clk_seq_item_c req);
    
    /**
     * TODO Describe uvma_clk_drv_c::action_start()
     */
-   extern virtual task action_start(ref uvma_clk_seq_item_c req);
+   extern task action_start(ref uvma_clk_seq_item_c req);
    
    /**
     * TODO Describe uvma_clk_drv_c::action_stop()
     */
-   extern virtual task action_stop(ref uvma_clk_seq_item_c req);
+   extern task action_stop(ref uvma_clk_seq_item_c req);
    
    /**
     * TODO Describe uvma_clk_drv_c::action_pause()
     */
-   extern virtual task action_pause(ref uvma_clk_seq_item_c req);
+   extern task action_pause(ref uvma_clk_seq_item_c req);
    
    /**
     * TODO Describe uvma_clk_drv_c::action_chg_freq()
     */
-   extern virtual task action_chg_freq(ref uvma_clk_seq_item_c req);
+   extern task action_chg_freq(ref uvma_clk_seq_item_c req);
    
    /**
     * TODO Describe uvma_clk_drv_c::clock_generator()
     */
-   extern virtual task clock_generator();
+   extern task clock_generator();
    
 endclass : uvma_clk_drv_c
 
@@ -167,7 +167,7 @@ task uvma_clk_drv_c::action_start(ref uvma_clk_seq_item_c req);
    cntxt.drv_frequency = req.new_frequency;
    
    if (cntxt.clk_gen_process != null) begin
-      if (cntxt.clk_gen_process.status() == RUNNING) begin
+      if (cntxt.clk_gen_process.status() == process::RUNNING) begin
          clock_running = 1;
       end
    end

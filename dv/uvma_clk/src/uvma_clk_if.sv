@@ -27,7 +27,7 @@
 interface uvma_clk_if;
    
    // Signals
-   wire  clk;
+   logic/*wire*/  clk;
    
    
    /// @name Singleton Implementation (i.e. without agent)

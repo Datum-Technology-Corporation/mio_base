@@ -49,14 +49,11 @@ class uvma_clk_mon_trn_logger_c extends uvml_logs_mon_trn_logger_c#(
       string event_str = "";
       
       case (t.event_type)
-         UVMA_CLK_MON_TRN_EVENT_STOPPED          : event_str = $sformatf("STOPPED");
-         UVMA_CLK_MON_TRN_EVENT_STARTED          : event_str = $sformatf("STARTED @ %t Mhz", t.new_frequency);
-         UVMA_CLK_MON_TRN_EVENT_CHANGED_FREQUENCY: event_str = $sformatf("CHANGED %t -> %t Mhz", t.old_frequency, t.new_frequency);
-         UVMA_CLK_MON_TRN_EVENT_X                : event_str = $sformatf("X");
-         UVMA_CLK_MON_TRN_EVENT_Z                : event_str = $sformatf("Z");
+         UVMA_CLK_MON_TRN_EVENT_LOCKED   : event_str = $sformatf("LOCKED @ %7.2f Mhz", t.frequency);
+         UVMA_CLK_MON_TRN_EVENT_LOST_LOCK: event_str = "LOST LOCK";
       endcase
       
-      fwrite($sformatf(" %t | %s ", $realtime(), event_str));
+      fwrite($sformatf(" %0t | %s ", $realtime(), event_str));
       
    endfunction : write
    
@@ -65,9 +62,9 @@ class uvma_clk_mon_trn_logger_c extends uvml_logs_mon_trn_logger_c#(
     */
    virtual function void print_header();
       
-      fwrite("-------------");
-      fwrite(" TIME | EVENT");
-      fwrite("-------------");
+      fwrite("---------------------");
+      fwrite("     TIME     | EVENT");
+      fwrite("---------------------");
       
    endfunction : print_header
    

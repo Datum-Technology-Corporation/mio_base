@@ -18,8 +18,9 @@
 
 // Directories
 +incdir+${DV_UVME_CLK_ST_SRC_PATH}
-+incdir+${DV_UVME_CLK_ST_SRC_PATH}/cov
-+incdir+${DV_UVME_CLK_ST_SRC_PATH}/vseq
++incdir+${DV_UVME_CLK_ST_SRC_PATH}/comps
++incdir+${DV_UVME_CLK_ST_SRC_PATH}/obj
++incdir+${DV_UVME_CLK_ST_SRC_PATH}/seq
 
 // Files
 ${DV_UVME_CLK_ST_SRC_PATH}/uvme_clk_st_pkg.sv

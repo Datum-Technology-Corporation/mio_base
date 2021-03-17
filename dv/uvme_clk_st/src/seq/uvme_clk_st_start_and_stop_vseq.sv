@@ -63,8 +63,8 @@ endfunction : new
 
 task uvme_clk_st_start_and_stop_vseq_c::body();
    
-   uvma_clk_seq_item  start_clk;
-   uvma_clk_seq_item  stop_clk ;
+   uvma_clk_seq_item_c  start_clk;
+   uvma_clk_seq_item_c  stop_clk ;
    
    fork
        begin

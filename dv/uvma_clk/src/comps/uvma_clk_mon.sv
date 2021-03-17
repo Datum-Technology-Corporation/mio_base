@@ -207,10 +207,10 @@ task uvma_clk_mon_c::wait_for_first_cycle();
    do begin
       @(cntxt.vif.clk);
       if (cntxt.vif.clk === 1'b0) begin
-         @(cnxt.vif.clk === 1'b1);
+         @(cntxt.vif.clk === 1'b1);
          first_edge = $realtime();
-         @(cnxt.vif.clk === 1'b0);
-         @(cnxt.vif.clk === 1'b1);
+         @(cntxt.vif.clk === 1'b0);
+         @(cntxt.vif.clk === 1'b1);
          
          saw_first_cycle = 1;
          cntxt.mon_cycle_count++;
@@ -224,6 +224,8 @@ endtask : wait_for_first_cycle
 
 
 task uvma_clk_mon_c::next_cycle();
+   
+   realtime  next_pos_edge;
    
    fork
       // Timeout
@@ -258,7 +260,7 @@ task uvma_clk_mon_c::next_cycle();
 endtask : next_cycle
 
 
-task uvma_clk_mon_c::send_trn(output uvma_clk_mon_trn_c trn);
+task uvma_clk_mon_c::send_trn(uvma_clk_mon_trn_c trn);
    
    ap.write(trn);
    `uvml_hrtbt()

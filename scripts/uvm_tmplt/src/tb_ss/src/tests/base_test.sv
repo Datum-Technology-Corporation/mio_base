@@ -129,13 +129,13 @@ class uvmt_${name}_base_test_c extends uvm_test;
    /**
     * Creates test_cfg and env_cfg. Assigns ral handle to env_cfg's.
     */
-   extern virtual function void create_cfg();
+   extern function void create_cfg();
    
    /**
     * 1. Calls test_cfg's process_cli_args()
     * 2. Calls randomize on 'this' and fatals out if it fails.
     */
-   extern virtual function void randomize_test();
+   extern function void randomize_test();
    
    /**
     * Configures uvml_default_hrtbt_monitor.
@@ -146,28 +146,28 @@ class uvmt_${name}_base_test_c extends uvm_test;
     * Assigns environment configuration (env_cfg) handle to environment (env)
     * using UVM Configuration Database.
     */
-   extern virtual function void assign_cfg();
+   extern function void assign_cfg();
    
    /**
     * Creates env_cntxt.
     */
-   extern virtual function void create_cntxt();
+   extern function void create_cntxt();
    
    /**
     * Assigns environment context (env_cntxt) handle to environment (env) using
     * UVM Configuration Database.
     */
-   extern virtual function void assign_cntxt();
+   extern function void assign_cntxt();
    
    /**
     * Creates env.
     */
-   extern virtual function void create_env();
+   extern function void create_env();
    
    /**
     * Creates additional (non-environment) components (and objects).
     */
-   extern virtual function void create_components();
+   extern function void create_components();
    
    /**
     * Prints overlined and underlined text in uppercase.
@@ -177,7 +177,7 @@ class uvmt_${name}_base_test_c extends uvm_test;
    /**
     * Fatals out after simulation_timeout has elapsed.
     */
-   extern virtual task simulation_timeout();
+   extern task simulation_timeout();
    
 endclass : uvmt_${name}_base_test_c
 

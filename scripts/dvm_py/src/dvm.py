@@ -23,6 +23,7 @@ Usage:
   dvm.py all  <target>
   dvm.py cmp  <target>
   dvm.py elab <target>
+  dvm.py cpel <target>
   dvm.py sim  <target>
   dvm.py clean
   dvm.py (-h | --help)
@@ -42,6 +43,7 @@ import subprocess
 
 dbg = True
 vivado_path   = "C:/Xilinx/Vivado/2019.2/bin/"
+uvm_home_path = "C:/Users/DavidOuellet-Poulin/Documents/Libraries/1800.2-2017-1.0"
 uvm_dpi_so    = "uvm_dpi"
 pwd           = os.getcwd()
 project_dir   = pwd + "/.."
@@ -63,12 +65,18 @@ def do_dispatch(args):
         args['elab' ] = True
         args['sim'  ] = True
     
+    if args['cpel']:
+        args['clean'] = True
+        args['cmp'  ] = True
+        args['elab' ] = True
+        args['sim'  ] = False
+    
     if args['clean']:
         do_clean()
     if args['cmp']:
-        #do_cmp(dv_path + "/uvmt_axis_st/uvmt_axis_st.flist", "uvmt_axis_st")
-        #do_cmp(dv_path + "/uvmt_pkt_snf/uvmt_pkt_snf.flist", "uvmt_axis_st")
-        do_cmp(dv_path + "/uvmt_clk_st/uvmt_clk_st.flist.xsim", "uvmt_clk_st")
+        #do_cmp(dv_path + "/uvmt_axis_st/uvmt_axis_st_pkt.flist", "uvmt_axis_st")
+        #do_cmp(dv_path + "/uvmt_pkt_snf/uvmt_pkt_snf_pkt.flist", "uvmt_axis_st")
+        do_cmp(dv_path + "/uvmt_clk_st/src/uvmt_clk_st_pkg.flist.xsim", "uvmt_clk_st")
     if args['elab']:
         #do_elab("uvmt_axis_st", "uvmt_axis_st_tb")
         #do_elab("uvmt_pkt_snf", "uvmt_pkt_snf_tb")
@@ -89,25 +97,25 @@ def do_paths():
     
     ### DV ###
     # Libraries
-    set_env_var("UVM_HOME"           , "C:/Users/DavidOuellet-Poulin/Documents/Libraries/1800.2-2017-1.0")
-    set_env_var("DV_UVM_PATH"        , dv_path + "/uvm"        )
-    set_env_var("DV_UVML_HRTBT_PATH" , dv_path + "/uvml_hrtbt" )
-    set_env_var("DV_UVML_TRN_PATH"   , dv_path + "/uvml_trn"   )
-    set_env_var("DV_UVML_LOGS_PATH"  , dv_path + "/uvml_logs"  )
-    set_env_var("DV_UVML_SB_PATH"    , dv_path + "/uvml_sb"    )
-    set_env_var("DV_UVML_RAL_PATH"   , dv_path + "/uvml_ral"   )
-    set_env_var("DV_UVMA_RESET_PATH" , dv_path + "/uvma_reset" )
-    set_env_var("DV_UVMA_CLK_PATH"   , dv_path + "/uvma_clk"   )
-    set_env_var("DV_UVME_CLK_ST_PATH", dv_path + "/uvme_st_clk")
-    set_env_var("DV_UVMT_CLK_ST_PATH", dv_path + "/uvmt_st_clk")
+    set_env_var("UVM_HOME"           , uvm_home_path)
+    set_env_var("DV_UVM_SRC_PATH"    , uvm_home_path            + "/src")
+    set_env_var("DV_UVML_HRTBT_SRC_PATH" , dv_path + "/uvml_hrtbt"  + "/src")
+    set_env_var("DV_UVML_TRN_SRC_PATH"   , dv_path + "/uvml_trn"    + "/src")
+    set_env_var("DV_UVML_LOGS_SRC_PATH"  , dv_path + "/uvml_logs"   + "/src")
+    set_env_var("DV_UVML_SB_SRC_PATH"    , dv_path + "/uvml_sb"     + "/src")
+    set_env_var("DV_UVML_RAL_SRC_PATH"   , dv_path + "/uvml_ral"    + "/src")
+    set_env_var("DV_UVMA_RESET_SRC_PATH" , dv_path + "/uvma_reset"  + "/src")
+    set_env_var("DV_UVMA_CLK_SRC_PATH"   , dv_path + "/uvma_clk"    + "/src")
+    set_env_var("DV_UVME_CLK_ST_SRC_PATH", dv_path + "/uvme_clk_st" + "/src")
+    set_env_var("DV_UVMT_CLK_ST_SRC_PATH", dv_path + "/uvmt_clk_st" + "/src")
     
     # Source
-    set_env_var("DV_UVMA_APB_PATH"    , dv_path + "/uvma_apb"    )
-    set_env_var("DV_UVMA_AXIS_PATH"   , dv_path + "/uvma_axis"   )
-    set_env_var("DV_UVME_PKT_SNF_PATH", dv_path + "/uvme_pkt_snf")
-    set_env_var("DV_UVME_AXIS_ST_PATH", dv_path + "/uvme_axis_st")
-    set_env_var("DV_UVMT_PKT_SNF_PATH", dv_path + "/uvmt_pkt_snf")
-    set_env_var("DV_UVMT_AXIS_ST_PATH", dv_path + "/uvmt_axis_st")
+    set_env_var("DV_UVMA_APB_SRC_PATH"    , dv_path + "/uvma_apb"    )
+    set_env_var("DV_UVMA_AXIS_SRC_PATH"   , dv_path + "/uvma_axis"   )
+    set_env_var("DV_UVME_PKT_SNF_SRC_PATH", dv_path + "/uvme_pkt_snf")
+    set_env_var("DV_UVME_AXIS_ST_SRC_PATH", dv_path + "/uvme_axis_st")
+    set_env_var("DV_UVMT_PKT_SNF_SRC_PATH", dv_path + "/uvmt_pkt_snf")
+    set_env_var("DV_UVMT_AXIS_ST_SRC_PATH", dv_path + "/uvmt_axis_st")
 
 
 

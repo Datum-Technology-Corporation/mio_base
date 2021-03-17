@@ -43,7 +43,7 @@ package uvme_clk_st_pkg;
    import uvml_logs_pkg ::*;
    import uvml_trn_pkg  ::*;
    import uvml_sb_pkg   ::*;
-   import uvma_clk_pkg::*;
+   import uvma_clk_pkg  ::*;
    
    // Constants / Structs / Enums
    `include "uvme_clk_st_constants.sv"

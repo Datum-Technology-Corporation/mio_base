@@ -89,22 +89,22 @@ class uvma_${name}_cov_model_c extends uvm_component;
    /**
     * TODO Describe uvma_${name}_cov_model_c::sample_cfg()
     */
-   extern virtual function void sample_cfg();
+   extern function void sample_cfg();
    
    /**
     * TODO Describe uvma_${name}_cov_model_c::sample_cntxt()
     */
-   extern virtual function void sample_cntxt();
+   extern function void sample_cntxt();
    
    /**
     * TODO Describe uvma_${name}_cov_model_c::sample_mon_trn()
     */
-   extern virtual function void sample_mon_trn();
+   extern function void sample_mon_trn();
    
    /**
     * TODO Describe uvma_${name}_cov_model_c::sample_seq_item()
     */
-   extern virtual function void sample_seq_item();
+   extern function void sample_seq_item();
    
 endclass : uvma_${name}_cov_model_c
 

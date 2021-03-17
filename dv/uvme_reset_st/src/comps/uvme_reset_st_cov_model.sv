@@ -102,27 +102,27 @@ class uvme_reset_st_cov_model_c extends uvm_component;
    /**
     * TODO Describe uvme_reset_st_cov_model_c::sample_cfg()
     */
-   extern virtual function void sample_cfg();
+   extern function void sample_cfg();
    
    /**
     * TODO Describe uvme_reset_st_cov_model_c::sample_cntxt()
     */
-   extern virtual function void sample_cntxt();
+   extern function void sample_cntxt();
    
    /**
     * TODO Describe uvme_reset_st_cov_model_c::sample_active_seq_item()
     */
-   extern virtual function void sample_active_seq_item();
+   extern function void sample_active_seq_item();
    
    /**
     * TODO Describe uvme_reset_st_cov_model_c::sample_active_mon_trn()
     */
-   extern virtual function void sample_active_mon_trn();
+   extern function void sample_active_mon_trn();
    
    /**
     * TODO Describe uvme_reset_st_cov_model_c::sample_passive_mon_trn()
     */
-   extern virtual function void sample_passive_mon_trn();
+   extern function void sample_passive_mon_trn();
    
 endclass : uvme_reset_st_cov_model_c
 

@@ -23,7 +23,7 @@
 /**
  * TODO Describe uvmt_clk_st_sanity_test_c
  */
-class uvmt_clk_st_sanity_test_c extends uvmt_uvmt_clk_st_base_test_c;
+class uvmt_clk_st_sanity_test_c extends uvmt_clk_st_base_test_c;
    
    rand uvme_clk_st_start_and_stop_vseq_c  start_and_stop_vseq;
    
