@@ -29,7 +29,7 @@ class uvmt_${name}_reg_base_test_c extends uvmt_${name}_base_test_c;
    uvm_reg_block  selected_block;
    
    
-   `uvm_component_utils(uvmt_${name}_reg_base_test_c)
+   `uvm_component_utils_begin(uvmt_${name}_reg_base_test_c)
       `uvm_field_object(selected_block, UVM_DEFAULT)
    `uvm_component_utils_end
    

@@ -25,7 +25,12 @@
  */
 class uvml_trn_seq_item_c extends uvm_sequence_item;
   
+   bit  may_drop  = 0;
+   bit  has_error = 0;
+   
   `uvm_object_utils_begin(uvml_trn_mon_trn_c)
+      `uvm_field_int(may_drop , UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
+      `uvm_field_int(has_error, UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
   `uvm_object_utils_end
   
   

@@ -63,12 +63,7 @@ package uvme_${name}_pkg;
    `include "uvme_${name}_env.sv"
    
    // Sequences
-   `include "uvme_${name}_base_vseq.sv"
-   `include "uvme_${name}_${clk_agent_name}_vseq.sv"
-   `include "uvme_${name}_${reset_agent_name}_vseq.sv"
-   `include "uvme_${name}_reg_base_vseq.sv"
-   `include "uvme_${name}_reg_bit_bash_vseq.sv"
-   `include "uvme_${name}_reg_hw_reset_vseq.sv"
+   `include "uvme_${name}_seq_lib.sv"
    
 endpackage : uvme_${name}_pkg
 

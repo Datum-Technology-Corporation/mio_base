@@ -21,7 +21,7 @@
 
 
 /**
- * TODO Describe uvml_io_file_c
+ * Models a standard OS File.
  */
 class uvml_io_file_c extends uvm_object;
    
@@ -64,12 +64,12 @@ class uvml_io_file_c extends uvm_object;
    /**
     * TODO Describe uvml_io_file_c::readline()
     */
-   extern function string readline(output bit eof);
+   extern function string readline();
    
    /**
     * TODO Describe uvml_io_file_c::write()
     */
-   function void write(string text);
+   extern function void write(string text);
    
    /**
     * TODO Describe uvml_io_file_c::writeline()
@@ -131,7 +131,7 @@ function bit uvml_io_file_c::close();
 endfunction : close
 
 
-function string uvml_io_file_c::readline(output bit eof);
+function string uvml_io_file_c::readline();
    
    if (!is_open()) begin
       `uvm_error("FILE", $sformatf("Attempting to read from file that isn't open: %s", get_path()))
@@ -145,8 +145,6 @@ function string uvml_io_file_c::readline(output bit eof);
          readline = "";
       end
    end
-   
-   eof = is_eof();
    
 endfunction : readline
 
