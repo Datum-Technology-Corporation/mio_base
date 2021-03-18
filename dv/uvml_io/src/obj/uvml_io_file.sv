@@ -67,6 +67,11 @@ class uvml_io_file_c extends uvm_object;
    extern function string readline(output bit eof);
    
    /**
+    * TODO Describe uvml_io_file_c::write()
+    */
+   function void write(string text);
+   
+   /**
     * TODO Describe uvml_io_file_c::writeline()
     */
    extern function void writeline(string text);
@@ -155,7 +160,7 @@ function void uvml_io_file_c::write(string text);
       $fwrite(fhandle, text);
    end
    
-endfunction : writeline
+endfunction : write
 
 
 function void uvml_io_file_c::writeline(string text);
