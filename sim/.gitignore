@@ -1,3 +1,6 @@
 /*.log
 /*.pb
 /xsim.dir/*/*.*
+/xsim.dir/*.*
+/xsim.dir/*
+/*.jou

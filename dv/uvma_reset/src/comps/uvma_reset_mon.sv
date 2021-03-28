@@ -142,12 +142,12 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
    trn = uvma_reset_mon_trn_c::type_id::create("trn");
    
    do begin
-      @(cntxt.vif.passive_mp.mon_cb);
+      @(cntxt.vif./*passive_mp.*/mon_cb);
       case (cntxt.reset_state)
          UVMA_RESET_STATE_PRE_RESET: begin
             case (cfg.polarity)
                UVMA_RESET_POLARITY_ACTIVE_LOW : begin
-                  if (cntxt.vif.passive_mp.mon_cb.reset_n === 0) begin
+                  if (cntxt.vif./*passive_mp.*/mon_cb.reset_n === 0) begin
                      cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
                      trn.timestamp_start = $realtime();
                      trn.num_cycles++;
@@ -155,7 +155,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
                end
                
                UVMA_RESET_POLARITY_ACTIVE_HIGH: begin
-                  if (cntxt.vif.passive_mp.mon_cb.reset === 1) begin
+                  if (cntxt.vif./*passive_mp.*/mon_cb.reset === 1) begin
                      cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
                      trn.timestamp_start = $realtime();
                      trn.num_cycles++;
@@ -169,7 +169,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
          UVMA_RESET_STATE_IN_RESET: begin
             case (cfg.polarity)
                UVMA_RESET_POLARITY_ACTIVE_LOW : begin
-                  if (cntxt.vif.passive_mp.mon_cb.reset_n === 1) begin
+                  if (cntxt.vif./*passive_mp.*/mon_cb.reset_n === 1) begin
                      cntxt.reset_state = UVMA_RESET_STATE_POST_RESET;
                      trn.timestamp_end = $realtime();
                      sampled_trn       = 1;
@@ -180,7 +180,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
                end
                
                UVMA_RESET_POLARITY_ACTIVE_HIGH: begin
-                  if (cntxt.vif.passive_mp.mon_cb.reset === 0) begin
+                  if (cntxt.vif./*passive_mp.*/mon_cb.reset === 0) begin
                      cntxt.reset_state = UVMA_RESET_STATE_POST_RESET;
                      trn.timestamp_end = $realtime();
                      sampled_trn       = 1;
@@ -197,7 +197,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
          UVMA_RESET_STATE_POST_RESET: begin
             case (cfg.polarity)
                UVMA_RESET_POLARITY_ACTIVE_LOW : begin
-                  if (cntxt.vif.passive_mp.mon_cb.reset_n === 0) begin
+                  if (cntxt.vif./*passive_mp.*/mon_cb.reset_n === 0) begin
                      cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
                      trn.timestamp_start = $realtime();
                      trn.num_cycles++;
@@ -205,7 +205,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
                end
                
                UVMA_RESET_POLARITY_ACTIVE_HIGH: begin
-                  if (cntxt.vif.passive_mp.mon_cb.reset === 1) begin
+                  if (cntxt.vif./*passive_mp.*/mon_cb.reset === 1) begin
                      cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
                      trn.timestamp_start = $realtime();
                      trn.num_cycles++;

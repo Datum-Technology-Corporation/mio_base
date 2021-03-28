@@ -76,15 +76,18 @@ def do_dispatch(args):
     if args['cmp']:
         #do_cmp(dv_path + "/uvmt_axis_st/uvmt_axis_st_pkt.flist", "uvmt_axis_st")
         #do_cmp(dv_path + "/uvmt_pkt_snf/uvmt_pkt_snf_pkt.flist", "uvmt_axis_st")
-        do_cmp(dv_path + "/uvmt_clk_st/src/uvmt_clk_st_pkg.flist.xsim", "uvmt_clk_st")
+        #do_cmp(dv_path + "/uvmt_clk_st/src/uvmt_clk_st_pkg.flist.xsim", "uvmt_clk_st")
+        do_cmp(dv_path + "/uvmt_reset_st/src/uvmt_reset_st_pkg.flist.xsim", "uvmt_reset_st")
     if args['elab']:
         #do_elab("uvmt_axis_st", "uvmt_axis_st_tb")
         #do_elab("uvmt_pkt_snf", "uvmt_pkt_snf_tb")
-        do_elab("uvmt_clk_st", "uvmt_clk_st_tb")
+        #do_elab("uvmt_clk_st", "uvmt_clk_st_tb")
+        do_elab("uvmt_reset_st", "uvmt_reset_st_tb")
     if args['sim']:
         #do_sim("uvmt_axis_st_tb", "uvmt_axis_st_rand_traffic_test", 1, ["SIM_DIR_RESULTS=./"])
         #do_sim("uvmt_pkt_snf_tb", "uvmt_pkt_snf_base_test", 1, ["SIM_DIR_RESULTS=" + pwd + "/"])
-        do_sim("uvmt_clk_st_tb", "uvmt_clk_st_sanity_test", 1, ["SIM_DIR_RESULTS=" + pwd + "/"])
+        #do_sim("uvmt_clk_st_tb", "uvmt_clk_st_sanity_test", 1, ["SIM_DIR_RESULTS=" + pwd + "/"])
+        do_sim("uvmt_reset_st_tb", "uvmt_reset_st_sanity_test", 1, ["SIM_DIR_RESULTS=" + pwd + "/"])
 
 
 
@@ -99,15 +102,17 @@ def do_paths():
     # Libraries
     set_env_var("UVM_HOME"           , uvm_home_path)
     set_env_var("DV_UVM_SRC_PATH"    , uvm_home_path            + "/src")
-    set_env_var("DV_UVML_HRTBT_SRC_PATH" , dv_path + "/uvml_hrtbt"  + "/src")
-    set_env_var("DV_UVML_TRN_SRC_PATH"   , dv_path + "/uvml_trn"    + "/src")
-    set_env_var("DV_UVML_LOGS_SRC_PATH"  , dv_path + "/uvml_logs"   + "/src")
-    set_env_var("DV_UVML_SB_SRC_PATH"    , dv_path + "/uvml_sb"     + "/src")
-    set_env_var("DV_UVML_RAL_SRC_PATH"   , dv_path + "/uvml_ral"    + "/src")
-    set_env_var("DV_UVMA_RESET_SRC_PATH" , dv_path + "/uvma_reset"  + "/src")
-    set_env_var("DV_UVMA_CLK_SRC_PATH"   , dv_path + "/uvma_clk"    + "/src")
-    set_env_var("DV_UVME_CLK_ST_SRC_PATH", dv_path + "/uvme_clk_st" + "/src")
-    set_env_var("DV_UVMT_CLK_ST_SRC_PATH", dv_path + "/uvmt_clk_st" + "/src")
+    set_env_var("DV_UVML_HRTBT_SRC_PATH"   , dv_path + "/uvml_hrtbt"    + "/src")
+    set_env_var("DV_UVML_TRN_SRC_PATH"     , dv_path + "/uvml_trn"      + "/src")
+    set_env_var("DV_UVML_LOGS_SRC_PATH"    , dv_path + "/uvml_logs"     + "/src")
+    set_env_var("DV_UVML_SB_SRC_PATH"      , dv_path + "/uvml_sb"       + "/src")
+    set_env_var("DV_UVML_RAL_SRC_PATH"     , dv_path + "/uvml_ral"      + "/src")
+    set_env_var("DV_UVMA_RESET_SRC_PATH"   , dv_path + "/uvma_reset"    + "/src")
+    set_env_var("DV_UVME_RESET_ST_SRC_PATH", dv_path + "/uvme_reset_st" + "/src")
+    set_env_var("DV_UVMT_RESET_ST_SRC_PATH", dv_path + "/uvmt_reset_st" + "/src")
+    set_env_var("DV_UVMA_CLK_SRC_PATH"     , dv_path + "/uvma_clk"      + "/src")
+    set_env_var("DV_UVME_CLK_ST_SRC_PATH"  , dv_path + "/uvme_clk_st"   + "/src")
+    set_env_var("DV_UVMT_CLK_ST_SRC_PATH"  , dv_path + "/uvmt_clk_st"   + "/src")
     
     # Source
     set_env_var("DV_UVMA_APB_SRC_PATH"    , dv_path + "/uvma_apb"    )
