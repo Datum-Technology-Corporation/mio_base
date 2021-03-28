@@ -46,7 +46,7 @@ class uvmt_${name}_hw_reset_test_c extends uvmt_${name}_reg_base_test_c;
    /**
     * Runs hw_reset_vseq on vsequencer.
     */
-   extern virtual task main_phase(uvm_phase phase);
+   extern virtual task configure_phase(uvm_phase phase);
    
 endclass : uvmt_${name}_hw_reset_test_c
 
@@ -60,16 +60,16 @@ function uvmt_${name}_hw_reset_test_c::new(string name="uvmt_${name}_hw_reset_te
 endfunction : new
 
 
-task uvmt_${name}_hw_reset_test_c::main_phase(uvm_phase phase);
+task uvmt_${name}_hw_reset_test_c::configure_phase(uvm_phase phase);
    
-   super.main_phase(phase);
+   super.configure_phase(phase);
    
    `uvm_info("TEST", $sformatf("Starting hw_reset virtual sequence:\n%s", hw_reset_vseq.sprint()), UVM_NONE)
    hw_reset_vseq.single_block = test_cfg.selected_reg_block;
    hw_reset_vseq.start(vsequencer);
    `uvm_info("TEST", "Finished hw_reset virtual sequence", UVM_NONE)
    
-endtask : main_phase
+endtask : configure_phase
 
 
 `endif // __UVMT_${name_uppercase}_HW_RESET_TEST_SV__

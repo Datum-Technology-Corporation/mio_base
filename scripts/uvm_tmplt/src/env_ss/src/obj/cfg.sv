@@ -133,8 +133,8 @@ function uvme_${name}_cfg_c::new(string name="uvme_${name}_cfg");
    ${ral_agent_name}_cfg = uvma_${ral_agent_type}_cfg_c::type_id::create("${ral_agent_name}_cfg");
    
    ${name}_ral = uvme_${name}_ral_c::type_id::create("${name}_ral");
+   ${name}_ral.cfg = this;
    ${name}_ral.build();
-   ${name}_ral.lock_model();
    
    // TODO Create scoreboard cfg objects
    //      Ex: sb_egress_cfg  = uvml_sb_cfg_c::type_id::create("sb_egress_cfg" );

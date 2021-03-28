@@ -46,7 +46,7 @@ class uvmt_${name}_bit_bash_test_c extends uvmt_${name}_reg_base_test_c;
    /**
     * Runs bit_bash_vseq on vsequencer.
     */
-   extern virtual task main_phase(uvm_phase phase);
+   extern virtual task configure_phase(uvm_phase phase);
    
 endclass : uvmt_${name}_bit_bash_test_c
 
@@ -60,16 +60,16 @@ function uvmt_${name}_bit_bash_test_c::new(string name="uvmt_${name}_bit_bash_te
 endfunction : new
 
 
-task uvmt_${name}_bit_bash_test_c::main_phase(uvm_phase phase);
+task uvmt_${name}_bit_bash_test_c::configure_phase(uvm_phase phase);
    
-   super.main_phase(phase);
+   super.configure_phase(phase);
    
    `uvm_info("TEST", $sformatf("Starting bit bash virtual sequence:\n%s", bit_bash_vseq.sprint()), UVM_NONE)
    bit_bash_vseq.single_block = test_cfg.selected_reg_block;
    bit_bash_vseq.start(vsequencer);
    `uvm_info("TEST", "Finished bit bash virtual sequence", UVM_NONE)
    
-endtask : main_phase
+endtask : configure_phase
 
 
 `endif // __UVMT_${name_uppercase}_BIT_BASH_TEST_SV__

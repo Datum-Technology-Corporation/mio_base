@@ -188,21 +188,21 @@ endtask : drv_req
 
 task uvma_reset_drv_c::drv_req_synchronous(ref uvma_reset_seq_item_c req);
    
-   @(cntxt.vif.drv_cb);
+   @(cntxt.vif.active_mp.drv_cb);
    case (cfg.polarity)
-      UVMA_RESET_POLARITY_ACTIVE_LOW : cntxt.vif.drv_cb.reset_n <= 0;
-      UVMA_RESET_POLARITY_ACTIVE_HIGH: cntxt.vif.drv_cb.reset   <= 1;
+      UVMA_RESET_POLARITY_ACTIVE_LOW : cntxt.vif.active_mp.drv_cb.reset_n <= 0;
+      UVMA_RESET_POLARITY_ACTIVE_HIGH: cntxt.vif.active_mp.drv_cb.reset   <= 1;
       
       default: `uvm_fatal("RESET_DRV", $sformatf("Invalid cfg.polarity: %s", cfg.polarity.name()))
    endcase
    
    repeat (req.duration) begin
-      @(cntxt.vif.drv_cb);
+      @(cntxt.vif.active_mp.drv_cb);
    end
    
    case (cfg.polarity)
-      UVMA_RESET_POLARITY_ACTIVE_LOW : cntxt.vif.drv_cb.reset_n <= 1;
-      UVMA_RESET_POLARITY_ACTIVE_HIGH: cntxt.vif.drv_cb.reset   <= 0;
+      UVMA_RESET_POLARITY_ACTIVE_LOW : cntxt.vif.active_mp.drv_cb.reset_n <= 1;
+      UVMA_RESET_POLARITY_ACTIVE_HIGH: cntxt.vif.active_mp.drv_cb.reset   <= 0;
       
       default: `uvm_fatal("RESET_DRV", $sformatf("Invalid cfg.polarity: %s", cfg.polarity.name()))
    endcase

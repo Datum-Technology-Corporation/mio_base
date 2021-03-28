@@ -314,6 +314,7 @@ endfunction: connect_scoreboard
 
 function void uvme_${name}_env_c::connect_ral();
    
+   ral.cntxt = cntxt;
    ral.default_map.set_sequencer(${ral_agent_name}_agent.sequencer, reg_adapter);
    ral.default_map.set_auto_predict(1);
    

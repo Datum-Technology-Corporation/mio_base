@@ -29,7 +29,7 @@
 
 `define uvml_hrtbt_set_cfg(PARAM, VALUE) \
    uvml_default_hrtbt.PARAM = VALUE; \
-   `uvm_info("HRTBT", {"Default heartbeat field '", `uvml_hrtbt_stringify(PARAM), "' set to '", `uvml_hrtbt_stringify(VALUE), "'"}, UVM_NONE) \
+   `uvm_info("HRTBT", {"Default heartbeat field '", `uvml_hrtbt_stringify(PARAM), "' set to '", $sformatf("%0d", VALUE), "'"}, UVM_NONE) \
 
 `define uvml_hrtbt_reset \
    uvml_default_hrtbt.reset(); \

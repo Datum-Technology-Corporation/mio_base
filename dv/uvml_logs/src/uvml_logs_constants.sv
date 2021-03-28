@@ -25,5 +25,4 @@ const string  uvml_logs_default_trn_log_dir_name =         "trn_log";
 const string  uvml_logs_default_trn_fextension   =             "log";
 
 
-
 `endif // __UVML_LOGS_CONSTANTS_SV__

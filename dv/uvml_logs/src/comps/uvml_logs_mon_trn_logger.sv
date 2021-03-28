@@ -94,7 +94,7 @@ class uvml_logs_mon_trn_logger_c#(
    /**
     * Writes log header to disk
     */
-   extern function void print_header();
+   extern virtual function void print_header();
    
    /**
     * Writes msg to disk
@@ -146,10 +146,10 @@ function void uvml_logs_mon_trn_logger_c::end_of_elaboration_phase(uvm_phase pha
    
    // Assemble final path
    if (name == "") begin
-     fpath = {cli_args_result, "/", sub_dir, "/", parent.get_full_name(), ".trn.", fextension};
+     fpath = {cli_args_result, "/", sub_dir, "/", parent.get_full_name(), ".mon_trn.", fextension};
    end
    else begin
-     fpath = {cli_args_result, "/", sub_dir, "/", parent.get_full_name(), name, ".trn.", fextension};
+     fpath = {cli_args_result, "/", sub_dir, "/", parent.get_full_name(), name, ".mon_trn.", fextension};
    end
    
    // Opem file handle and check 

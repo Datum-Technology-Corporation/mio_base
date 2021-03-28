@@ -23,8 +23,11 @@
 /**
  * Encapsulates all signals and clocking of Clock interface. Used by
  * monitor (uvma_clk_mon_c) and driver (uvma_clk_drv_c).
+ * 
+ * Provides equivalent implementation to uvma_clk_drv_c::clock_generator() for
+ * possible use in emulation?
  */
-interface uvma_clk_if;
+interface uvma_clk_if();
    
    // Signals
    logic/*wire*/  clk;
@@ -34,27 +37,38 @@ interface uvma_clk_if;
    /// @{
    
    // State variables
-   bit       clk_started = 0;
-   realtime  clk_period  = 10ns;
+   bit           clk_started    = 0;
+   int unsigned  clk_frequency  = uvma_clk_default_frequency;
+   real          clk_duty_cycle = uvma_clk_default_duty_cycle;
    
    
    /**
     * Generates clk signal.
     */
    initial begin
+      real  period, period_duty_cycle_on, period_duty_cycle_off;
+      
+      // We re-calculate each time because the frequency can change at any moment
+      period = $itor(clk_frequency) / 10_000.0; // Period is in ps and frequency is in Hz so we cheat
+      period_duty_cycle_on  = period * clk_duty_cycle/100.0;
+      period_duty_cycle_off = period - period_duty_cycle_on;
+      
       wait (clk_started);
+      clk = 0;
       fork
          forever begin
-            #(clk_period/2) clk = ~clk;
+            #(period_duty_cycle_off * 1ps) clk = 1'b1;
+            #(period_duty_cycle_on  * 1ps) clk = 1'b0;
          end
       join_none
    end
    
    /**
-    * Sets clock period in ps.
+    * Sets clock parameters.
     */
-   function void set_clk_period(realtime period);
-      clk_period = period * 1ps;
+   function void set_clk_period(int unsigned frequency, real duty_cycle);
+      clk_frequency  = frequency;
+      clk_duty_cycle = duty_cycle;
    endfunction : set_clk_period
    
    /**

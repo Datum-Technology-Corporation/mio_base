@@ -20,7 +20,8 @@
 `define __UVMA_CLK_CONSTANTS_SV__
 
 
-
+const int unsigned  uvma_clk_default_frequency  = 100_000_000; // 100 MHz
+const real          uvma_clk_default_duty_cycle = 0.5; // 50%
 
 
 `endif // __UVMA_CLK_CONSTANTS_SV__

@@ -151,10 +151,14 @@ endtask : drv_vif
 task uvma_clk_drv_c::drv_req(ref uvma_clk_seq_item_c req);
    
    case (req.action)
-      UVMA_CLK_SEQ_ITEM_ACTION_START           : action_start   (req);
       UVMA_CLK_SEQ_ITEM_ACTION_STOP            : action_stop    (req);
       UVMA_CLK_SEQ_ITEM_ACTION_PAUSE           : action_pause   (req);
       UVMA_CLK_SEQ_ITEM_ACTION_CHANGE_FREQUENCY: action_chg_freq(req);
+      
+      UVMA_CLK_SEQ_ITEM_ACTION_START: begin
+         action_chg_freq(req);
+         action_start   (req);
+      end
    endcase
    
 endtask : drv_req
@@ -212,28 +216,39 @@ endtask : action_chg_freq
 
 task uvma_clk_drv_c::clock_generator();
    
-   realtime  period, period_duty_cycle_on, period_duty_cycle_off;
+   real  period, period_duty_cycle_on, period_duty_cycle_off;
    
    cntxt.clk_gen_process = process::self();
    
    forever begin
-      if (!(cntxt.vif.clk inside {1'b0, 1'b1})) begin
+      if ((cntxt.vif.clk !== 1'b0) && (cntxt.vif.clk !== 1'b1)) begin
          cntxt.vif.clk = $urandom_range(0,1);
       end
       else begin
-         cntxt.vif.clk = ~cntxt.vif.clk;
+         if (cntxt.vif.clk === 1'b0) begin
+            cntxt.vif.clk = 1'b1;
+         end
+         else if (cntxt.vif.clk === 1'b1) begin
+            cntxt.vif.clk = 1'b0;
+         end
+         else begin
+            `uvm_error("CLK_DRV", $sformatf("Unexpected clk value (%h), setting to 0", cntxt.vif.clk))            cntxt.vif.clk = 1'b0;
+         end
       end
       
       // We re-calculate each time because the frequency can change at any moment via a sequence item
-      period = 1.0 / cntxt.drv_frequency;
+      period = cntxt.drv_frequency / 10_000.0; // Period is in ps and frequency is in Hz so we cheat
       period_duty_cycle_on  = period * $itor(cfg.drv_duty_cycle)/100.0;
       period_duty_cycle_off = period - period_duty_cycle_on;
       
       if (cntxt.vif.clk === 1'b1) begin
-         #(period_duty_cycle_on);
+         #(period_duty_cycle_on * 1ps);
+      end
+      else if (cntxt.vif.clk === 1'b0) begin
+         #(period_duty_cycle_off * 1ps);
       end
       else begin
-         #(period_duty_cycle_off);
+         `uvm_error("CLK_DRV", $sformatf("Unexpected clk value (%h). Skipping clock half-period.", cntxt.vif.clk))
       end
    end
    

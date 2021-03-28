@@ -25,7 +25,7 @@
  * monitor and driver.
  */
 interface uvma_reset_if (
-   input  clk
+   input logic clk
 );
    
    // Signals
@@ -48,6 +48,9 @@ interface uvma_reset_if (
       input  reset  ,
              reset_n;
    endclocking : mon_cb
+   
+   modport active_mp (clocking drv_cb);
+   modport passive_mp(clocking mon_cb);
    
 endinterface : uvma_reset_if
 
