@@ -20,7 +20,8 @@
 `define __UVMA_CLK_MACROS_SV__
 
 
-
+`define UVMA_CLK_DEFAULT_FREQUENCY   100_000_000
+`define UVMA_CLK_DEFAULT_DUTY_CYCLE           50
 
 
 `endif // __UVMA_CLK_MACROS_SV__
