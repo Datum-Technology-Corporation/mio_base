@@ -138,7 +138,7 @@ function string uvml_io_file_c::readline();
    end
    else begin
       if (!is_eof()) begin
-         readline = $fgets(fhandle);
+         $fgets(readline, fhandle);
       end
       else begin
          `uvm_warning("FILE", $sformatf("Trying to read past end of file: %s", get_path()))
