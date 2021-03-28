@@ -73,14 +73,14 @@ class uvme_clk_st_cfg_c extends uvm_object;
       }
       
       if (trn_log_enabled) {
-         soft active_cfg .trn_log_enabled == 1;
-         soft passive_cfg.trn_log_enabled == 1;
+         /*soft*/ active_cfg .trn_log_enabled == 1;
+         /*soft*/ passive_cfg.trn_log_enabled == 1;
       }
    }
    
    constraint sb_cfg_cons {
       if (scoreboarding_enabled) {
-         soft sb_cfg.enabled == 1;
+         /*soft*/ sb_cfg.enabled == 1;
       }
       else {
          sb_cfg.enabled == 0;

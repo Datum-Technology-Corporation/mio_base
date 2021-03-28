@@ -21,8 +21,8 @@
 
 
 /**
- * Component sampling transactions from a Clock virtual interface
- * (uvma_clk_if).
+ * Component sampling transactions from a Clock virtual interface (uvma_clk_if).
+ * @warnin This code has not been tested
  */
 class uvma_clk_mon_c extends uvm_monitor;
    
@@ -205,12 +205,12 @@ task uvma_clk_mon_c::wait_for_first_cycle();
    realtime  first_edge;
    
    do begin
-      @(cntxt.vif.clk);
+      wait ((cntxt.vif.clk === 1'b1) || (cntxt.vif.clk === 1'b0));
       if (cntxt.vif.clk === 1'b0) begin
-         @(cntxt.vif.clk === 1'b1);
+         wait (cntxt.vif.clk === 1'b1);
          first_edge = $realtime();
-         @(cntxt.vif.clk === 1'b0);
-         @(cntxt.vif.clk === 1'b1);
+         wait (cntxt.vif.clk === 1'b0);
+         wait (cntxt.vif.clk === 1'b1);
          
          saw_first_cycle = 1;
          cntxt.mon_cycle_count++;
@@ -220,7 +220,6 @@ task uvma_clk_mon_c::wait_for_first_cycle();
    end while (!saw_first_cycle);
    
 endtask : wait_for_first_cycle
-
 
 
 task uvma_clk_mon_c::next_cycle();
@@ -238,8 +237,8 @@ task uvma_clk_mon_c::next_cycle();
       
       // Waits for new cycle
       begin
-         @(cntxt.vif.clk === 1'b0);
-         @(cntxt.vif.clk === 1'b1);
+         wait (cntxt.vif.clk === 1'b0);
+         wait (cntxt.vif.clk === 1'b1);
          
          next_pos_edge = cntxt.mon_last_pos_edge + ((1.00 - $itor(cfg.mon_tolerance)/100.0) * cntxt.mon_period);
          if ($realtime() < next_pos_edge) begin
