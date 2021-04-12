@@ -47,7 +47,7 @@ package uvme_${name}_pkg;
    `include "uvme_${name}_tdefs.sv"
    
    // Register Abstraction Layer
-   `include "uvme_${name}_ral.sv"
+   `include "uvme_${name}_reg_block.sv"
    
    // Objects
    `include "uvme_${name}_cfg.sv"

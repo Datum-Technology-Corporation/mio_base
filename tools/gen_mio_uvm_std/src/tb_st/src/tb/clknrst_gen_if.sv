@@ -52,7 +52,7 @@ interface uvmt_${name}_st_clknrst_gen_if;
    /**
     * Sets clock period in ps.
     */
-   function void set_clk_period(realtime period);
+   function void set_clk_period(int unsigned period);
       clk_period = period * 1ps;
    endfunction : set_clk_period
    

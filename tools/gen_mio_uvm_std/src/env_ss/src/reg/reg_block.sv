@@ -16,15 +16,14 @@
 // 
 
 
-`ifndef __UVME_${name_uppercase}_RAL_SV__
-`define __UVME_${name_uppercase}_RAL_SV__
+`ifndef __UVME_${name_uppercase}_REG_BLOCK_SV__
+`define __UVME_${name_uppercase}_REG_BLOCK_SV__
 
 
 /**
- * Top-level object encapsulating ${name_normal_case} Register Abstraction Layer
- * (RAL).
+ * Top-level object encapsulating ${name_normal_case} Register Block.
  */
-class uvme_${name}_ral_c extends uvml_ral_reg_block_c;
+class uvme_${name}_reg_block_c extends uvml_reg_block_reg_block_c;
    
    // Objects
    uvme_${name}_cfg_c    cfg;
@@ -39,7 +38,7 @@ class uvme_${name}_ral_c extends uvml_ral_reg_block_c;
    //      Ex: rand uvme_${name}_xyz_reg_c  xyz;
    
    
-   `uvm_object_utils_begin(uvme_${name}_ral_c)
+   `uvm_object_utils_begin(uvme_${name}_reg_block_c)
       // TODO Add field macros for sub-block(s) and register(s)
       //      Ex: `uvm_field_object(abc, UVM_DEFAULT)
       //          `uvm_field_object(xyz, UVM_DEFAULT)
@@ -49,7 +48,7 @@ class uvme_${name}_ral_c extends uvml_ral_reg_block_c;
    /**
     * Default constructor.
     */
-   extern function new(string name="uvme_${name}_ral", int has_coverage=UVM_NO_COVERAGE);
+   extern function new(string name="uvme_${name}_reg_block", int has_coverage=UVM_NO_COVERAGE);
    
    /**
     * Creates register and register block instances and associates them with this
@@ -77,20 +76,20 @@ class uvme_${name}_ral_c extends uvml_ral_reg_block_c;
     */
    extern function void add_regs_to_map();
    
-endclass : uvme_${name}_ral_c
+endclass : uvme_${name}_reg_block_c
 
 
 `pragma protect begin
 
 
-function uvme_${name}_ral_c::new(string name="uvme_${name}_ral", int has_coverage=UVM_NO_COVERAGE);
+function uvme_${name}_reg_block_c::new(string name="uvme_${name}_reg_block", int has_coverage=UVM_NO_COVERAGE);
    
    super.new(name, has_coverage);
    
 endfunction : new
 
 
-function void uvme_${name}_ral_c::build();
+function void uvme_${name}_reg_block_c::build();
    
    super.build();
    
@@ -103,9 +102,9 @@ function void uvme_${name}_ral_c::build();
 endfunction: build
 
 
-function void uvme_${name}_ral_c::create_blocks();
+function void uvme_${name}_reg_block_c::create_blocks();
    
-   // TODO Implement uvme_${name}_ral_c::create_blocks()
+   // TODO Implement uvme_${name}_reg_block_c::create_blocks()
    //      Ex: abc = uvme_${name}_abc_reg_block_c::type_id::create("abc");
    //          abc.configure(this);
    //          abc.build();
@@ -113,9 +112,9 @@ function void uvme_${name}_ral_c::create_blocks();
 endfunction : create_blocks
 
 
-function void uvme_${name}_ral_c::create_regs();
+function void uvme_${name}_reg_block_c::create_regs();
    
-   // TODO Implement uvme_${name}_ral_c::create_regs()
+   // TODO Implement uvme_${name}_reg_block_c::create_regs()
    //      Ex:  xyz = uvme_${name}_xyz_reg_c::type_id::create("xyz");
    //           xyz.configure(this);
    //           xyz.build();
@@ -123,21 +122,21 @@ function void uvme_${name}_ral_c::create_regs();
 endfunction : create_regs
 
 
-function void uvme_${name}_ral_c::create_reg_map();
+function void uvme_${name}_reg_block_c::create_reg_map();
    
    default_map = create_map(
       .name     ("default_map"),
-      .base_addr(cfg.ral_base_address),
-      .n_bytes  (uvme_${name}_ral_reg_n_bytes),
+      .base_addr(cfg.reg_block_base_address),
+      .n_bytes  (uvme_${name}_reg_block_reg_n_bytes),
       .endian   (UVM_LITTLE_ENDIAN)
    );
    
 endfunction : create_reg_map
 
 
-function void uvme_${name}_ral_c::add_regs_to_map();
+function void uvme_${name}_reg_block_c::add_regs_to_map();
    
-   // TODO Implement uvme_${name}_ral_c::add_regs_to_map()
+   // TODO Implement uvme_${name}_reg_block_c::add_regs_to_map()
    //      Ex: default_map.add_reg(
    //             .rg    (xyz),
    //             .offset(32'h00_00_00_00),
@@ -150,4 +149,4 @@ endfunction : add_regs_to_map
 `pragma protect end
 
 
-`endif // _UVME_${name_uppercase}_RAL_SV__
+`endif // _UVME_${name_uppercase}_REG_BLOCK_SV__

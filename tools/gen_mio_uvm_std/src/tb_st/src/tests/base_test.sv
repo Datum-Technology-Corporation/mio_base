@@ -222,8 +222,10 @@ task uvmt_${name}_st_base_test_c::reset_phase(uvm_phase phase);
    
    `uvm_info("TEST", $sformatf("Asserting reset for %0t", (test_cfg.reset_period * 1ns)), UVM_NONE)
    clknrst_gen_vif.assert_reset();
+   `uvml_hrtbt()
    #(test_cfg.reset_period * 1ns);
    clknrst_gen_vif.deassert_reset();
+   `uvml_hrtbt()
    `uvm_info("TEST", "De-asserted reset", UVM_NONE)
    
 endtask : reset_phase

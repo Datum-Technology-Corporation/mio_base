@@ -16,15 +16,13 @@
 // 
 
 
-`ifndef __UVMT_${name_uppercase}_ST_CONSTANTS_SV__
-`define __UVMT_${name_uppercase}_ST_CONSTANTS_SV__
+`ifndef __UVMT_${name_uppercase}_CONSTANTS_SV__
+`define __UVMT_${name_uppercase}_CONSTANTS_SV__
 
 
-const int unsigned uvmt_${name}_st_default_clk_period          =     10_000; //  10 ns (100 Mhz)
-const int unsigned uvmt_${name}_st_default_reset_period        =         10; //  10 ns
-const int unsigned uvmt_${name}_st_default_startup_timeout     =    200_000; //  2 us // TODO Set default Heartbeat Monitor startup timeout
-const int unsigned uvmt_${name}_st_default_heartbeat_period    =    200_000; //  2 us // TODO Set default Heartbeat Monitor period
-const int unsigned uvmt_${name}_st_default_simulation_timeout  = 10_000_000; // 10 ms // TODO Set default simulation timeout
+const int unsigned uvmt_${name}_default_startup_timeout     =    20_000; //  20 us // TODO Set default Heartbeat Monitor startup timeout
+const int unsigned uvmt_${name}_default_heartbeat_period    =    20_000; //  20 us // TODO Set default Heartbeat Monitor period
+const int unsigned uvmt_${name}_default_simulation_timeout  = 1_000_000; //   1 ms // TODO Set default simulation timeout
 
 
-`endif // __UVMT_${name_uppercase}_ST_CONSTANTS_SV__
+`endif // __UVMT_${name_uppercase}_CONSTANTS_SV__
