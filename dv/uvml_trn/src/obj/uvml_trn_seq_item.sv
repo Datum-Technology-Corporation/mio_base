@@ -24,9 +24,12 @@
  * TODO Describe uvml_trn_seq_item_c
  */
 class uvml_trn_seq_item_c extends uvm_sequence_item;
-  
-   bit  may_drop  = 0;
-   bit  has_error = 0;
+   
+   int unsigned  uid       = 0;
+   bit           may_drop  = 0;
+   bit           has_error = 0;
+   
+   static int unsigned  last_uid = 0;
    
   `uvm_object_utils_begin(uvml_trn_mon_trn_c)
       `uvm_field_int(may_drop , UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
@@ -45,6 +48,7 @@ endclass : uvml_trn_seq_item_c
 function uvml_trn_seq_item_c::new(string name="uvml_trn_seq_item");
   
   super.new(name);
+   uid = last_uid++;
   
 endfunction : new
 

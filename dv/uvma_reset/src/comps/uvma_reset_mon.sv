@@ -140,6 +140,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
    bit  sampled_trn = 0;
    
    trn = uvma_reset_mon_trn_c::type_id::create("trn");
+   trn.originator = this.get_full_name();
    
    do begin
       @(cntxt.vif./*passive_mp.*/mon_cb);
@@ -228,6 +229,7 @@ task uvma_reset_mon_c::sample_trn_asynchronous(output uvma_reset_mon_trn_c trn);
    bit  sampled_trn = 0;
    
    trn = uvma_reset_mon_trn_c::type_id::create("trn");
+   trn.originator = this.get_full_name();
    
    do begin
       case (cntxt.reset_state)
