@@ -20,11 +20,11 @@
 """Design Verification \'Makefile\'.
 
 Usage:
-  dvm.py all  <target>
+  dvm.py all  <target> [-t <test_name>] [-s <seed>]
   dvm.py cmp  <target>
   dvm.py elab <target>
   dvm.py cpel <target>
-  dvm.py sim  <target>
+  dvm.py sim  <target> [-t <test_name>] [-s <seed>]
   dvm.py clean
   dvm.py (-h | --help)
   dvm.py --version
@@ -41,7 +41,7 @@ from docopt   import docopt
 import os
 import subprocess
 
-dbg = True
+dbg = False
 vivado_path   = "C:/Xilinx/Vivado/2019.2/bin/"
 uvm_home_path = "C:/Users/DavidOuellet-Poulin/Documents/Libraries/1800.2-2017-1.0"
 uvm_dpi_so    = "uvm_dpi"
@@ -50,7 +50,7 @@ project_dir   = pwd + "/.."
 rtl_path      = project_dir + "/rtl"
 rtl_libs_path = rtl_path + "/.imports"
 dv_path       = project_dir + "/dv"
-dv_libs_path  = dv_path + "/.imports"
+dv_libs_path  = project_dir + "/../mio_base_hopper/dv"
 
 
 
@@ -58,6 +58,9 @@ def do_dispatch(args):
     if (dbg):
         print("Call to do_dispatch()")
     do_paths()
+    
+    if not args['<seed>']:
+        args['<seed>'] = 1
     
     if args['all']:
         args['clean'] = True
@@ -74,20 +77,11 @@ def do_dispatch(args):
     if args['clean']:
         do_clean()
     if args['cmp']:
-        #do_cmp(dv_path + "/uvmt_axis_st/uvmt_axis_st_pkt.flist", "uvmt_axis_st")
-        #do_cmp(dv_path + "/uvmt_pkt_snf/uvmt_pkt_snf_pkt.flist", "uvmt_axis_st")
-        #do_cmp(dv_path + "/uvmt_clk_st/src/uvmt_clk_st_pkg.flist.xsim", "uvmt_clk_st")
-        do_cmp(dv_path + "/uvmt_reset_st/src/uvmt_reset_st_pkg.flist.xsim", "uvmt_reset_st")
+        do_cmp(dv_path + "/" + args['<target>'] + "/src/" + args['<target>'] + "_pkg.flist.xsim", args['<target>'])
     if args['elab']:
-        #do_elab("uvmt_axis_st", "uvmt_axis_st_tb")
-        #do_elab("uvmt_pkt_snf", "uvmt_pkt_snf_tb")
-        #do_elab("uvmt_clk_st", "uvmt_clk_st_tb")
-        do_elab("uvmt_reset_st", "uvmt_reset_st_tb")
+        do_elab(args['<target>'], args['<target>'] + "_tb")
     if args['sim']:
-        #do_sim("uvmt_axis_st_tb", "uvmt_axis_st_rand_traffic_test", 1, ["SIM_DIR_RESULTS=./"])
-        #do_sim("uvmt_pkt_snf_tb", "uvmt_pkt_snf_base_test", 1, ["SIM_DIR_RESULTS=" + pwd + "/"])
-        #do_sim("uvmt_clk_st_tb", "uvmt_clk_st_sanity_test", 1, ["SIM_DIR_RESULTS=" + pwd + "/"])
-        do_sim("uvmt_reset_st_tb", "uvmt_reset_st_sanity_test", 1, ["SIM_DIR_RESULTS=" + pwd + "/"])
+        do_sim(args['<target>'] + "_tb", args['<target>'] + "_" + args['<test_name>'] + "_test", args['<seed>'], [])
 
 
 
@@ -100,8 +94,8 @@ def do_paths():
     
     ### DV ###
     # Libraries
-    set_env_var("UVM_HOME"           , uvm_home_path)
-    set_env_var("DV_UVM_SRC_PATH"    , uvm_home_path            + "/src")
+    set_env_var("UVM_HOME"                 , uvm_home_path)
+    set_env_var("DV_UVM_SRC_PATH"          , uvm_home_path              + "/src")
     set_env_var("DV_UVML_HRTBT_SRC_PATH"   , dv_path + "/uvml_hrtbt"    + "/src")
     set_env_var("DV_UVML_TRN_SRC_PATH"     , dv_path + "/uvml_trn"      + "/src")
     set_env_var("DV_UVML_LOGS_SRC_PATH"    , dv_path + "/uvml_logs"     + "/src")
@@ -113,14 +107,6 @@ def do_paths():
     set_env_var("DV_UVMA_CLK_SRC_PATH"     , dv_path + "/uvma_clk"      + "/src")
     set_env_var("DV_UVME_CLK_ST_SRC_PATH"  , dv_path + "/uvme_clk_st"   + "/src")
     set_env_var("DV_UVMT_CLK_ST_SRC_PATH"  , dv_path + "/uvmt_clk_st"   + "/src")
-    
-    # Source
-    set_env_var("DV_UVMA_APB_SRC_PATH"    , dv_path + "/uvma_apb"    )
-    set_env_var("DV_UVMA_AXIS_SRC_PATH"   , dv_path + "/uvma_axis"   )
-    set_env_var("DV_UVME_PKT_SNF_SRC_PATH", dv_path + "/uvme_pkt_snf")
-    set_env_var("DV_UVME_AXIS_ST_SRC_PATH", dv_path + "/uvme_axis_st")
-    set_env_var("DV_UVMT_PKT_SNF_SRC_PATH", dv_path + "/uvmt_pkt_snf")
-    set_env_var("DV_UVMT_AXIS_ST_SRC_PATH", dv_path + "/uvmt_axis_st")
 
 
 
@@ -148,20 +134,30 @@ def do_cmp(filelist_path, lib_name):
 def do_elab(lib_name, design_unit):
     if (dbg):
         print("Call to do_elab(lib_name='" + lib_name + "', design_unit='" + design_unit + "')")
-    run_xsim_bin("xelab", design_unit + " -relax --O0 -s " + design_unit + " -timescale 1ns/1ps")
+    run_xsim_bin("xelab", design_unit + " uvml_logs_sim_summary --debug all  -relax --O0 -s " + design_unit + " -timescale 1ns/1ps")
 
 
 
 def do_sim(snapshot, test_name, seed, args):
-    act_args = "-testplusarg \"UVM_TESTNAME=" + test_name + "_c\""
+    tests_results_path = pwd + "/results/" + test_name + "_" + str(seed)
     
+    args.append("UVM_TESTNAME=" + test_name + "_c")
+    args.append("SIM_DIR_RESULTS=" + tests_results_path.replace("\\", "/") + "")
+    
+    act_args = ""
     for arg in args:
         act_args = act_args + " -testplusarg \"" + arg + "\""
+    
+    if not os.path.exists(tests_results_path):
+        os.mkdir(tests_results_path)
+    if not os.path.exists(tests_results_path + "/trn_log"):
+        os.mkdir(tests_results_path + "/trn_log")
     
     if (dbg):
         print("Call to do_sim(snapshot='" + snapshot + "', test_name='" + test_name + "', seed='" + str(seed) + "', args='" + act_args + "')")
     
     run_xsim_bin("xsim", snapshot + " " + act_args + " -runall")
+    #run_xsim_bin("xsim", snapshot + " " + act_args + " --gui")
 
 
 

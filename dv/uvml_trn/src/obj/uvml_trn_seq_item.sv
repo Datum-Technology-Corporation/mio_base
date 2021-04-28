@@ -25,15 +25,15 @@
  */
 class uvml_trn_seq_item_c extends uvm_sequence_item;
    
-   int unsigned  uid       = 0;
-   bit           may_drop  = 0;
-   bit           has_error = 0;
+   int unsigned  __uid       = 0;
+   bit           __may_drop  = 0;
+   bit           __has_error = 0;
    
-   static int unsigned  last_uid = 0;
+   static int unsigned  __last_uid = 0;
    
   `uvm_object_utils_begin(uvml_trn_mon_trn_c)
-      `uvm_field_int(may_drop , UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
-      `uvm_field_int(has_error, UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
+      `uvm_field_int(__may_drop , UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
+      `uvm_field_int(__has_error, UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
   `uvm_object_utils_end
   
   
@@ -46,9 +46,9 @@ endclass : uvml_trn_seq_item_c
 
 
 function uvml_trn_seq_item_c::new(string name="uvml_trn_seq_item");
-  
-  super.new(name);
-   uid = last_uid++;
+   
+   super.new(name);
+   __uid = __last_uid++;
   
 endfunction : new
 

@@ -17,7 +17,7 @@
 
 
 // Libraries
-//-f ${DV_UVM_SRC_PATH}/uvm.flist
+//-f ${DV_UVM_SRC_PATH}/uvm_pkg.flist
 -f ${DV_UVML_HRTBT_SRC_PATH}/uvml_hrtbt_pkg.flist
 -f ${DV_UVML_TRN_SRC_PATH}/uvml_trn_pkg.flist
 -f ${DV_UVML_LOGS_SRC_PATH}/uvml_logs_pkg.flist

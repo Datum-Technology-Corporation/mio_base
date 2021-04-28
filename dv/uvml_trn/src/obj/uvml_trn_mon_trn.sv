@@ -25,22 +25,22 @@
  */
 class uvml_trn_mon_trn_c extends uvm_sequence_item;
    
-   int unsigned  uid             = 0;
-   string        originator      = "";
-   bit           may_drop        = 0;
-   bit           has_error       = 0;
-   realtime      timestamp_start = $realtime();
-   realtime      timestamp_end   = $realtime();
+   int unsigned  __uid             = 0;
+   string        __originator      = "";
+   bit           __may_drop        = 0;
+   bit           __has_error       = 0;
+   realtime      __timestamp_start = $realtime();
+   realtime      __timestamp_end   = $realtime();
    
-   static int unsigned  last_uid = 0;
+   static int unsigned  __last_uid = 0;
    
    
    `uvm_object_utils_begin(uvml_trn_mon_trn_c)
-      `uvm_field_string(originator     , UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
-      `uvm_field_int   (may_drop       , UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
-      `uvm_field_int   (has_error      , UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
-      `uvm_field_real  (timestamp_start, UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
-      `uvm_field_real  (timestamp_end  , UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
+      `uvm_field_string(__originator     , UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
+      `uvm_field_int   (__may_drop       , UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
+      `uvm_field_int   (__has_error      , UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
+      `uvm_field_real  (__timestamp_start, UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
+      `uvm_field_real  (__timestamp_end  , UVM_DEFAULT + UVM_NOPACK + UVM_NOCOMPARE)
    `uvm_object_utils_end
    
    
@@ -55,7 +55,7 @@ endclass : uvml_trn_mon_trn_c
 function uvml_trn_mon_trn_c::new(string name="uvml_trn_mon_trn");
    
    super.new(name);
-   uid = last_uid++;
+   __uid = __last_uid++;
    
 endfunction : new
 

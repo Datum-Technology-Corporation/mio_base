@@ -210,7 +210,7 @@ task uvml_sb_simplex_c::run_phase(uvm_phase phase);
          end
       join_none
    end
-
+   
 endtask: run_phase
 
 
@@ -257,7 +257,7 @@ task uvml_sb_simplex_c::mode_in_order();
          cntxt.match_count++;
       end
       else begin
-         if (exp_trn.may_drop) begin
+         if (exp_trn.__may_drop) begin
             log_drop(act_trn, exp_trn);
          end
          else begin
@@ -305,7 +305,7 @@ task uvml_sb_simplex_c::mode_out_of_order();
          cntxt.act_q.delete(act_match_idx);
       end
       else begin
-         if (exp_trn.may_drop) begin
+         if (exp_trn.__may_drop) begin
             log_drop(act_trn);
          end
          else begin
@@ -344,7 +344,7 @@ function void uvml_sb_simplex_c::calc_act_stats(ref T_ACT_TRN trn);
    cntxt.act_observed++;
    cntxt.act_bits_observed += packed_trn.size();
    
-   if (trn.has_error) begin
+   if (trn.__has_error) begin
       cntxt.act_bad_observed++;
       cntxt.act_bad_bits_observed += packed_trn.size();
    end
@@ -367,7 +367,7 @@ function void uvml_sb_simplex_c::calc_exp_stats(ref T_EXP_TRN trn);
    cntxt.exp_observed++;
    cntxt.exp_bits_observed += packed_trn.size();
    
-   if (trn.has_error) begin
+   if (trn.__has_error) begin
       cntxt.exp_bad_observed++;
       cntxt.exp_bad_bits_observed += packed_trn.size();
    end
@@ -384,14 +384,14 @@ endfunction : calc_exp_stats
 
 function void uvml_sb_simplex_c::log_new_act(ref T_ACT_TRN trn);
    
-   `uvm_info("SB", $sformatf("New actual transaction from %s: \n%s", trn.originator, trn.sprint()), UVM_HIGH)
+   `uvm_info("SB", $sformatf("New actual transaction from %s: \n%s", trn.__originator, trn.sprint()), UVM_HIGH)
    
 endfunction : log_new_act
 
 
 function void uvml_sb_simplex_c::log_new_exp(ref T_EXP_TRN trn);
    
-   `uvm_info("SB", $sformatf("New expected transaction from %s: \n%s", trn.originator, trn.sprint()), UVM_HIGH)
+   `uvm_info("SB", $sformatf("New expected transaction from %s: \n%s", trn.__originator, trn.sprint()), UVM_HIGH)
    
 endfunction : log_new_exp
 

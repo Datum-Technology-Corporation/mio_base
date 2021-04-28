@@ -46,7 +46,7 @@ class uvma_reset_mon_trn_logger_c extends uvml_logs_mon_trn_logger_c#(
     */
    virtual function void write(uvma_reset_mon_trn_c t);
       
-      fwrite($sformatf(" %t | %t | %t |", $realtime(), t.timestamp_start, t.timestamp_end));
+      fwrite($sformatf(" %t | %t | %t |", $realtime(), t.__timestamp_start, t.__timestamp_end));
       
    endfunction : write
    

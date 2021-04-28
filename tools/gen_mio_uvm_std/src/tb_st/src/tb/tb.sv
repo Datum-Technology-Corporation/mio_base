@@ -45,8 +45,13 @@ module uvmt_${name}_st_tb;
     * Test bench entry point.
     */
    initial begin
-      // Specify time format for simulation (units_number, precision_number, suffix_string, minimum_field_width)
-      $timeformat(-9, 3, " ns", 18);
+      // Specify time format for simulation
+      $timeformat(
+         .units_number       (   -9),
+         .precision_number   (    3),
+         .suffix_string      (" ns"),
+         .minimum_field_width(   18) 
+      );
       
       // Add interfaces to uvm_config_db
       uvm_config_db#(virtual uvmt_${name}_st_clknrst_gen_if)::set(null, "*"                    , "clknrst_gen_vif", clknrst_gen_if);

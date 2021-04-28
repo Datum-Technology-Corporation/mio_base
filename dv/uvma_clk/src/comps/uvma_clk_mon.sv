@@ -178,7 +178,7 @@ task uvma_clk_mon_c::sync_lock_fsm();
             if (cntxt.mon_cycle_count >= cfg.mon_lock_cycle_threshold) begin
                cntxt.current_state = UVMA_CLK_STATE_LOCKED;
                trn = uvma_clk_mon_trn_c::type_id::create("trn");
-               trn.originator = this.get_full_name();
+               trn.__originator = this.get_full_name();
                trn.event_type = UVMA_CLK_MON_TRN_EVENT_LOCKED;
                trn.frequency  = cntxt.mon_frequency;
                send_trn(trn);
@@ -189,7 +189,7 @@ task uvma_clk_mon_c::sync_lock_fsm();
             if (cntxt.mon_missed_edges >= cfg.mon_sync_missed_edges_threshold) begin
                cntxt.current_state = UVMA_CLK_STATE_NO_SYNC;
                trn = uvma_clk_mon_trn_c::type_id::create("trn");
-               trn.originator = this.get_full_name();
+               trn.__originator = this.get_full_name();
                trn.event_type = UVMA_CLK_MON_TRN_EVENT_LOST_LOCK;
                send_trn(trn);
             end

@@ -140,7 +140,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
    bit  sampled_trn = 0;
    
    trn = uvma_reset_mon_trn_c::type_id::create("trn");
-   trn.originator = this.get_full_name();
+   trn.__originator = this.get_full_name();
    
    do begin
       @(cntxt.vif./*passive_mp.*/mon_cb);
@@ -150,7 +150,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
                UVMA_RESET_POLARITY_ACTIVE_LOW : begin
                   if (cntxt.vif./*passive_mp.*/mon_cb.reset_n === 0) begin
                      cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
-                     trn.timestamp_start = $realtime();
+                     trn.__timestamp_start = $realtime();
                      trn.num_cycles++;
                   end
                end
@@ -158,7 +158,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
                UVMA_RESET_POLARITY_ACTIVE_HIGH: begin
                   if (cntxt.vif./*passive_mp.*/mon_cb.reset === 1) begin
                      cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
-                     trn.timestamp_start = $realtime();
+                     trn.__timestamp_start = $realtime();
                      trn.num_cycles++;
                   end
                end
@@ -172,7 +172,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
                UVMA_RESET_POLARITY_ACTIVE_LOW : begin
                   if (cntxt.vif./*passive_mp.*/mon_cb.reset_n === 1) begin
                      cntxt.reset_state = UVMA_RESET_STATE_POST_RESET;
-                     trn.timestamp_end = $realtime();
+                     trn.__timestamp_end = $realtime();
                      sampled_trn       = 1;
                   end
                   else begin
@@ -183,7 +183,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
                UVMA_RESET_POLARITY_ACTIVE_HIGH: begin
                   if (cntxt.vif./*passive_mp.*/mon_cb.reset === 0) begin
                      cntxt.reset_state = UVMA_RESET_STATE_POST_RESET;
-                     trn.timestamp_end = $realtime();
+                     trn.__timestamp_end = $realtime();
                      sampled_trn       = 1;
                   end
                   else begin
@@ -200,7 +200,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
                UVMA_RESET_POLARITY_ACTIVE_LOW : begin
                   if (cntxt.vif./*passive_mp.*/mon_cb.reset_n === 0) begin
                      cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
-                     trn.timestamp_start = $realtime();
+                     trn.__timestamp_start = $realtime();
                      trn.num_cycles++;
                   end
                end
@@ -208,7 +208,7 @@ task uvma_reset_mon_c::sample_trn_synchronous(output uvma_reset_mon_trn_c trn);
                UVMA_RESET_POLARITY_ACTIVE_HIGH: begin
                   if (cntxt.vif./*passive_mp.*/mon_cb.reset === 1) begin
                      cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
-                     trn.timestamp_start = $realtime();
+                     trn.__timestamp_start = $realtime();
                      trn.num_cycles++;
                   end
                end
@@ -229,7 +229,7 @@ task uvma_reset_mon_c::sample_trn_asynchronous(output uvma_reset_mon_trn_c trn);
    bit  sampled_trn = 0;
    
    trn = uvma_reset_mon_trn_c::type_id::create("trn");
-   trn.originator = this.get_full_name();
+   trn.__originator = this.get_full_name();
    
    do begin
       case (cntxt.reset_state)
@@ -238,14 +238,14 @@ task uvma_reset_mon_c::sample_trn_asynchronous(output uvma_reset_mon_trn_c trn);
                UVMA_RESET_POLARITY_ACTIVE_LOW : begin
                   wait (cntxt.vif.reset_n === 0) begin
                      cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
-                     trn.timestamp_start = $realtime();
+                     trn.__timestamp_start = $realtime();
                   end
                end
                
                UVMA_RESET_POLARITY_ACTIVE_HIGH: begin
                   wait (cntxt.vif.reset === 1) begin
                      cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
-                     trn.timestamp_start = $realtime();
+                     trn.__timestamp_start = $realtime();
                   end
                end
                
@@ -258,7 +258,7 @@ task uvma_reset_mon_c::sample_trn_asynchronous(output uvma_reset_mon_trn_c trn);
                UVMA_RESET_POLARITY_ACTIVE_LOW : begin
                   wait (cntxt.vif.reset_n === 1) begin
                      cntxt.reset_state = UVMA_RESET_STATE_POST_RESET;
-                     trn.timestamp_end = $realtime();
+                     trn.__timestamp_end = $realtime();
                      sampled_trn       = 1;
                   end
                end
@@ -266,7 +266,7 @@ task uvma_reset_mon_c::sample_trn_asynchronous(output uvma_reset_mon_trn_c trn);
                UVMA_RESET_POLARITY_ACTIVE_HIGH: begin
                   wait (cntxt.vif.reset === 0) begin
                      cntxt.reset_state = UVMA_RESET_STATE_POST_RESET;
-                     trn.timestamp_end = $realtime();
+                     trn.__timestamp_end = $realtime();
                      sampled_trn       = 1;
                   end
                end
@@ -280,14 +280,14 @@ task uvma_reset_mon_c::sample_trn_asynchronous(output uvma_reset_mon_trn_c trn);
                UVMA_RESET_POLARITY_ACTIVE_LOW : begin
                   wait (cntxt.vif.reset_n === 0) begin
                      cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
-                     trn.timestamp_start = $realtime();
+                     trn.__timestamp_start = $realtime();
                   end
                end
                
                UVMA_RESET_POLARITY_ACTIVE_HIGH: begin
                   wait (cntxt.vif.reset === 1) begin
                      cntxt.reset_state = UVMA_RESET_STATE_IN_RESET;
-                     trn.timestamp_start = $realtime();
+                     trn.__timestamp_start = $realtime();
                   end
                end
                
@@ -304,7 +304,7 @@ endtask : sample_trn_asynchronous
 
 function void uvma_reset_mon_c::process_trn(ref uvma_reset_mon_trn_c trn);
    
-   trn.duration = trn.timestamp_end - trn.timestamp_start;
+   trn.duration = trn.__timestamp_end - trn.__timestamp_start;
    
 endfunction : process_trn
 
